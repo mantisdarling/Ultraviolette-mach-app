@@ -1,26 +1,29 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0D0D0D&customColorList=0,2,2,5,30&height=220&section=header&text=Ultraviolette%20Website%20Clone&fontSize=38&fontColor=ffffff&fontAlignY=40&desc=UI%20Archaeology%20Series%20%E2%80%94%20Entry%20001&descAlignY=60&descSize=16&animation=fadeIn" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=000000&height=240&section=header&text=Ultraviolette%20Website%20Clone&fontSize=38&fontColor=ffffff&fontAlignY=40&desc=UI%20Archaeology%20Series%20%E2%80%94%20Entry%20001&descAlignY=60&descSize=16&animation=fadeIn&stroke=ffffff&strokeWidth=1" />
 
-<br/>
-
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=16&duration=3000&pause=1200&color=FFFFFF&center=true&vCenter=true&width=550&lines=Reverse-engineered+from+scratch.;No+frameworks.+Just+fundamentals.;Built+to+learn+how+great+UIs+work." alt="typing" />
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=15&duration=3000&pause=1200&color=888888&center=true&vCenter=true&width=560&lines=Reverse-engineered+from+scratch.;No+frameworks.+Just+fundamentals.;Built+to+understand+how+great+UIs+work." alt="typing" />
 
 <br/><br/>
 
-[![Live Demo](https://img.shields.io/badge/LIVE_DEMO-▶_Visit_Site-ffffff?style=for-the-badge&labelColor=000000)](https://ultraviolette-website-clone.vercel.app)
+[![Live Demo](https://img.shields.io/badge/▶_LIVE_DEMO-000000?style=for-the-badge&logoColor=white&labelColor=000000&color=111111)](https://ultraviolette-website-clone.vercel.app)
 &nbsp;
-[![HTML](https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white)]()
+[![HTML](https://img.shields.io/badge/HTML-111111?style=for-the-badge&logo=html5&logoColor=E34F26)]()
 &nbsp;
-[![CSS](https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=css3&logoColor=white)]()
+[![CSS](https://img.shields.io/badge/CSS-111111?style=for-the-badge&logo=css3&logoColor=1572B6)]()
 &nbsp;
-[![JS](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)]()
+[![JS](https://img.shields.io/badge/JS-111111?style=for-the-badge&logo=javascript&logoColor=F7DF1E)]()
 &nbsp;
-[![Status](https://img.shields.io/badge/STATUS-COMPLETE-222222?style=for-the-badge&labelColor=00C853)]()
+[![Status](https://img.shields.io/badge/COMPLETE-111111?style=for-the-badge&logoColor=white)]()
+
+</div>
 
 <br/>
 
-</div>
+```
+█░█ █░░ ▀█▀ █▀█ ▄▀█ █░█ █ █▀█ █░░ █▀▀ ▀█▀ ▀█▀ █▀▀   █▀▀ █░░ █▀█ █▄░█ █▀▀
+█▄█ █▄▄ ░█░ █▀▄ █▀█ ▀▄▀ █ █▄█ █▄▄ ██▄ ░█░ ░█░ ██▄   █▄▄ █▄▄ █▄█ █░▀█ ██▄
+```
 
 ---
 
@@ -30,7 +33,7 @@
 
 <div align="center">
 
-🔗 **[ultraviolette-website-clone.vercel.app](https://ultraviolette-website-clone.vercel.app)**
+`🔗` **[ultraviolette-website-clone.vercel.app](https://ultraviolette-website-clone.vercel.app)**
 
 </div>
 
@@ -38,34 +41,42 @@
 
 ## ◼ About
 
-This is a **pixel-close recreation** of the [Ultraviolette Automotive](https://ultraviolette.com) website — one of the most visually striking EV brand websites out there.
+```
+PROJECT     →   Ultraviolette Automotive — Website Clone
+TYPE        →   UI Archaeology / Frontend Study
+STACK       →   HTML · CSS · JavaScript (no frameworks)
+DEPLOYED    →   Vercel
+STATUS      →   Complete
+```
 
-Built entirely from scratch using pure HTML, CSS, and JavaScript. No React. No Tailwind. No shortcuts.
+A **pixel-close recreation** of the [Ultraviolette Automotive](https://ultraviolette.com) website — one of the most visually refined EV brand sites out there.
 
-The goal wasn't just to make it look similar — it was to understand *why* it looks the way it does. Every section was studied, broken down, and rebuilt from first principles.
+Built entirely from scratch. No React. No Tailwind. No shortcuts.
 
-> ⚠️ **Disclaimer:** Built strictly for educational and portfolio purposes.
+The goal wasn't just to make it *look* similar — it was to understand *why* it looks the way it does. Every section was studied, broken down, and rebuilt from first principles.
+
+> ⚠️ Built strictly for **educational and portfolio purposes only.**
 > Not affiliated with or endorsed by Ultraviolette Automotive Pvt. Ltd.
 
 ---
 
 ## ◼ Features
 
-| | Feature | Details |
-|---|---|---|
-| 📱 | **Responsive Design** | Fully fluid across desktop, tablet, and mobile |
-| 🎞️ | **Smooth Animations** | Scroll-triggered transitions and hover effects |
-| 🧩 | **Modular Structure** | Clean, readable, section-based HTML layout |
-| ⚡ | **No Dependencies** | Zero libraries — pure vanilla stack |
-| 🎨 | **Premium Aesthetic** | Faithful replication of Ultraviolette's dark visual identity |
-| 🚀 | **Deployed on Vercel** | Live and accessible from anywhere |
+| Feature | Details |
+|---|---|
+| 📱 Responsive Design | Fully fluid across desktop, tablet, and mobile |
+| 🎞️ Smooth Animations | Scroll-triggered transitions and hover effects |
+| 🧩 Modular Structure | Clean, readable, section-based HTML layout |
+| ⚡ Zero Dependencies | Pure vanilla stack — no libraries, no frameworks |
+| 🎨 Premium Aesthetic | Faithful replication of Ultraviolette's dark visual identity |
+| 🚀 Live on Vercel | Deployed and accessible from anywhere |
 
 ---
 
 ## ◼ Tech Stack
 
 <div align="center">
-  <img src="https://skillicons.dev/icons?i=html,css,js,vercel&theme=dark" alt="tech stack icons" />
+  <img src="https://skillicons.dev/icons?i=html,css,js,vercel&theme=dark" alt="stack" />
 </div>
 
 <br/>
@@ -82,19 +93,18 @@ Vercel      →   Deployment & hosting
 ## ◼ Getting Started
 
 ```bash
-# 1. Clone the repository
+# Clone
 git clone https://github.com/mantisdarling/ultraviolette-website-clone.git
 
-# 2. Enter the project folder
+# Enter
 cd ultraviolette-website-clone
 
-# 3. Open in your browser
-#    Option A — just double-click index.html
-#    Option B — use VS Code Live Server for hot reload
+# Run — Option A: double-click index.html
+# Run — Option B: VS Code + Live Server (recommended)
 open index.html
 ```
 
-> Or skip all of this → **[Live Demo](https://ultraviolette-website-clone.vercel.app)**
+> Or just hit the live demo → **[ultraviolette-website-clone.vercel.app](https://ultraviolette-website-clone.vercel.app)**
 
 ---
 
@@ -103,35 +113,47 @@ open index.html
 ```
 ultraviolette-website-clone/
 │
-├── index.html          ← Main entry point
-├── Website/            ← All assets (CSS, JS, images)
-├── preview.png         ← README preview image
-└── README.md
+├── index.html          ←  Entry point
+├── Website/            ←  All assets (CSS, JS, images)
+├── preview.png         ←  README preview
+└── README.md           ←  You are here
 ```
 
 ---
 
 ## ◼ UI Archaeology Series
 
-> *Some call it cloning. I call it UI archaeology — the practice of reverse-engineering exceptional interfaces to understand how they're truly built.*
+```
+WHAT IS UI ARCHAEOLOGY?
 
-This project is **Entry 001** of an ongoing series where I pick production websites with standout design and rebuild them from scratch. Each one is a deep-dive into real-world UI techniques, layout patterns, and interaction design.
+The practice of reverse-engineering exceptional production interfaces
+to deeply understand how they are built — not to copy, but to learn.
+```
 
-| # | Project | Tech | Status |
+This is **Entry 001**. Each entry in this series is a full rebuild of a real website I find impressive, done from scratch, documented here.
+
+| Entry | Project | Stack | Status |
 |---|---|---|---|
-| 001 | ⚡ Ultraviolette Automotive | HTML · CSS · JS | ✅ Complete |
-| 002 | Coming soon... | — | 🔄 In progress |
+| `001` | Ultraviolette Automotive | HTML · CSS · JS | ✅ Complete |
+| `002` | Coming soon | — | 🔲 Upcoming |
 
 ---
 
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0D0D0D&customColorList=0,2,2,5,30&height=120&section=footer&animation=fadeIn" />
+<br/>
 
-Built by [Mantis](https://github.com/mantisdarling) &nbsp;·&nbsp; Part of the UI Archaeology Series
+```
+built by mantis  ·  ui archaeology series  ·  github.com/mantisdarling
+```
 
-[![GitHub](https://img.shields.io/badge/github-mantisdarling-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/mantisdarling)
+[![GitHub](https://img.shields.io/badge/mantisdarling-111111?style=flat-square&logo=github&logoColor=white)](https://github.com/mantisdarling)
 &nbsp;
-[![Views](https://komarev.com/ghpvc/?username=mantisdarling&style=flat-square&color=ffffff&label=repo+views)](https://github.com/mantisdarling/ultraviolette-website-clone)
+[![Views](https://komarev.com/ghpvc/?username=mantisdarling&style=flat-square&color=111111&label=views)](https://github.com/mantisdarling/ultraviolette-website-clone)
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=000000&height=120&section=footer&animation=fadeIn" />
 
 </div>
+
+
+
