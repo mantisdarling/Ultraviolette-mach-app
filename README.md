@@ -30,15 +30,6 @@
 &nbsp;
 [![Status](https://img.shields.io/badge/COMPLETE_✅-000000?style=for-the-badge&logoColor=6A0DAD)]()
 
-<br/><br/>
-
-<!-- SNAKE ANIMATION TOP -->
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/mantisdarling/mantisdarling/output/github-contribution-grid-snake-dark.svg" />
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/mantisdarling/mantisdarling/output/github-contribution-grid-snake.svg" />
-  <img alt="github-snake" src="https://raw.githubusercontent.com/mantisdarling/mantisdarling/output/github-contribution-grid-snake-dark.svg" />
-</picture>
-
 </div>
 
 <br/>
@@ -52,7 +43,7 @@
   ╚═════╝ ╚══════╝╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝   ╚═╝      ╚═╝   ╚══════╝
 ```
 
-<div align="center">💀━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━💀</div>
+---
 
 ## ◼ Preview
 
@@ -64,7 +55,7 @@
 
 </div>
 
-<div align="center">💀━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━💀</div>
+---
 
 ## ◼ About
 
@@ -77,7 +68,7 @@ The goal wasn't just to make it *look* similar — it was to understand *why* it
 > ⚠️ Built strictly for **educational and portfolio purposes only.**
 > Not affiliated with or endorsed by Ultraviolette Automotive Pvt. Ltd.
 
-<div align="center">💀━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━💀</div>
+---
 
 ## ◼ Features
 
@@ -93,7 +84,7 @@ The goal wasn't just to make it *look* similar — it was to understand *why* it
 └──────────────────────────┴──────────────────────────────────────┘
 ```
 
-<div align="center">💀━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━💀</div>
+---
 
 ## ◼ Tech Stack
 
@@ -115,23 +106,7 @@ The goal wasn't just to make it *look* similar — it was to understand *why* it
 └─────────────────┴───────────────────────────────────────────────┘
 ```
 
-<div align="center">💀━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━💀</div>
-
-## ◼ Trophies
-
-<div align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=mantisdarling&theme=darkhub&no-frame=true&no-bg=true&margin-w=6&column=7" alt="trophies" />
-</div>
-
-<div align="center">💀━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━💀</div>
-
-## ◼ Streak
-
-<div align="center">
-  <img src="https://streak-stats.demolab.com?user=mantisdarling&theme=dark&background=000000&border=6A0DAD&stroke=6A0DAD&ring=6A0DAD&fire=6A0DAD&currStreakNum=ffffff&sideNums=ffffff&currStreakLabel=6A0DAD&sideLabels=6A0DAD&dates=888888&hide_border=false" alt="streak" />
-</div>
-
-<div align="center">💀━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━💀</div>
+---
 
 ## ◼ Getting Started
 
@@ -149,7 +124,7 @@ open index.html
 
 > Or just hit the live demo → **[ultraviolette-website-clone.vercel.app](https://ultraviolette-website-clone.vercel.app)**
 
-<div align="center">💀━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━💀</div>
+---
 
 ## ◼ Project Structure
 
@@ -162,7 +137,7 @@ ultraviolette-website-clone/
 └── README.md           ←  You are here
 ```
 
-<div align="center">💀━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━💀</div>
+---
 
 ## ◼ UI Archaeology Series
 
@@ -186,32 +161,13 @@ $ cat ui-archaeology.log
 [END]   More entries loading...
 ```
 
-<!-- SNAKE ANIMATION BOTTOM -->
-<div align="center">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/mantisdarling/mantisdarling/output/github-contribution-grid-snake-dark.svg" />
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/mantisdarling/mantisdarling/output/github-contribution-grid-snake.svg" />
-  <img alt="github-snake" src="https://raw.githubusercontent.com/mantisdarling/mantisdarling/output/github-contribution-grid-snake-dark.svg" />
-</picture>
-</div>
-
-<div align="center">💀━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━💀</div>
+---
 
 <div align="center">
 
 <br/>
 
 ```
-
-### **interactive demo**
-
-<a href="https://platane.github.io/snk">
-  <img height="300px" src="https://user-images.githubusercontent.com/1659820/121798244-7c86d700-cc25-11eb-8c1c-b8e65556ac0d.gif" ></img>
-</a>
-
-[platane.github.io/snk](https://platane.github.io/snk)
-
-
   built by mantisdarling  ·  ui archaeology series  ·  github.com/mantisdarling
 ```
 
