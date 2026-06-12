@@ -149,6 +149,8 @@ The goal wasn't just to make it *look* similar — it was to understand *why* it
 
 <div align="center">💀━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━💀</div>
 
+![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](https://myoctocat.com/assets/images/base-octocat.svg)
+
 ## ◼ Getting Started
 
 ```bash
@@ -228,5 +230,3 @@ $ cat ui-archaeology.log
 <img src="https://capsule-render.vercel.app/api?type=waving&color=000000&height=120&section=footer&animation=fadeIn&stroke=6A0DAD&strokeWidth=3" />
 
 </div>
-
-![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](https://myoctocat.com/assets/images/base-octocat.svg)
