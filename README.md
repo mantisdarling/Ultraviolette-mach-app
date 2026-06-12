@@ -32,6 +32,12 @@
 
 <br/><br/>
 
+## 🐍 Contribution Snake
+
+<p align="center">
+  <img src="https://github.com/mantisdarling/mantisdarling/raw/output/github-contribution-grid-snake.gif" alt="Snake animation">
+</p>
+
 <!-- SNAKE ANIMATION TOP -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/mantisdarling/mantisdarling/output/github-contribution-grid-snake-dark.svg" />
