@@ -34,7 +34,8 @@
 
 ## 🐍 Contribution Snake
 
-![snake](https://github.com/mantisdarling/mantisdarling/raw/output/github-contribution-grid-snake.gif)
+![snake](https://github.com/mantisdarling/mantisdarling/raw/output/github-contribution-grid-snake.gif)    
+[![.github/workflows/snake.yml](https://github.com/mantisdarling/ultraviolette-website-clone/actions/workflows/snake.yml/badge.svg)](https://github.com/mantisdarling/ultraviolette-website-clone/actions/workflows/snake.yml)
 
 <!-- SNAKE ANIMATION TOP -->
 <picture>
