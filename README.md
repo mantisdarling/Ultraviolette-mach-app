@@ -1,75 +1,137 @@
-# MACH-EV — Ultraviolette F77 Experience clone
-[![PWA Status](https://img.shields.io/badge/PWA-Ready-7B2CBF?style=for-the-badge)](https://www.ultraviolette.com/)
-[![Lighthouse Score](https://img.shields.io/badge/Lighthouse-100%2F100-success?style=for-the-badge)](#before-vs-after-metrics)
-[![Stack](https://img.shields.io/badge/Stack-Vanilla_HTML_/_CSS_/_JS-black?style=for-the-badge)](#-modular-architecture)
+<div align="center">
 
-An optimized, Progressive Web App (PWA) fan experience clone site of the **Ultraviolette F77 Mach 2** electric motorcycle. Engineered for maximum rendering performance, smooth animations, offline-first access, and strict accessibility compliance. Built entirely with **pure vanilla web technologies** (no frameworks, no library bloat).
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0D0D0D&customColorList=0,2,2,5,30&height=220&section=header&text=Ultraviolette%20Website%20Clone&fontSize=38&fontColor=ffffff&fontAlignY=40&desc=UI%20Archaeology%20Series%20%E2%80%94%20Entry%20001&descAlignY=60&descSize=16&animation=fadeIn" />
 
----
+<br/>
 
-## ⚡ Performance Summary (Lighthouse 100/100)
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=16&duration=3000&pause=1200&color=FFFFFF&center=true&vCenter=true&width=550&lines=Reverse-engineered+from+scratch.;No+frameworks.+Just+fundamentals.;Built+to+learn+how+great+UIs+work." alt="typing" />
 
-| Performance Metric | Before Refactoring | After Refactoring | Engineering Impact |
-| :--- | :--- | :--- | :--- |
-| **First Contentful Paint (FCP)** | ~1.8s | **~0.4s** | **~75% reduction** (Immediate render via critical inline CSS) |
-| **Largest Contentful Paint (LCP)** | ~3.0s | **~0.9s** | **~70% reduction** (Preloaded local responsive WebP assets) |
-| **Total Blocking Time (TBT)** | ~350ms | **~60ms** | **~83% reduction** (rAF throttling & active viewport WebGL checks) |
-| **Cumulative Layout Shift (CLS)** | 0.28 | **0.00** | **100% eliminated** (Strict aspect-ratio layout reservations) |
-| **Lighthouse Scores** | 68 / 82 / 70 / 90 | **100 / 100 / 100 / 100** | **Perfect green audits across all metrics** |
+<br/><br/>
 
----
+[![Live Demo](https://img.shields.io/badge/LIVE_DEMO-▶_Visit_Site-ffffff?style=for-the-badge&labelColor=000000)](https://ultraviolette-website-clone.vercel.app)
+&nbsp;
+[![HTML](https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white)]()
+&nbsp;
+[![CSS](https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=css3&logoColor=white)]()
+&nbsp;
+[![JS](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)]()
+&nbsp;
+[![Status](https://img.shields.io/badge/STATUS-COMPLETE-222222?style=for-the-badge&labelColor=00C853)]()
 
-## 🛠️ Key Technical Details
+<br/>
 
-### 1. Modular Directory Structure
-The codebase is structured logically to separate concerns and optimize the Critical Rendering Path:
-* **`index.html`**: Clean entrypoint with semantic HTML5 markup, canonical metadata, font preloads, and script loaders.
-* **`css/critical.css`**: Design tokens, resets, header navigation, custom cursor, and preloader styles inlined into the HTML `<head>` for immediate page paints.
-* **`css/main.css`**: Below-the-fold layout styles (tables, galleries, forms, cards) loaded asynchronously.
-* **`js/main.js`**: User interactions, color swatches, active state highlights, magnetic CTA scripts, and responsive grids.
-* **`js/webgl-nebula.js`**: WebGL background shader running independently.
-* **`sw.js`**: Progressive Web App service worker managing asset caching.
-* **`site.webmanifest`**: Manifest declaring install attributes, theme definitions, and icons for mobile/desktop.
-
-### 2. Local Image Pipeline & WebP Conversion
-All CDN images are compressed and converted into highly optimized, responsive WebP files. The project includes a Python utility to automate this:
-* **`scripts/optimize_images.py`**: A helper script utilizing the **Pillow** library. It downloads the remote CDN assets, converts them to WebP, and outputs three width variants: desktop (`1920w`), tablet (`1024w`), and mobile (`640w`).
-* **Aspect Ratio Reservations**: Every image tag declares explicit `width` and `height` attributes to prevent browser reflow layouts when loading, ensuring a **0.00 Cumulative Layout Shift**.
-
-### 3. GPU Thread & Viewport Optimization
-* **IntersectionObserver Control**: The custom WebGL particle background shader loop automatically pauses (`cancelAnimationFrame`) whenever the hero section moves out of the viewport. This preserves mobile battery life and reduces resource consumption.
-* **Scroll Throttling**: Interactive UI calculations (like the parallax about section image and scroll progress indicators) are throttled via `requestAnimationFrame` running on a passive listener.
-
-### 4. PWA Caching Strategy
-* **Pre-caching**: Static assets (scripts, local WebP images, layouts) are cached in browser storage upon service worker installation.
-* **Offline-First**: Implements a **Network-First** caching strategy for main HTML documents and a **Cache-First** strategy for media assets, scripts, stylesheets, and external Google Fonts. 
-
-### 5. Graceful Fallbacks
-* **Blocker Resilience**: Appending the `.js` initialization class to the document root is executed dynamically within [main.js](file:///c:/Users/harsh/Documents/uv/js/main.js). If the script fails to load, is delayed, or is blocked by client plugins, the styling rules degrade gracefully and sections display normally rather than rendering a blank screen.
+</div>
 
 ---
 
-## 💻 Local Installation & Setup
+## ◼ Preview
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/your-username/mach-ev.git
-   cd mach-ev
-   ```
+![Preview](preview.png)
 
-2. **Generate optimized image assets:**
-   *(Requires Python 3 and Pillow: `pip install Pillow`)*
-   ```bash
-   python scripts/optimize_images.py
-   python scripts/generate_icons.py
-   ```
+<div align="center">
 
-3. **Start the local server:**
-   Because the Progressive Web App uses Service Workers, it cannot be run directly via the `file://` protocol. Serve the directory locally:
-   ```bash
-   python -m http.server 8000
-   ```
+🔗 **[ultraviolette-website-clone.vercel.app](https://ultraviolette-website-clone.vercel.app)**
 
-4. **Verify:**
-   Open your browser and navigate to:
-   👉 **[http://localhost:8000/index.html](http://localhost:8000/index.html)**
+</div>
+
+---
+
+## ◼ About
+
+This is a **pixel-close recreation** of the [Ultraviolette Automotive](https://ultraviolette.com) website — one of the most visually striking EV brand websites out there.
+
+Built entirely from scratch using pure HTML, CSS, and JavaScript. No React. No Tailwind. No shortcuts.
+
+The goal wasn't just to make it look similar — it was to understand *why* it looks the way it does. Every section was studied, broken down, and rebuilt from first principles.
+
+> ⚠️ **Disclaimer:** Built strictly for educational and portfolio purposes.
+> Not affiliated with or endorsed by Ultraviolette Automotive Pvt. Ltd.
+
+---
+
+## ◼ Features
+
+| | Feature | Details |
+|---|---|---|
+| 📱 | **Responsive Design** | Fully fluid across desktop, tablet, and mobile |
+| 🎞️ | **Smooth Animations** | Scroll-triggered transitions and hover effects |
+| 🧩 | **Modular Structure** | Clean, readable, section-based HTML layout |
+| ⚡ | **No Dependencies** | Zero libraries — pure vanilla stack |
+| 🎨 | **Premium Aesthetic** | Faithful replication of Ultraviolette's dark visual identity |
+| 🚀 | **Deployed on Vercel** | Live and accessible from anywhere |
+
+---
+
+## ◼ Tech Stack
+
+<div align="center">
+  <img src="https://skillicons.dev/icons?i=html,css,js,vercel&theme=dark" alt="tech stack icons" />
+</div>
+
+<br/>
+
+```
+HTML        →   Structure & semantic layout
+CSS         →   Styling, animations, responsive design
+JavaScript  →   Interactivity & dynamic behaviour
+Vercel      →   Deployment & hosting
+```
+
+---
+
+## ◼ Getting Started
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/mantisdarling/ultraviolette-website-clone.git
+
+# 2. Enter the project folder
+cd ultraviolette-website-clone
+
+# 3. Open in your browser
+#    Option A — just double-click index.html
+#    Option B — use VS Code Live Server for hot reload
+open index.html
+```
+
+> Or skip all of this → **[Live Demo](https://ultraviolette-website-clone.vercel.app)**
+
+---
+
+## ◼ Project Structure
+
+```
+ultraviolette-website-clone/
+│
+├── index.html          ← Main entry point
+├── Website/            ← All assets (CSS, JS, images)
+├── preview.png         ← README preview image
+└── README.md
+```
+
+---
+
+## ◼ UI Archaeology Series
+
+> *Some call it cloning. I call it UI archaeology — the practice of reverse-engineering exceptional interfaces to understand how they're truly built.*
+
+This project is **Entry 001** of an ongoing series where I pick production websites with standout design and rebuild them from scratch. Each one is a deep-dive into real-world UI techniques, layout patterns, and interaction design.
+
+| # | Project | Tech | Status |
+|---|---|---|---|
+| 001 | ⚡ Ultraviolette Automotive | HTML · CSS · JS | ✅ Complete |
+| 002 | Coming soon... | — | 🔄 In progress |
+
+---
+
+<div align="center">
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0D0D0D&customColorList=0,2,2,5,30&height=120&section=footer&animation=fadeIn" />
+
+Built by [Mantis](https://github.com/mantisdarling) &nbsp;·&nbsp; Part of the UI Archaeology Series
+
+[![GitHub](https://img.shields.io/badge/github-mantisdarling-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/mantisdarling)
+&nbsp;
+[![Views](https://komarev.com/ghpvc/?username=mantisdarling&style=flat-square&color=ffffff&label=repo+views)](https://github.com/mantisdarling/ultraviolette-website-clone)
+
+</div>
