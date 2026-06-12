@@ -1,20 +1,34 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0a0a0a&height=250&section=header&text=Ultraviolette%20Website%20Clone&fontSize=36&fontColor=ffffff&fontAlignY=42&desc=UI%20Archaeology%20Series%20%E2%80%94%20Entry%20001&descAlignY=62&descSize=15&animation=fadeIn&stroke=9B59B6&strokeWidth=2" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=000000&height=250&section=header&text=Ultraviolette%20Website%20Clone&fontSize=36&fontColor=ffffff&fontAlignY=42&desc=UI%20Archaeology%20Series%20%E2%80%94%20Entry%20001&descAlignY=62&descSize=15&animation=fadeIn&stroke=6A0DAD&strokeWidth=3" />
 
-<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=15&duration=3000&pause=1200&color=9B59B6&center=true&vCenter=true&width=560&lines=Reverse-engineered+from+scratch.;No+frameworks.+Just+fundamentals.;Built+to+understand+how+great+UIs+work." alt="typing" />
+<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=15&duration=3000&pause=1200&color=6A0DAD&center=true&vCenter=true&width=560&lines=Reverse-engineered+from+scratch.;No+frameworks.+Just+fundamentals.;Built+to+understand+how+great+UIs+work." alt="typing" />
 
 <br/><br/>
 
-[![Live Demo](https://img.shields.io/badge/▶_LIVE_DEMO-0a0a0a?style=for-the-badge&logoColor=white&labelColor=0a0a0a&color=0a0a0a)](https://ultraviolette-website-clone.vercel.app)
+[![Live Demo](https://img.shields.io/badge/▶_LIVE_DEMO-000000?style=for-the-badge&logoColor=6A0DAD&labelColor=000000&color=000000)](https://ultraviolette-website-clone.vercel.app)
 &nbsp;
-[![HTML](https://img.shields.io/badge/HTML-0a0a0a?style=for-the-badge&logo=html5&logoColor=E34F26)]()
+[![HTML](https://img.shields.io/badge/HTML-000000?style=for-the-badge&logo=html5&logoColor=E34F26)]()
 &nbsp;
-[![CSS](https://img.shields.io/badge/CSS-0a0a0a?style=for-the-badge&logo=css3&logoColor=1572B6)]()
+[![CSS](https://img.shields.io/badge/CSS-000000?style=for-the-badge&logo=css3&logoColor=1572B6)]()
 &nbsp;
-[![JS](https://img.shields.io/badge/JS-0a0a0a?style=for-the-badge&logo=javascript&logoColor=F7DF1E)]()
+[![JS](https://img.shields.io/badge/JavaScript-000000?style=for-the-badge&logo=javascript&logoColor=F7DF1E)]()
 &nbsp;
-[![Status](https://img.shields.io/badge/COMPLETE-0a0a0a?style=for-the-badge&logoColor=9B59B6)]()
+[![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=ffffff)]()
+&nbsp;
+[![Git](https://img.shields.io/badge/Git-000000?style=for-the-badge&logo=git&logoColor=F05032)]()
+
+<br/>
+
+[![Responsive](https://img.shields.io/badge/Responsive-000000?style=for-the-badge&logoColor=6A0DAD)](https://ultraviolette-website-clone.vercel.app)
+&nbsp;
+[![Animations](https://img.shields.io/badge/Animations-000000?style=for-the-badge&logoColor=6A0DAD)]()
+&nbsp;
+[![Vanilla JS](https://img.shields.io/badge/Vanilla_JS-000000?style=for-the-badge&logoColor=6A0DAD)]()
+&nbsp;
+[![No Framework](https://img.shields.io/badge/No_Framework-000000?style=for-the-badge&logoColor=6A0DAD)]()
+&nbsp;
+[![Status](https://img.shields.io/badge/COMPLETE_✅-000000?style=for-the-badge&logoColor=6A0DAD)]()
 
 </div>
 
@@ -23,8 +37,8 @@
 ```
  ██╗   ██╗██╗  ████████╗██████╗  █████╗ ██╗   ██╗██╗ ██████╗ ██╗     ███████╗████████╗████████╗███████╗
  ██║   ██║██║  ╚══██╔══╝██╔══██╗██╔══██╗██║   ██║██║██╔═══██╗██║     ██╔════╝╚══██╔══╝╚══██╔══╝██╔════╝
- ██║   ██║██║     ██║   ██████╔╝███████║██║   ██║██║██║   ██║██║     █████╗     ██║      ██║   █████╗  
- ██║   ██║██║     ██║   ██╔══██╗██╔══██║╚██╗ ██╔╝██║██║   ██║██║     ██╔══╝     ██║      ██║   ██╔══╝  
+ ██║   ██║██║     ██║   ██████╔╝███████║██║   ██║██║██║   ██║██║     █████╗     ██║      ██║   █████╗
+ ██║   ██║██║     ██║   ██╔══██╗██╔══██║╚██╗ ██╔╝██║██║   ██║██║     ██╔══╝     ██║      ██║   ██╔══╝
  ╚██████╔╝███████╗██║   ██║  ██║██║  ██║ ╚████╔╝ ██║╚██████╔╝███████╗███████╗   ██║      ██║   ███████╗
   ╚═════╝ ╚══════╝╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝   ╚═╝      ╚═╝   ╚══════╝
 ```
@@ -67,7 +81,6 @@ The goal wasn't just to make it *look* similar — it was to understand *why* it
 │  🧩 Modular Structure    │  Clean section-based HTML layout     │
 │  ⚡ Zero Dependencies    │  Pure vanilla — no libraries         │
 │  🎨 Premium Aesthetic    │  Ultraviolette's dark visual style   │
-│  🚀 Live on Vercel       │  Deployed & accessible anywhere      │
 └──────────────────────────┴──────────────────────────────────────┘
 ```
 
@@ -76,7 +89,7 @@ The goal wasn't just to make it *look* similar — it was to understand *why* it
 ## ◼ Tech Stack
 
 <div align="center">
-  <img src="https://skillicons.dev/icons?i=html,css,js,vercel&theme=dark" alt="stack" />
+  <img src="https://skillicons.dev/icons?i=html,css,js,vercel,git&theme=dark" alt="stack" />
 </div>
 
 <br/>
@@ -88,6 +101,7 @@ The goal wasn't just to make it *look* similar — it was to understand *why* it
 │  HTML           │  Structure & semantic layout                  │
 │  CSS            │  Styling, animations, responsive design       │
 │  JavaScript     │  Interactivity & dynamic behaviour            │
+│  Git            │  Version control                              │
 │  Vercel         │  Deployment & hosting                         │
 └─────────────────┴───────────────────────────────────────────────┘
 ```
@@ -134,8 +148,8 @@ $ cat ui-archaeology.log
         exceptional production interfaces to understand how
         they are truly built. Not to copy. To learn.
 
-[LOG]   Series started by: mantisdarling
-[LOG]   Mission: rebuild one great UI at a time, from scratch.
+[LOG]   Series started by  :  mantisdarling
+[LOG]   Mission            :  rebuild one great UI at a time, from scratch.
 
 ┌──────┬──────────────────────────────┬──────────────────┬──────────────┐
 │  #   │  Project                     │  Stack           │  Status      │
@@ -157,10 +171,10 @@ $ cat ui-archaeology.log
   built by mantisdarling  ·  ui archaeology series  ·  github.com/mantisdarling
 ```
 
-[![GitHub](https://img.shields.io/badge/mantisdarling-0a0a0a?style=flat-square&logo=github&logoColor=9B59B6)](https://github.com/mantisdarling)
+[![GitHub](https://img.shields.io/badge/mantisdarling-000000?style=flat-square&logo=github&logoColor=6A0DAD)](https://github.com/mantisdarling)
 &nbsp;
-[![Views](https://komarev.com/ghpvc/?username=mantisdarling&style=flat-square&color=9B59B6&label=views)](https://github.com/mantisdarling/ultraviolette-website-clone)
+[![Views](https://komarev.com/ghpvc/?username=mantisdarling&style=flat-square&color=6A0DAD&label=views)](https://github.com/mantisdarling/ultraviolette-website-clone)
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0a0a0a&height=120&section=footer&animation=fadeIn&stroke=9B59B6&strokeWidth=2" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=000000&height=120&section=footer&animation=fadeIn&stroke=6A0DAD&strokeWidth=3" />
 
 </div>
