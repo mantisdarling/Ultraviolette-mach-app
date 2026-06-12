@@ -34,9 +34,7 @@
 
 ## 🐍 Contribution Snake
 
-<p align="center">
-  <img src="https://github.com/mantisdarling/mantisdarling/raw/output/github-contribution-grid-snake.gif" alt="Snake animation">
-</p>
+![snake](https://github.com/mantisdarling/mantisdarling/raw/output/github-contribution-grid-snake.gif)
 
 <!-- SNAKE ANIMATION TOP -->
 <picture>
