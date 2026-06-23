@@ -116,10 +116,22 @@ The goal wasn't just to make it *look* similar — it was to understand *why* it
 
 <div align="center">💀━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━💀</div>
 
-## ◼ Trophies
+## ◼ Trophies & Stats
 
 <div align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=mantisdarling&theme=darkhub&no-frame=true&no-bg=true&margin-w=6&column=7" alt="trophies" />
+
+[![Stars](https://img.shields.io/github/stars/mantisdarling/ultraviolette-website-clone?style=for-the-badge&logo=github&color=7B2CBF&logoColor=ffffff)](https://github.com/mantisdarling/ultraviolette-website-clone/stargazers)
+&nbsp;
+[![Forks](https://img.shields.io/github/forks/mantisdarling/ultraviolette-website-clone?style=for-the-badge&logo=github&color=7B2CBF&logoColor=ffffff)](https://github.com/mantisdarling/ultraviolette-website-clone/network/members)
+&nbsp;
+[![License](https://img.shields.io/github/license/mantisdarling/ultraviolette-website-clone?style=for-the-badge&color=7B2CBF)](https://github.com/mantisdarling/ultraviolette-website-clone/blob/main/LICENSE)
+
+<br/>
+
+<img src="https://github-readme-stats.vercel.app/api?username=mantisdarling&show_icons=true&theme=rose_pine&bg_color=080808&title_color=7B2CBF&text_color=ffffff&icon_color=7B2CBF&border_color=1a0f2e" alt="Mantis's GitHub Stats" />
+&nbsp;
+<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=mantisdarling&layout=compact&theme=rose_pine&bg_color=080808&title_color=7B2CBF&text_color=ffffff&border_color=1a0f2e" alt="Top Languages" />
+
 </div>
 
 <div align="center">💀━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━💀</div>
