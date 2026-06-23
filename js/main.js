@@ -88,30 +88,37 @@ const REDUCED_MOTION   = window.matchMedia ? window.matchMedia('(prefers-reduced
 
 /* ─────────────────────────────────────────────
    AUDIO SYSTEM & SCROLL SPEED GLOBAL VARIABLES
+   
+   These variables manage our native Web Audio synth engine and track
+   scroll velocity to dynamically adjust the synthesizer's pitch.
    ───────────────────────────────────────────── */
-let audioCtx = null;
-let engineOsc1 = null;
-let engineOsc2 = null;
-let engineFilter = null;
-let engineGain = null;
-let engineActive = false;
+let audioCtx = null;      // Global AudioContext (instantiated on user gesture)
+let engineOsc1 = null;    // Main sawtooth oscillator (engine buzz)
+let engineOsc2 = null;    // Sub triangle oscillator (bass rumble)
+let engineFilter = null;  // Lowpass filter for tone shaping
+let engineGain = null;    // Overall volume gain node
+let engineActive = false; // Flag to check if engine is running
 
+// Scroll speed tracking variables
 let lastScrollY = window.scrollY;
 let lastScrollTime = Date.now();
 let targetPitchMultiplier = 1.0;
 let currentPitchMultiplier = 1.0;
 
+// Callback triggered on every scroll event to calculate velocity.
+// We map the speed (pixels per millisecond) to modulate the synth engine's frequency.
 function onScrollSpeedUpdate(sy) {
   if (!engineActive || !engineOsc1 || !engineOsc2 || !engineFilter) return;
 
   const now = Date.now();
-  const dt = Math.max(1, now - lastScrollTime);
+  const dt = Math.max(1, now - lastScrollTime); // Avoid division by zero
   const dy = Math.abs(sy - lastScrollY);
   
   lastScrollY = sy;
   lastScrollTime = now;
 
-  const speed = dy / dt;
+  const speed = dy / dt; // Pixels per millisecond
+  // Cap the pitch multiplier so the engine doesn't sound too high-pitched
   targetPitchMultiplier = 1.0 + Math.min(1.2, speed * 0.25);
 }
 
@@ -198,6 +205,10 @@ function onScrollSpeedUpdate(sy) {
 
 /* ─────────────────────────────────────────────
    UNIFIED PASSIVE SCROLL & RESIZE MANAGER
+   
+   Implements a custom momentum-based scroll (inertial scroll) for devices
+   with fine pointers. It uses linear interpolation (lerping) to smoothly
+   slide the viewport towards the target position.
 ───────────────────────────────────────────── */
 (function initScrollSystems() {
   const prog   = document.getElementById('prog');
@@ -207,9 +218,12 @@ function onScrollSpeedUpdate(sy) {
   const paraImg  = document.getElementById('para-img');
   const paraWrap = paraImg && typeof paraImg.closest === 'function' ? paraImg.closest('.life-img-wrap') : null;
 
-  let targetY = window.scrollY;
-  let currentY = window.scrollY;
-  let isMoving = false;
+  let targetY = window.scrollY;  // Where the user wants to scroll to (instant)
+  let currentY = window.scrollY; // Where the viewport currently is (smoothed)
+  let isMoving = false;          // True when requestAnimationFrame tick loop is active
+  
+  // Ease factor determines scroll inertia. 
+  // 0.08 means the page scrolls 8% of the remaining distance per frame.
   const ease = 0.08;
 
   function runAllScrollUpdates(yVal) {
@@ -770,6 +784,10 @@ document.querySelectorAll('.ctr[data-t]').forEach(el => {
 
 /* ─────────────────────────────────────────────
    WEB AUDIO API SYNTHESIZER & SOUND SYSTEM
+   
+   A pure programmatic synthesizer simulating a high-end electric motorcycle motor.
+   No sound files are loaded; all frequencies, vibrations, and pitches are 
+   generated in real-time using native browser oscillator nodes.
    ───────────────────────────────────────────── */
 function initAudio() {
   if (audioCtx) return;
@@ -777,6 +795,7 @@ function initAudio() {
   audioCtx = new AudioContextClass();
 }
 
+// Short synthesized chime for UI feedback (buttons & swatches)
 function playClickSound() {
   initAudio();
   if (!audioCtx || audioCtx.state === 'suspended') return;
@@ -786,9 +805,9 @@ function playClickSound() {
     osc.connect(gain);
     gain.connect(audioCtx.destination);
 
-    osc.type = 'triangle';
+    osc.type = 'triangle'; // Smooth, friendly tone
     osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.08);
+    osc.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.08); // Fast decay pitch drop
 
     gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
     gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
@@ -798,6 +817,7 @@ function playClickSound() {
   } catch (e) {}
 }
 
+// Starts the electric motorcycle engine sweep and idle drone
 function startEngine() {
   initAudio();
   if (audioCtx.state === 'suspended') {
@@ -808,40 +828,43 @@ function startEngine() {
 
   const now = audioCtx.currentTime;
 
-  // 1. Startup turbine sweep sound
+  // 1. Startup turbine sweep sound: mimics charging capacitors / diagnostics scan
   const sweepOsc = audioCtx.createOscillator();
   const sweepGain = audioCtx.createGain();
   sweepOsc.type = 'sine';
   sweepOsc.frequency.setValueAtTime(60, now);
-  sweepOsc.frequency.exponentialRampToValueAtTime(800, now + 1.2);
+  sweepOsc.frequency.exponentialRampToValueAtTime(800, now + 1.2); // Sweep pitch up
   
   sweepGain.gain.setValueAtTime(0.001, now);
-  sweepGain.gain.linearRampToValueAtTime(0.1, now + 0.6);
-  sweepGain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+  sweepGain.gain.linearRampToValueAtTime(0.1, now + 0.6); // Fade in
+  sweepGain.gain.exponentialRampToValueAtTime(0.001, now + 1.2); // Fade out
 
   sweepOsc.connect(sweepGain);
   sweepGain.connect(audioCtx.destination);
   sweepOsc.start(now);
   sweepOsc.stop(now + 1.2);
 
-  // 2. Idle Engine Drone
+  // 2. Continuous Idle Engine Drone
   engineOsc1 = audioCtx.createOscillator();
   engineOsc2 = audioCtx.createOscillator();
   engineGain = audioCtx.createGain();
   engineFilter = audioCtx.createBiquadFilter();
 
+  // Sawtooth oscillator provides the rough buzz / electric rasp
   engineOsc1.type = 'sawtooth';
   engineOsc1.frequency.setValueAtTime(65, now + 0.8);
 
+  // Triangle oscillator provides the deep low-frequency sub bass
   engineOsc2.type = 'triangle';
   engineOsc2.frequency.setValueAtTime(130, now + 0.8);
 
+  // Lowpass filter filters out high-frequency noise for a warm mechanical hum
   engineFilter.type = 'lowpass';
   engineFilter.frequency.setValueAtTime(200, now + 0.8);
-  engineFilter.Q.setValueAtTime(4, now + 0.8);
+  engineFilter.Q.setValueAtTime(4, now + 0.8); // Resonance spike at filter cutoff
 
   engineGain.gain.setValueAtTime(0.001, now);
-  engineGain.gain.linearRampToValueAtTime(0.04, now + 1.2);
+  engineGain.gain.linearRampToValueAtTime(0.04, now + 1.2); // Smoothly fade in engine sound
 
   engineOsc1.connect(engineFilter);
   engineOsc2.connect(engineFilter);
@@ -851,11 +874,13 @@ function startEngine() {
   engineOsc1.start(now + 0.8);
   engineOsc2.start(now + 0.8);
 
+  // 3. Engine Rumble: Low-Frequency Oscillator (LFO) oscillates the filter frequency
+  // to create a rhythmic, mechanical vibration effect.
   const lfo = audioCtx.createOscillator();
   const lfoGain = audioCtx.createGain();
   lfo.type = 'sine';
-  lfo.frequency.setValueAtTime(3, now + 0.8);
-  lfoGain.gain.setValueAtTime(30, now + 0.8);
+  lfo.frequency.setValueAtTime(3, now + 0.8); // 3 Hz rumble rate
+  lfoGain.gain.setValueAtTime(30, now + 0.8); // Amount of frequency modulation
 
   lfo.connect(lfoGain);
   lfoGain.connect(engineFilter.frequency);
@@ -1087,6 +1112,9 @@ function stopEngine() {
     drawHUDLine(hs);
   }
 
+  // Dynamic SVG line drawing math:
+  // Draws a path from the active hotspot, projects it horizontally outward, 
+  // bends it at a strict 45-degree angle, and runs it straight into the details card.
   function drawHUDLine(hs) {
     const wrap = hs.closest('.schematic-wrap');
     const path = document.getElementById('hud-line');
@@ -1095,19 +1123,27 @@ function stopEngine() {
     const wrapRect = wrap.getBoundingClientRect();
     const hsRect   = hs.getBoundingClientRect();
     
+    // Calculate hotspot center coordinate relative to the wrapper canvas
     const startX = hsRect.left - wrapRect.left + hsRect.width / 2;
     const startY = hsRect.top - wrapRect.top + hsRect.height / 2;
-    const endX   = wrapRect.width - 24;
+    const endX   = wrapRect.width - 24; // Target right edge near HUD details card
 
+    // Bending logic:
+    // targetY is the middle horizontal axis where the HUD details card sits.
+    // dx is the initial straight lead-out before the 45-degree angle starts.
+    // Since it's a 45-degree angle, the horizontal shift (diagonal width) 
+    // must exactly equal the vertical shift (dy).
     const targetY = wrapRect.height / 2;
     const dx = 40;
     const dy = targetY - startY;
-    const diagonalX = startX + dx + Math.abs(dy); // 45-degree angle offset
+    const diagonalX = startX + dx + Math.abs(dy); // 45-degree coordinate offset
     
     let d;
     if (diagonalX < endX - 20) {
+      // Standard path: Lead-out -> 45-degree bend -> run straight to card
       d = `M ${startX} ${startY} L ${startX + dx} ${startY} L ${diagonalX} ${targetY} L ${endX} ${targetY}`;
     } else {
+      // Fallback for tight spaces: simple horizontal line
       d = `M ${startX} ${startY} L ${endX - 30} ${startY} L ${endX} ${startY}`;
     }
     path.setAttribute('d', d);
