@@ -482,6 +482,36 @@
             <div class="spec-c" style="border-left-color:rgba(123,44,191,.6)"><div class="spec-lbl">MAXIMUM TWIST</div><div class="spec-val"><span class="spec-num" id="spec-torque" data-t="100">100</span><span class="spec-unit">NM</span><span class="spec-tag" style="color:rgba(123,44,191,.7)">TORQUE</span></div></div>
             <div class="spec-c" style="border-left-color:rgba(123,44,191,.35)"><div class="spec-lbl">IDC RANGE</div><div class="spec-val"><span class="spec-num" id="spec-range" data-t="323">323</span><span class="spec-unit">KM</span><span class="spec-tag" style="color:rgba(123,44,191,.45)">RANGE</span></div></div>
           </div>
+          
+          <!-- Range & Charge Simulator Widget -->
+          <div class="sim-card">
+            <div class="sim-header">
+              <span class="material-symbols-outlined" style="font-size:16px;color:var(--uv5)">battery_charging_full</span>
+              <span class="sim-title">DYNAMIC RANGE SIMULATOR</span>
+            </div>
+            <div class="sim-body">
+              <div class="sim-modes" role="group" aria-label="Select simulation riding mode">
+                <button type="button" class="sim-mode-btn on" data-mode="glide">GLIDE</button>
+                <button type="button" class="sim-mode-btn" data-mode="combat">COMBAT</button>
+                <button type="button" class="sim-mode-btn" data-mode="ballistic">BALLISTIC</button>
+              </div>
+              <div class="sim-control">
+                <div class="sim-control-lbl">BATTERY CHARGE: <span id="charge-pct">80%</span></div>
+                <input type="range" id="charge-slider" class="sim-slider" min="10" max="100" value="80" aria-label="Simulate battery charge percentage"/>
+              </div>
+              <div class="sim-metrics">
+                <div class="sim-metric">
+                  <div class="sim-metric-val"><span id="sim-est-range">258</span><span class="sim-metric-unit">KM</span></div>
+                  <div class="sim-metric-lbl">EST. RANGE</div>
+                </div>
+                <div class="sim-metric">
+                  <div class="sim-metric-val"><span id="sim-est-charge">0</span><span class="sim-metric-unit">MIN</span></div>
+                  <div class="sim-metric-lbl">FAST CHARGE TO 80%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
           <div class="showcase-btns">
             <a href="https://www.ultraviolette.com/f77" target="_blank" rel="noopener" class="btn-p">EXPLORE F77 <span class="material-symbols-outlined" style="font-size:16px">arrow_forward</span></a>
             <a href="https://www.ultraviolette.com/configure?model=Mach+2&variant=Recon" target="_blank" rel="noopener" class="btn-o">CONFIGURE RECON</a>

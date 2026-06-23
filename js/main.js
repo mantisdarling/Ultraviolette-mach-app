@@ -87,6 +87,35 @@ const HAS_FINE_POINTER = window.matchMedia ? window.matchMedia('(pointer: fine)'
 const REDUCED_MOTION   = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false;
 
 /* ─────────────────────────────────────────────
+   AUDIO SYSTEM & SCROLL SPEED GLOBAL VARIABLES
+   ───────────────────────────────────────────── */
+let audioCtx = null;
+let engineOsc1 = null;
+let engineOsc2 = null;
+let engineFilter = null;
+let engineGain = null;
+let engineActive = false;
+
+let lastScrollY = window.scrollY;
+let lastScrollTime = Date.now();
+let targetPitchMultiplier = 1.0;
+let currentPitchMultiplier = 1.0;
+
+function onScrollSpeedUpdate(sy) {
+  if (!engineActive || !engineOsc1 || !engineOsc2 || !engineFilter) return;
+
+  const now = Date.now();
+  const dt = Math.max(1, now - lastScrollTime);
+  const dy = Math.abs(sy - lastScrollY);
+  
+  lastScrollY = sy;
+  lastScrollTime = now;
+
+  const speed = dy / dt;
+  targetPitchMultiplier = 1.0 + Math.min(1.2, speed * 0.25);
+}
+
+/* ─────────────────────────────────────────────
    MAGNETIC CURSOR
 ───────────────────────────────────────────── */
 (function initCursor() {
@@ -250,6 +279,57 @@ const REDUCED_MOTION   = window.matchMedia ? window.matchMedia('(prefers-reduced
         requestAnimationFrame(tick);
       }
     }, { passive: false });
+
+    // Keyboard navigation scroll support
+    window.addEventListener('keydown', e => {
+      const activeEl = document.activeElement;
+      if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.isContentEditable)) {
+        return;
+      }
+      
+      const maxScroll = document.body.scrollHeight - window.innerHeight;
+      let handled = false;
+      
+      switch (e.key) {
+        case 'ArrowDown':
+          targetY += 100;
+          handled = true;
+          break;
+        case 'ArrowUp':
+          targetY -= 100;
+          handled = true;
+          break;
+        case ' ':
+          e.preventDefault();
+          targetY += window.innerHeight * (e.shiftKey ? -0.85 : 0.85);
+          handled = true;
+          break;
+        case 'PageDown':
+          targetY += window.innerHeight * 0.85;
+          handled = true;
+          break;
+        case 'PageUp':
+          targetY -= window.innerHeight * 0.85;
+          handled = true;
+          break;
+        case 'Home':
+          targetY = 0;
+          handled = true;
+          break;
+        case 'End':
+          targetY = maxScroll;
+          handled = true;
+          break;
+      }
+      
+      if (handled) {
+        targetY = Math.max(0, Math.min(maxScroll, targetY));
+        if (!isMoving) {
+          isMoving = true;
+          requestAnimationFrame(tick);
+        }
+      }
+    });
   }
 
   window.addEventListener('scroll', () => {
@@ -570,13 +650,6 @@ document.querySelectorAll('.ctr[data-t]').forEach(el => {
 /* ─────────────────────────────────────────────
    WEB AUDIO API SYNTHESIZER & SOUND SYSTEM
    ───────────────────────────────────────────── */
-let audioCtx = null;
-let engineOsc1 = null;
-let engineOsc2 = null;
-let engineFilter = null;
-let engineGain = null;
-let engineActive = false;
-
 function initAudio() {
   if (audioCtx) return;
   const AudioContextClass = window.AudioContext || window.webkitAudioContext;
@@ -737,26 +810,6 @@ function stopEngine() {
     });
   });
 })();
-
-// Scroll speed pitch modulator
-let lastScrollY = window.scrollY;
-let lastScrollTime = Date.now();
-let targetPitchMultiplier = 1.0;
-let currentPitchMultiplier = 1.0;
-
-function onScrollSpeedUpdate(sy) {
-  if (!engineActive || !engineOsc1 || !engineOsc2 || !engineFilter) return;
-
-  const now = Date.now();
-  const dt = Math.max(1, now - lastScrollTime);
-  const dy = Math.abs(sy - lastScrollY);
-  
-  lastScrollY = sy;
-  lastScrollTime = now;
-
-  const speed = dy / dt;
-  targetPitchMultiplier = 1.0 + Math.min(1.2, speed * 0.25);
-}
 
 (function updateSoundPitch() {
   if (engineActive && engineOsc1 && engineOsc2 && engineFilter && audioCtx) {
@@ -923,9 +976,19 @@ function onScrollSpeedUpdate(sy) {
     
     const startX = hsRect.left - wrapRect.left + hsRect.width / 2;
     const startY = hsRect.top - wrapRect.top + hsRect.height / 2;
+    const endX   = wrapRect.width - 24;
 
-    const endX = wrapRect.width - 24;
-    const d = `M ${startX} ${startY} L ${endX - 30} ${startY} L ${endX} ${startY}`;
+    const targetY = wrapRect.height / 2;
+    const dx = 40;
+    const dy = targetY - startY;
+    const diagonalX = startX + dx + Math.abs(dy); // 45-degree angle offset
+    
+    let d;
+    if (diagonalX < endX - 20) {
+      d = `M ${startX} ${startY} L ${startX + dx} ${startY} L ${diagonalX} ${targetY} L ${endX} ${targetY}`;
+    } else {
+      d = `M ${startX} ${startY} L ${endX - 30} ${startY} L ${endX} ${startY}`;
+    }
     path.setAttribute('d', d);
   }
 
@@ -942,4 +1005,85 @@ function onScrollSpeedUpdate(sy) {
     const active = document.querySelector('.hotspot.on');
     if (active) drawHUDLine(active);
   }, 1000);
+})();
+
+/* ─────────────────────────────────────────────
+   CONFIGURATOR DYNAMIC RANGE & CHARGE SIMULATOR
+   ───────────────────────────────────────────── */
+(function initRangeSimulator() {
+  const slider = document.getElementById('charge-slider');
+  const pctText = document.getElementById('charge-pct');
+  const rangeText = document.getElementById('sim-est-range');
+  const chargeText = document.getElementById('sim-est-charge');
+  const modeBtns = document.querySelectorAll('.sim-mode-btn');
+  const trimBtns = document.querySelectorAll('.trim-btn');
+
+  if (!slider || !rangeText || !chargeText) return;
+
+  let activeMode = 'glide';
+  let activeTrim = 'recon';
+
+  const baseRanges = {
+    glide: 211,
+    combat: 160,
+    ballistic: 110
+  };
+
+  const reconRanges = {
+    glide: 323,
+    combat: 250,
+    ballistic: 180
+  };
+
+  function updateSimulation() {
+    const charge = parseInt(slider.value, 10);
+    if (pctText) pctText.textContent = charge + '%';
+
+    const ranges = activeTrim === 'recon' ? reconRanges : baseRanges;
+    const estRange = Math.round(ranges[activeMode] * (charge / 100));
+    rangeText.textContent = estRange;
+
+    if (charge >= 80) {
+      chargeText.textContent = "0";
+      const unit = chargeText.nextElementSibling;
+      if (unit) unit.textContent = charge === 100 ? "FULL" : "OPTIMISED";
+    } else {
+      const remainingPercent = 80 - charge;
+      const rate = activeTrim === 'recon' ? 1.0 : 0.75;
+      const chargeTime = Math.round(remainingPercent * rate);
+      chargeText.textContent = chargeTime;
+      const unit = chargeText.nextElementSibling;
+      if (unit) unit.textContent = "MIN";
+    }
+  }
+
+  function detectActiveTrim() {
+    const activeTrimBtn = document.querySelector('.trim-btn.on');
+    if (activeTrimBtn) {
+      activeTrim = activeTrimBtn.dataset.trim;
+    }
+    updateSimulation();
+  }
+
+  slider.addEventListener('input', updateSimulation);
+
+  modeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      modeBtns.forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      activeMode = btn.dataset.mode;
+      updateSimulation();
+      if (typeof playClickSound === 'function') playClickSound();
+    });
+  });
+
+  trimBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeTrim = btn.dataset.trim;
+      updateSimulation();
+    });
+  });
+
+  setInterval(detectActiveTrim, 800);
+  updateSimulation();
 })();
