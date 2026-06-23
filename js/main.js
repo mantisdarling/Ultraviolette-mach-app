@@ -955,6 +955,22 @@ function stopEngine() {
       }
     });
   });
+
+  // Automatically suspend audio context when switching tabs to improve background UX,
+  // and resume if the engine drone was active when the user returns.
+  document.addEventListener('visibilitychange', () => {
+    if (audioCtx) {
+      if (document.hidden) {
+        if (audioCtx.state === 'running') {
+          audioCtx.suspend();
+        }
+      } else {
+        if (engineActive && audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+      }
+    }
+  });
 })();
 
 (function updateSoundPitch() {
