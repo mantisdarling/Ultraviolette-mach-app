@@ -102,15 +102,21 @@ const REDUCED_MOTION   = window.matchMedia ? window.matchMedia('(prefers-reduced
   document.addEventListener('mousemove', e => {
     mx = e.clientX; 
     my = e.clientY;
-    cur.style.left = mx + 'px';
-    cur.style.top  = my + 'px';
+    const c = document.getElementById('cur');
+    if (c) {
+      c.style.left = mx + 'px';
+      c.style.top  = my + 'px';
+    }
   });
 
   (function animRing() {
     rx += (mx - rx) * 0.1;
     ry += (my - ry) * 0.1;
-    curR.style.left = rx + 'px';
-    curR.style.top  = ry + 'px';
+    const cr = document.getElementById('cur-r');
+    if (cr) {
+      cr.style.left = rx + 'px';
+      cr.style.top  = ry + 'px';
+    }
     requestAnimationFrame(animRing);
   })();
 
@@ -118,18 +124,26 @@ const REDUCED_MOTION   = window.matchMedia ? window.matchMedia('(prefers-reduced
   document.querySelectorAll('a, button, .sw-dot, .mode-c, .gal-c, .soc-btn, .sdot, .hstat')
     .forEach(el => {
       el.addEventListener('mouseenter', () => {
-        cur.style.width   = '20px'; 
-        cur.style.height   = '20px';
-        curR.style.width  = '60px'; 
-        curR.style.height  = '60px';
-        curR.style.borderColor = 'rgba(123,44,191,.75)';
+        const c = document.getElementById('cur');
+        const cr = document.getElementById('cur-r');
+        if (c && cr) {
+          c.style.width   = '20px'; 
+          c.style.height   = '20px';
+          cr.style.width  = '60px'; 
+          cr.style.height  = '60px';
+          cr.style.borderColor = 'rgba(123,44,191,.75)';
+        }
       });
       el.addEventListener('mouseleave', () => {
-        cur.style.width   = '10px'; 
-        cur.style.height   = '10px';
-        curR.style.width  = '36px'; 
-        curR.style.height  = '36px';
-        curR.style.borderColor = 'rgba(123,44,191,.45)';
+        const c = document.getElementById('cur');
+        const cr = document.getElementById('cur-r');
+        if (c && cr) {
+          c.style.width   = '10px'; 
+          c.style.height   = '10px';
+          cr.style.width  = '36px'; 
+          cr.style.height  = '36px';
+          cr.style.borderColor = 'rgba(123,44,191,.45)';
+        }
       });
     });
 })();

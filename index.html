@@ -107,53 +107,8 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap"/>
 </noscript>
 
-}
-
-.js .stagger>* {
-  opacity: 0;
-  transform: translateY(36px);
-  transition: opacity .7s var(--ease), transform .7s var(--ease);
-}
-
-.js .stagger.on>*:nth-child(1) { opacity: 1; transform: none; transition-delay: .04s; }
-.js .stagger.on>*:nth-child(2) { opacity: 1; transform: none; transition-delay: .14s; }
-.js .stagger.on>*:nth-child(3) { opacity: 1; transform: none; transition-delay: .24s; }
-.js .stagger.on>*:nth-child(4) { opacity: 1; transform: none; transition-delay: .34s; }
-.js .stagger.on>*:nth-child(5) { opacity: 1; transform: none; transition-delay: .44s; }
-
-.js .clip-r {
-  clip-path: inset(0 100% 0 0);
-  transition: clip-path 1.1s var(--ease);
-}
-
-.js .clip-r.on {
-  clip-path: inset(0 0% 0 0);
-}
-
-.ctr {
-  display: inline;
-}
-
-/* Skip Nav Link */
-.skip-link {
-  position: absolute;
-  top: -80px;
-  left: 20px;
-  background: var(--uv);
-  color: #fff;
-  padding: 12px 24px;
-  z-index: 99999;
-  font-family: "JetBrains Mono", monospace;
-  font-size: 12px;
-  text-decoration: none;
-  letter-spacing: .1em;
-  transition: top .3s;
-}
-
-.skip-link:focus {
-  top: 20px;
-}
-</style>
+<!-- Critical Stylesheet -->
+<link rel="stylesheet" href="css/critical.css"/>
 
 <!-- Main Stylesheet -->
 <link rel="stylesheet" href="css/main.css"/>
