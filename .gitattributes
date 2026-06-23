@@ -1,0 +1,11 @@
+# Handle line endings automatically for files detected as text
+# and leave all others alone.
+* text=auto
+
+# Denotes all files that should have LF line endings on checkout.
+*.js text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.webmanifest text eol=lf

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ultraviolette-website-clone.vercel.app/sitemap.xml
