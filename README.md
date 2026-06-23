@@ -8,40 +8,40 @@
 
 [![Live Demo](https://img.shields.io/badge/▶_LIVE_DEMO-000000?style=for-the-badge&logoColor=6A0DAD&labelColor=000000&color=000000)](https://ultraviolette-website-clone.vercel.app)
 &nbsp;
-[![HTML](https://img.shields.io/badge/HTML-000000?style=for-the-badge&logo=html5&logoColor=E34F26)]()
+![HTML](https://img.shields.io/badge/HTML-000000?style=for-the-badge&logo=html5&logoColor=E34F26)
 &nbsp;
-[![CSS](https://img.shields.io/badge/CSS-000000?style=for-the-badge&logo=css3&logoColor=1572B6)]()
+![CSS](https://img.shields.io/badge/CSS-000000?style=for-the-badge&logo=css3&logoColor=1572B6)
 &nbsp;
-[![JS](https://img.shields.io/badge/JavaScript-000000?style=for-the-badge&logo=javascript&logoColor=F7DF1E)]()
+![JS](https://img.shields.io/badge/JavaScript-000000?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
 &nbsp;
-[![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=ffffff)]()
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=ffffff)
 &nbsp;
-[![Git](https://img.shields.io/badge/Git-000000?style=for-the-badge&logo=git&logoColor=F05032)]()
+![Git](https://img.shields.io/badge/Git-000000?style=for-the-badge&logo=git&logoColor=F05032)
 
 <br/>
 
 [![Responsive](https://img.shields.io/badge/Responsive-000000?style=for-the-badge&logoColor=6A0DAD)](https://ultraviolette-website-clone.vercel.app)
 &nbsp;
-[![Animations](https://img.shields.io/badge/Animations-000000?style=for-the-badge&logoColor=6A0DAD)]()
+![Animations](https://img.shields.io/badge/Animations-000000?style=for-the-badge&logoColor=6A0DAD)
 &nbsp;
-[![Vanilla JS](https://img.shields.io/badge/Vanilla_JS-000000?style=for-the-badge&logoColor=6A0DAD)]()
+![Vanilla JS](https://img.shields.io/badge/Vanilla_JS-000000?style=for-the-badge&logoColor=6A0DAD)
 &nbsp;
-[![No Framework](https://img.shields.io/badge/No_Framework-000000?style=for-the-badge&logoColor=6A0DAD)]()
+![No Framework](https://img.shields.io/badge/No_Framework-000000?style=for-the-badge&logoColor=6A0DAD)
 &nbsp;
-[![Status](https://img.shields.io/badge/COMPLETE_✅-000000?style=for-the-badge&logoColor=6A0DAD)]()
+![Status](https://img.shields.io/badge/COMPLETE_✅-000000?style=for-the-badge&logoColor=6A0DAD)
 
 <br/><br/>
 
 ## 🐍 Contribution Snake
 
-![snake](https://github.com/mantisdarling/mantisdarling/raw/output/github-contribution-grid-snake.gif)    
+![snake](https://github.com/mantisdarling/ultraviolette-website-clone/raw/output/github-contribution-grid-snake.gif)    
 [![.github/workflows/snake.yml](https://github.com/mantisdarling/ultraviolette-website-clone/actions/workflows/snake.yml/badge.svg)](https://github.com/mantisdarling/ultraviolette-website-clone/actions/workflows/snake.yml)
 
 <!-- SNAKE ANIMATION TOP -->
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/mantisdarling/mantisdarling/output/github-contribution-grid-snake-dark.svg" />
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/mantisdarling/mantisdarling/output/github-contribution-grid-snake.svg" />
-  <img alt="github-snake" src="https://raw.githubusercontent.com/mantisdarling/mantisdarling/output/github-contribution-grid-snake-dark.svg" />
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/mantisdarling/ultraviolette-website-clone/output/github-contribution-grid-snake-dark.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/mantisdarling/ultraviolette-website-clone/output/github-contribution-grid-snake.svg" />
+  <img alt="github-snake" src="https://raw.githubusercontent.com/mantisdarling/ultraviolette-website-clone/output/github-contribution-grid-snake-dark.svg" />
 </picture>
 
 </div>
@@ -63,15 +63,15 @@
 <picture>
   <source
     media="(prefers-color-scheme: dark)"
-    srcset="https://raw.githubusercontent.com/platane/snk/output/github-contribution-grid-snake-dark.svg"
+    srcset="https://raw.githubusercontent.com/mantisdarling/ultraviolette-website-clone/output/github-contribution-grid-snake-dark.svg"
   />
   <source
     media="(prefers-color-scheme: light)"
-    srcset="https://raw.githubusercontent.com/platane/snk/output/github-contribution-grid-snake.svg"
+    srcset="https://raw.githubusercontent.com/mantisdarling/ultraviolette-website-clone/output/github-contribution-grid-snake.svg"
   />
   <img
     alt="github contribution grid snake animation"
-    src="https://raw.githubusercontent.com/platane/snk/output/github-contribution-grid-snake.svg"
+    src="https://raw.githubusercontent.com/mantisdarling/ultraviolette-website-clone/output/github-contribution-grid-snake.svg"
   />
 </picture>
 
@@ -108,7 +108,11 @@ The goal wasn't just to make it *look* similar — it was to understand *why* it
 ├──────────────────────────┬──────────────────────────────────────┤
 │  📱 Responsive Design    │  Fluid across all screen sizes       │
 │  🎞️  Smooth Animations   │  Scroll-triggered transitions        │
-│  🧩 Modular Structure    │  Clean section-based HTML layout     │
+│  🏎️  TFT Cluster Dashboard│  Interactive Speedometer Mockup      │
+│  🔋 Range Simulator      │  Dynamic state-of-charge estimator   │
+│  🛠️  Chassis Hotspot HUD │  Specs hotspots with HUD indicators  │
+│  🎵 Web Audio Engine     │  Synth engine drone & scroll throttle│
+│  🚀 PWA Caching Support  │  Offline Service Worker functionality│
 │  ⚡ Zero Dependencies    │  Pure vanilla — no libraries         │
 │  🎨 Premium Aesthetic    │  Ultraviolette's dark visual style   │
 └──────────────────────────┴──────────────────────────────────────┘
@@ -154,8 +158,6 @@ The goal wasn't just to make it *look* similar — it was to understand *why* it
 
 <div align="center">💀━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━💀</div>
 
-![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](https://myoctocat.com/assets/images/base-octocat.svg)
-
 ## ◼ Getting Started
 
 ```bash
@@ -179,10 +181,20 @@ open index.html
 ```
 ultraviolette-website-clone/
 │
-├── index.html          ←  Entry point
-├── Website/            ←  All assets (CSS, JS, images)
-├── preview.png         ←  README preview
-└── README.md           ←  You are here
+├── index.html            ←  Primary HTML entry point
+├── css/                  ←  Stylesheets
+│   ├── critical.css      ←  Inline above-the-fold styles
+│   └── main.css          ←  Cinematic aesthetic styles
+├── js/                   ←  Logic & interactivity script modules
+│   ├── main.js           ←  Core scroll, audio, hotspot, & UI logic
+│   └── webgl-nebula.js   ←  WebGL noise-shaping ripple clouds
+├── assets/               ←  Optimized WebP visuals & app icons
+│   ├── images/           ←  High-res bike liveries & chapters WebPs
+│   └── icons/            ←  PWA launcher icon variants
+├── sw.js                 ←  Offline caching Service Worker PWA support
+├── site.webmanifest      ←  PWA app manifest
+├── preview.png           ←  Project screenshot preview
+└── README.md             ←  You are here
 ```
 
 <div align="center">💀━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━💀</div>
@@ -212,9 +224,9 @@ $ cat ui-archaeology.log
 <!-- SNAKE ANIMATION BOTTOM -->
 <div align="center">
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/mantisdarling/mantisdarling/output/github-contribution-grid-snake-dark.svg" />
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/mantisdarling/mantisdarling/output/github-contribution-grid-snake.svg" />
-  <img alt="github-snake" src="https://raw.githubusercontent.com/mantisdarling/mantisdarling/output/github-contribution-grid-snake-dark.svg" />
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/mantisdarling/ultraviolette-website-clone/output/github-contribution-grid-snake-dark.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/mantisdarling/ultraviolette-website-clone/output/github-contribution-grid-snake.svg" />
+  <img alt="github-snake" src="https://raw.githubusercontent.com/mantisdarling/ultraviolette-website-clone/output/github-contribution-grid-snake-dark.svg" />
 </picture>
 </div>
 

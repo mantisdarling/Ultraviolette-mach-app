@@ -1,0 +1,4 @@
+edge-profile-debug/
+.gemini/
+.agents/
+*.log
