@@ -499,23 +499,144 @@ document.querySelectorAll('.ctr[data-t]').forEach(el => {
 ───────────────────────────────────────────── */
 (function initRidingModes() {
   const modes = document.querySelectorAll('.mode-c');
+  const tftScreen = document.getElementById('tft-screen');
+  const tftSpeed = document.getElementById('tft-speed');
+  const tftModeBanner = document.getElementById('tft-mode-banner');
+  const tftRange = document.getElementById('tft-range');
+  const tftLoad = document.getElementById('tft-load');
+  const tftTemp = document.getElementById('tft-temp');
+  const tftBms = document.getElementById('tft-bms');
+  const tftAlert = document.getElementById('tft-alert');
+  const tftProgressFill = document.getElementById('tft-progress-fill');
+  const tftRingFill = document.getElementById('tft-ring-fill');
+  const tftTime = document.getElementById('tft-time');
+
+  if (!modes.length) return;
+
+  const tftData = {
+    glide: {
+      speed: 80,
+      banner: "GLIDE MODE // ECO",
+      range: "323 KM",
+      load: "25%",
+      temp: "38°C",
+      bms: "OPTIMAL",
+      alert: "TELEMETRY SECURE // GPS LOCK",
+      dashOffset: 198,
+      theme: "theme-glide"
+    },
+    combat: {
+      speed: 120,
+      banner: "COMBAT MODE // SPORT",
+      range: "250 KM",
+      load: "65%",
+      temp: "42°C",
+      bms: "OPTIMAL",
+      alert: "PERFORMANCE MAP // ENGAGED",
+      dashOffset: 92,
+      theme: "theme-combat"
+    },
+    ballistic: {
+      speed: 155,
+      banner: "BALLISTIC MODE // ARMED",
+      range: "180 KM",
+      load: "100%",
+      temp: "46°C",
+      bms: "WARM // AIR_COOLING",
+      alert: "BALLISTIC THRUST // ARMED",
+      dashOffset: 0,
+      theme: "theme-ballistic"
+    },
+    ballistic_plus: {
+      speed: 162,
+      banner: "BALLISTIC+ // UNRESTRICTED",
+      range: "150 KM",
+      load: "120%",
+      temp: "51°C",
+      bms: "ALERT // SYS_OVERRIDE",
+      alert: "WARNING // POWERTRAIN UNLIMITED",
+      dashOffset: 0,
+      theme: "theme-ballistic-plus"
+    }
+  };
+
+  function animateTFTNumbers(targetNum) {
+    if (!tftSpeed) return;
+    const startNum = parseInt(tftSpeed.textContent, 10) || 0;
+    if (startNum === targetNum) return;
+    
+    const dur = 800;
+    const startTime = performance.now();
+
+    (function tickNum(now) {
+      const p = Math.min((now - startTime) / dur, 1);
+      const ease = p * (2 - p);
+      tftSpeed.textContent = Math.round(startNum + ease * (targetNum - startNum));
+      if (p < 1) requestAnimationFrame(tickNum);
+      else tftSpeed.textContent = targetNum;
+    })(performance.now());
+  }
+
+  function updateTFT(mode) {
+    const data = tftData[mode];
+    if (!data || !tftScreen) return;
+
+    tftScreen.className = "tft-screen " + data.theme;
+
+    animateTFTNumbers(data.speed);
+    if (tftModeBanner) tftModeBanner.textContent = data.banner;
+    if (tftRange) tftRange.textContent = data.range;
+    if (tftLoad) tftLoad.textContent = data.load;
+    if (tftTemp) tftTemp.textContent = data.temp;
+    if (tftBms) {
+      tftBms.textContent = data.bms;
+      tftBms.style.color = mode === 'ballistic_plus' ? '#E74C3C' : (mode === 'ballistic' ? '#F1C40F' : '#2ECC71');
+    }
+    if (tftAlert) {
+      tftAlert.textContent = data.alert;
+      tftAlert.style.color = mode === 'ballistic_plus' ? '#E74C3C' : '';
+    }
+
+    if (tftProgressFill) tftProgressFill.style.width = data.load;
+    if (tftRingFill) tftRingFill.style.strokeDashoffset = data.dashOffset;
+
+    if (typeof playClickSound === 'function') playClickSound();
+  }
+
+  const activate = (c) => {
+    modes.forEach(x => {
+      x.classList.remove('on');
+      x.setAttribute('aria-pressed', 'false');
+    });
+    c.classList.add('on');
+    c.setAttribute('aria-pressed', 'true');
+    updateTFT(c.dataset.mode);
+  };
+
   modes.forEach(c => {
-    const activate = () => {
-      modes.forEach(x => {
-        x.classList.remove('on');
-        x.setAttribute('aria-pressed', 'false');
-      });
-      c.classList.add('on');
-      c.setAttribute('aria-pressed', 'true');
-    };
-    c.addEventListener('click',   activate);
+    c.addEventListener('click', () => activate(c));
     c.addEventListener('keydown', e => { 
       if (e.key === 'Enter' || e.key === ' ') { 
         e.preventDefault(); 
-        activate(); 
+        activate(c); 
       } 
     });
   });
+
+  function updateTFTClock() {
+    if (!tftTime) return;
+    const now = new Date();
+    let hrs = now.getHours();
+    let mins = now.getMinutes();
+    const ampm = hrs >= 12 ? 'PM' : 'AM';
+    hrs = hrs % 12;
+    hrs = hrs ? hrs : 12;
+    mins = mins < 10 ? '0' + mins : mins;
+    hrs = hrs < 10 ? '0' + hrs : hrs;
+    tftTime.textContent = `${hrs}:${mins} ${ampm}`;
+  }
+  setInterval(updateTFTClock, 1000);
+  updateTFTClock();
 })();
 
 /* ─────────────────────────────────────────────

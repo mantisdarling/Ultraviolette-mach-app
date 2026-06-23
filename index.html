@@ -533,31 +533,80 @@
         <span class="label label-uv reveal" style="display:block;margin-bottom:14px">RIDING INTELLIGENCE</span>
         <div class="sw reveal" style="transition-delay:.1s;display:block;overflow:hidden"><span class="sw-inner" style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(38px,6vw,80px);color:#fff;letter-spacing:-.04em;display:block">FOUR RIDING MODES</span></div>
       </div>
-      <div class="modes-g stagger" role="group" aria-label="Riding modes">
-        <div class="mode-c on" role="button" tabindex="0" aria-pressed="true">
-          <div class="mode-num">MODE_01</div>
-          <div class="mode-name" style="font-size:clamp(28px,4vw,40px)">GLIDE</div>
-          <p class="mode-desc">Efficiency-first mode. Smooth, restrained power delivery with maximum energy recuperation. Best for daily commutes and long-distance runs.</p>
-          <span class="mode-tag">MAX RANGE PRIORITY</span>
+      
+      <div class="modes-layout-g">
+        <!-- Vertical Mode Buttons list -->
+        <div class="modes-list stagger" role="group" aria-label="Select riding mode">
+          <div class="mode-c on" role="button" tabindex="0" aria-pressed="true" data-mode="glide">
+            <div class="mode-num">MODE_01</div>
+            <div class="mode-name" style="font-size:clamp(24px,3vw,32px)">GLIDE</div>
+            <p class="mode-desc">Efficiency-first mode. Smooth, restrained power delivery with maximum energy recuperation.</p>
+            <span class="mode-tag">MAX RANGE PRIORITY</span>
+          </div>
+          <div class="mode-c" role="button" tabindex="0" aria-pressed="false" data-mode="combat">
+            <div class="mode-num">MODE_02</div>
+            <div class="mode-name" style="font-size:clamp(24px,3vw,32px)">COMBAT</div>
+            <p class="mode-desc">Balanced performance and range. Elevated throttle response with sharper handling dynamics.</p>
+            <span class="mode-tag">BALANCED PERFORMANCE</span>
+          </div>
+          <div class="mode-c" role="button" tabindex="0" aria-pressed="false" data-mode="ballistic">
+            <div class="mode-num">MODE_03</div>
+            <div class="mode-name" style="font-size:clamp(24px,3vw,32px)">BALLISTIC</div>
+            <p class="mode-desc">Full power unleashed. Instant maximum torque. Experience 0–60 km/h in 2.8 seconds.</p>
+            <span class="mode-tag">MAX ATTACK MODE</span>
+          </div>
+          <div class="mode-c" role="button" tabindex="0" aria-pressed="false" style="border-color:rgba(123,44,191,.4);position:relative" data-mode="ballistic_plus">
+            <div style="position:absolute;top:14px;right:14px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;color:var(--uv);border:1px solid rgba(123,44,191,.35);padding:3px 8px">OTA UPDATE</div>
+            <div class="mode-num">MODE_04</div>
+            <div class="mode-name" style="font-size:clamp(24px,3vw,32px);background:linear-gradient(135deg,#fff,#deb7ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">BALLISTIC+</div>
+            <p class="mode-desc">Unrestricted frontier. Max firmware maps, full telemetry access, zero software governors.</p>
+            <span class="mode-tag" style="color:var(--uv2)">OTA GEN3 POWERTRAIN</span>
+          </div>
         </div>
-        <div class="mode-c" role="button" tabindex="0" aria-pressed="false">
-          <div class="mode-num">MODE_02</div>
-          <div class="mode-name" style="font-size:clamp(28px,4vw,40px)">COMBAT</div>
-          <p class="mode-desc">Balanced performance and range. Elevated throttle response with sharper handling dynamics for spirited, engaging riding.</p>
-          <span class="mode-tag">BALANCED PERFORMANCE</span>
-        </div>
-        <div class="mode-c" role="button" tabindex="0" aria-pressed="false">
-          <div class="mode-num">MODE_03</div>
-          <div class="mode-name" style="font-size:clamp(28px,4vw,40px)">BALLISTIC</div>
-          <p class="mode-desc">Full power unleashed. Instant maximum torque, razor-sharp throttle. Experience 0–60 km/h in 2.8 seconds. No civilian limits.</p>
-          <span class="mode-tag">MAX ATTACK MODE</span>
-        </div>
-        <div class="mode-c" role="button" tabindex="0" aria-pressed="false" style="border-color:rgba(123,44,191,.4);position:relative">
-          <div style="position:absolute;top:14px;right:14px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;color:var(--uv);border:1px solid rgba(123,44,191,.35);padding:3px 8px">OTA UPDATE</div>
-          <div class="mode-num">MODE_04</div>
-          <div class="mode-name" style="font-size:clamp(28px,4vw,40px);background:linear-gradient(135deg,#fff,#deb7ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">BALLISTIC+</div>
-          <p class="mode-desc">The unrestricted frontier. Delivered via Gen3 Powertrain OTA update — maximum firmware maps, full telemetry access, zero software governors.</p>
-          <span class="mode-tag" style="color:var(--uv2)">OTA GEN3 POWERTRAIN</span>
+        
+        <!-- Interactive TFT Mockup instrument cluster -->
+        <div class="tft-card-wrap reveal-right">
+          <div class="tft-screen theme-glide" id="tft-screen">
+            <div class="tft-header-bar">
+              <span class="tft-header-telemetry">SYS_ACTIVE // VIOLETTE_OS_v3.2</span>
+              <span class="tft-header-time" id="tft-time">04:20 AM</span>
+            </div>
+            
+            <div class="tft-main-content">
+              <!-- Radial speedometer and arc -->
+              <div class="tft-dial-wrap">
+                <svg class="tft-svg-ring" viewBox="0 0 100 100" aria-hidden="true">
+                  <circle class="tft-ring-bg" cx="50" cy="50" r="42"></circle>
+                  <circle class="tft-ring-fill" id="tft-ring-fill" cx="50" cy="50" r="42" stroke-dasharray="264" stroke-dashoffset="198"></circle>
+                </svg>
+                <div class="tft-speed-display">
+                  <div class="tft-speed-num" id="tft-speed">80</div>
+                  <div class="tft-speed-unit">KM/H</div>
+                </div>
+              </div>
+              
+              <!-- Core stats column -->
+              <div class="tft-stats-panel">
+                <div class="tft-mode-banner" id="tft-mode-banner">GLIDE MODE // ECO</div>
+                
+                <div class="tft-telemetry-metrics">
+                  <div class="tft-met"><span class="tft-met-lbl">EST RANGE</span><span class="tft-met-val" id="tft-range">323 KM</span></div>
+                  <div class="tft-met"><span class="tft-met-lbl">LOAD CAP</span><span class="tft-met-val" id="tft-load">25%</span></div>
+                  <div class="tft-met"><span class="tft-met-lbl">CELL TEMP</span><span class="tft-met-val" id="tft-temp">38°C</span></div>
+                </div>
+                
+                <div class="tft-progress-wrap">
+                  <div class="tft-progress-lbl">POWERTRAIN PERFORMANCE LOAD</div>
+                  <div class="tft-progress-bar"><div class="tft-progress-fill" id="tft-progress-fill" style="width: 25%;"></div></div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="tft-footer-bar">
+              <div class="tft-foot-stat">BMS STATE: <span style="color:#2ECC71" id="tft-bms">OPTIMAL</span></div>
+              <div class="tft-foot-alert" id="tft-alert">TELEMETRY SECURE // GPS LOCK</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
