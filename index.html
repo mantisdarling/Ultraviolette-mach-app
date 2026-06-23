@@ -115,6 +115,9 @@
 </head>
 <body>
 
+<!-- Startup diagnostic sweep overlay -->
+<div id="ignition-sweep" class="ignition-sweep" aria-hidden="true"></div>
+
 <!-- Skip Navigation Link for accessibility -->
 <a href="#main-content" class="skip-link">Skip to main content</a>
 
@@ -211,6 +214,10 @@
       </h1>
       <p class="hero-sub">Aviation-inspired engineering meets ballistic performance. The F77 — India's most advanced electric motorcycle — built to dominate every road and track.</p>
       <div class="hero-btns">
+        <button type="button" class="btn-p btn-ignite" id="btn-ignite" aria-live="polite">
+          <span class="material-symbols-outlined btn-ignite-icon" style="font-size:18px">power_settings_new</span>
+          <span class="btn-ignite-txt">START ENGINE</span>
+        </button>
         <a href="https://www.ultraviolette.com/f77" target="_blank" rel="noopener noreferrer" class="btn-p">DISCOVER F77 <span class="material-symbols-outlined" style="font-size:18px">arrow_forward</span></a>
         <a href="https://www.youtube.com/@UltravioletteEV" target="_blank" rel="noopener noreferrer" class="btn-g">WATCH FILM</a>
       </div>
@@ -358,34 +365,122 @@
     </div>
   </section>
 
+  <!-- Interactive Tech Specs & Chassis Explorer -->
+  <section id="specs-explorer">
+    <div class="con">
+      <div class="reveal" style="margin-bottom:48px">
+        <span class="label label-uv" style="display:block;margin-bottom:12px">INTERACTIVE ANATOMY</span>
+        <h2 style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(32px,5vw,72px);line-height:1;letter-spacing:-.04em;color:#fff">
+          CHASSIS &amp; ENERGY CELL
+        </h2>
+      </div>
+      
+      <div class="specs-explorer-g">
+        <!-- Interactive schematic canvas and hotspot wrap -->
+        <div class="schematic-wrap reveal-left">
+          <picture>
+            <source srcset="assets/images/ss05-mobile.webp 640w, assets/images/ss05-tablet.webp 1024w, assets/images/ss05-desktop.webp 1920w" sizes="(max-width: 1024px) 100vw, 800px" type="image/webp">
+            <img src="assets/images/ss05-desktop.webp" alt="F77 Chassis Blueprint" class="chassis-img" width="800" height="480" loading="lazy" decoding="async"/>
+          </picture>
+          <div class="schematic-overlay"></div>
+          
+          <!-- Hotspots -->
+          <button type="button" class="hotspot on" style="top: 55%; left: 45%;" data-idx="0" aria-label="SRB10 Battery Cell System">
+            <span class="hotspot-pulse"></span>
+            <span class="hotspot-core">1</span>
+          </button>
+          <button type="button" class="hotspot" style="top: 65%; left: 35%;" data-idx="1" aria-label="30 kW PMSM Motor">
+            <span class="hotspot-pulse"></span>
+            <span class="hotspot-core">2</span>
+          </button>
+          <button type="button" class="hotspot" style="top: 40%; left: 52%;" data-idx="2" aria-label="Aero Trellis Frame">
+            <span class="hotspot-pulse"></span>
+            <span class="hotspot-core">3</span>
+          </button>
+          <button type="button" class="hotspot" style="top: 22%; left: 60%;" data-idx="3" aria-label="Violette AI Console">
+            <span class="hotspot-pulse"></span>
+            <span class="hotspot-core">4</span>
+          </button>
+          <button type="button" class="hotspot" style="top: 75%; left: 18%;" data-idx="4" aria-label="10-Level Regenerative Braking">
+            <span class="hotspot-pulse"></span>
+            <span class="hotspot-core">5</span>
+          </button>
+          
+          <!-- SVG connector lines -->
+          <svg class="hud-svg" aria-hidden="true" width="100%" height="100%" style="position:absolute;inset:0;pointer-events:none;z-index:2">
+            <path id="hud-line" d="" stroke="rgba(168,85,247,0.7)" stroke-width="2" fill="none" stroke-dasharray="8,4"></path>
+          </svg>
+        </div>
+        
+        <!-- Interactive HUD card -->
+        <div class="hud-card reveal-right" id="hud-card">
+          <div class="hud-header">
+            <div class="hud-tag">COMPONENT // 01</div>
+            <h3 class="hud-title" id="hud-title">SRB10 ENERGY CELL</h3>
+          </div>
+          <div class="hud-body">
+            <p class="hud-desc" id="hud-desc">
+              10.3 kWh aviation-grade lithium-ion pack. Engineered with five structural layers of safety, thermal protection, and active IP67 waterproofing.
+            </p>
+            <div class="hud-specs" id="hud-specs">
+              <div class="hud-spec-row"><span class="h-lbl">CAPACITY</span><span class="h-val">10.3 KWH</span></div>
+              <div class="hud-spec-row"><span class="h-lbl">COOLING</span><span class="h-val">THERMAL SYNERGY</span></div>
+              <div class="hud-spec-row"><span class="h-lbl">CERTIFICATION</span><span class="h-val">AIS 156 PHASE 2</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- F77 Showcase Selector Section -->
   <section id="showcase">
     <div class="con">
       <div class="showcase-g">
         <div class="reveal-left">
           <span class="label" style="display:block;margin-bottom:14px">F77 MACH 2 // KINETIC</span>
-          <h2 style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(48px,7vw,108px);line-height:.85;letter-spacing:-.04em;color:#fff;margin-bottom:14px">MACH 2<br/><span style="color:var(--uv)">RECON</span></h2>
-          <p style="font-size:14px;color:var(--uv);font-family:'JetBrains Mono',monospace;letter-spacing:.18em;margin-bottom:6px">10.3 KWH · 323 KM · 30 KW · 100 NM</p>
-          <p style="font-size:13px;color:var(--dim);font-family:'JetBrains Mono',monospace;letter-spacing:.1em;margin-bottom:18px">BASE: 7.1 KWH · 211 KM · 27 KW · 90 NM</p>
-          <p style="font-size:16px;color:var(--mid);line-height:1.7;max-width:460px;border-left:3px solid rgba(123,44,191,.35);padding-left:18px;margin-bottom:32px">PMSM motor, switchable dual-channel ABS, traction control, 10-level regen braking — 5" TFT display with Bluetooth, Wi-Fi, LTE &amp; GPS.</p>
+          <h2 style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(48px,7vw,108px);line-height:.85;letter-spacing:-.04em;color:#fff;margin-bottom:14px">MACH 2</h2>
           
-          <div class="col-lbl">SELECT COLOUR — <span id="clbl">TURBO RED</span></div>
-          <div class="swatches" role="group" aria-label="Select bike colour">
-            <div class="sw-dot on" role="button" tabindex="0" aria-pressed="true" aria-label="Turbo Red" style="background:#C0392B" data-clr="TURBO RED" data-img="assets/images/laser-turbo-red.webp" title="Turbo Red"></div>
-            <div class="sw-dot" role="button" tabindex="0" aria-pressed="false" aria-label="Afterburner Yellow" style="background:#E8B800" data-clr="AFTERBURNER YELLOW" data-img="assets/images/laser-afterburner-yellow.webp" title="Afterburner Yellow"></div>
-            <div class="sw-dot" role="button" tabindex="0" aria-pressed="false" aria-label="Plasma Red" style="background:#A93226" data-clr="PLASMA RED" data-img="assets/images/laser-plasma-red.webp" title="Plasma Red"></div>
-            <div class="sw-dot" role="button" tabindex="0" aria-pressed="false" aria-label="Stellar White" style="background:#D8D8D8;border-color:#444" data-clr="STELLAR WHITE" data-img="assets/images/airstrike-stellar-white.webp" title="Stellar White"></div>
-            <div class="sw-dot" role="button" tabindex="0" aria-pressed="false" aria-label="Supersonic Silver" style="background:#C0C8D0;border-color:#555" data-clr="SUPERSONIC SILVER" data-img="assets/images/airstrike-supersonic-silver.webp" title="Supersonic Silver"></div>
-            <div class="sw-dot" role="button" tabindex="0" aria-pressed="false" aria-label="Lightning Blue" style="background:#4A90D9" data-clr="LIGHTNING BLUE" data-img="assets/images/airstrike-lightning-blue.webp" title="Lightning Blue"></div>
-            <div class="sw-dot" role="button" tabindex="0" aria-pressed="false" aria-label="Stealth Grey" style="background:#7B8B99" data-clr="STEALTH GREY" data-img="assets/images/shadow-stealth-grey.webp" title="Stealth Grey"></div>
-            <div class="sw-dot" role="button" tabindex="0" aria-pressed="false" aria-label="Asteroid Grey" style="background:#5A5A5A;border-color:#444" data-clr="ASTEROID GREY" data-img="assets/images/shadow-asteroid-grey.webp" title="Asteroid Grey"></div>
-            <div class="sw-dot" role="button" tabindex="0" aria-pressed="false" aria-label="Cosmic Black" style="background:#1A1A1A;border-color:#444" data-clr="COSMIC BLACK" data-img="assets/images/shadow-cosmic-black.webp" title="Cosmic Black"></div>
+          <div class="trim-switcher" role="radiogroup" aria-label="Select trim level">
+            <button type="button" class="trim-btn on" role="radio" aria-checked="true" data-trim="recon">MACH 2 RECON (RECOMMENDED)</button>
+            <button type="button" class="trim-btn" role="radio" aria-checked="false" data-trim="base">MACH 2 BASE</button>
+          </div>
+          
+          <div class="col-lbl">SELECT DESIGN LINE — <span id="clbl">TURBO RED</span></div>
+          
+          <div class="design-lines">
+            <div class="line-group">
+              <div class="line-title">LASER</div>
+              <div class="swatches" role="group" aria-label="Laser Colors">
+                <div class="sw-dot on" role="button" tabindex="0" aria-pressed="true" aria-label="Turbo Red" style="background:#C0392B" data-clr="TURBO RED" data-img="assets/images/laser-turbo-red.webp" title="Turbo Red"></div>
+                <div class="sw-dot" role="button" tabindex="0" aria-pressed="false" aria-label="Afterburner Yellow" style="background:#E8B800" data-clr="AFTERBURNER YELLOW" data-img="assets/images/laser-afterburner-yellow.webp" title="Afterburner Yellow"></div>
+                <div class="sw-dot" role="button" tabindex="0" aria-pressed="false" aria-label="Plasma Red" style="background:#A93226" data-clr="PLASMA RED" data-img="assets/images/laser-plasma-red.webp" title="Plasma Red"></div>
+              </div>
+            </div>
+            
+            <div class="line-group">
+              <div class="line-title">AIRSTRIKE</div>
+              <div class="swatches" role="group" aria-label="Airstrike Colors">
+                <div class="sw-dot" role="button" tabindex="0" aria-pressed="false" aria-label="Stellar White" style="background:#D8D8D8;border-color:#444" data-clr="STELLAR WHITE" data-img="assets/images/airstrike-stellar-white.webp" title="Stellar White"></div>
+                <div class="sw-dot" role="button" tabindex="0" aria-pressed="false" aria-label="Supersonic Silver" style="background:#C0C8D0;border-color:#555" data-clr="SUPERSONIC SILVER" data-img="assets/images/airstrike-supersonic-silver.webp" title="Supersonic Silver"></div>
+                <div class="sw-dot" role="button" tabindex="0" aria-pressed="false" aria-label="Lightning Blue" style="background:#4A90D9" data-clr="LIGHTNING BLUE" data-img="assets/images/airstrike-lightning-blue.webp" title="Lightning Blue"></div>
+              </div>
+            </div>
+            
+            <div class="line-group">
+              <div class="line-title">SHADOW</div>
+              <div class="swatches" role="group" aria-label="Shadow Colors">
+                <div class="sw-dot" role="button" tabindex="0" aria-pressed="false" aria-label="Stealth Grey" style="background:#7B8B99" data-clr="STEALTH GREY" data-img="assets/images/shadow-stealth-grey.webp" title="Stealth Grey"></div>
+                <div class="sw-dot" role="button" tabindex="0" aria-pressed="false" aria-label="Asteroid Grey" style="background:#5A5A5A;border-color:#444" data-clr="ASTEROID GREY" data-img="assets/images/shadow-asteroid-grey.webp" title="Asteroid Grey"></div>
+                <div class="sw-dot" role="button" tabindex="0" aria-pressed="false" aria-label="Cosmic Black" style="background:#1A1A1A;border-color:#444" data-clr="COSMIC BLACK" data-img="assets/images/shadow-cosmic-black.webp" title="Cosmic Black"></div>
+              </div>
+            </div>
           </div>
           
           <div class="spec-cards">
-            <div class="spec-c"><div class="spec-lbl">PEAK OUTPUT (RECON)</div><div class="spec-val"><span class="spec-num">30</span><span class="spec-unit">KW</span><span class="spec-tag">POWER</span></div></div>
-            <div class="spec-c" style="border-left-color:rgba(123,44,191,.6)"><div class="spec-lbl">MAXIMUM TWIST (RECON)</div><div class="spec-val"><span class="spec-num">100</span><span class="spec-unit">NM</span><span class="spec-tag" style="color:rgba(123,44,191,.7)">TORQUE</span></div></div>
-            <div class="spec-c" style="border-left-color:rgba(123,44,191,.35)"><div class="spec-lbl">TOP SPEED (BOTH)</div><div class="spec-val"><span class="spec-num">155</span><span class="spec-unit">KM/H</span><span class="spec-tag" style="color:rgba(123,44,191,.45)">VELOCITY</span></div></div>
+            <div class="spec-c"><div class="spec-lbl">PEAK OUTPUT</div><div class="spec-val"><span class="spec-num" id="spec-power" data-t="30">30</span><span class="spec-unit">KW</span><span class="spec-tag">POWER</span></div></div>
+            <div class="spec-c" style="border-left-color:rgba(123,44,191,.6)"><div class="spec-lbl">MAXIMUM TWIST</div><div class="spec-val"><span class="spec-num" id="spec-torque" data-t="100">100</span><span class="spec-unit">NM</span><span class="spec-tag" style="color:rgba(123,44,191,.7)">TORQUE</span></div></div>
+            <div class="spec-c" style="border-left-color:rgba(123,44,191,.35)"><div class="spec-lbl">IDC RANGE</div><div class="spec-val"><span class="spec-num" id="spec-range" data-t="323">323</span><span class="spec-unit">KM</span><span class="spec-tag" style="color:rgba(123,44,191,.45)">RANGE</span></div></div>
           </div>
           <div class="showcase-btns">
             <a href="https://www.ultraviolette.com/f77" target="_blank" rel="noopener" class="btn-p">EXPLORE F77 <span class="material-symbols-outlined" style="font-size:16px">arrow_forward</span></a>

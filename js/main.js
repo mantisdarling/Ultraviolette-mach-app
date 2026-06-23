@@ -178,10 +178,13 @@ const REDUCED_MOTION   = window.matchMedia ? window.matchMedia('(prefers-reduced
   const paraImg  = document.getElementById('para-img');
   const paraWrap = paraImg && typeof paraImg.closest === 'function' ? paraImg.closest('.life-img-wrap') : null;
 
-  let rafPending = false;
+  let targetY = window.scrollY;
+  let currentY = window.scrollY;
+  let isMoving = false;
+  const ease = 0.08;
 
-  function runAllScrollUpdates() {
-    const sy = window.scrollY;
+  function runAllScrollUpdates(yVal) {
+    const sy = typeof yVal === 'number' ? yVal : window.scrollY;
     const bh = document.body.scrollHeight - window.innerHeight;
 
     /* 1 — Scroll progress bar */
@@ -193,9 +196,10 @@ const REDUCED_MOTION   = window.matchMedia ? window.matchMedia('(prefers-reduced
     /* 3 — Horizontal scroll (narrative) */
     const currentHasHScroll = hWrap && hTrack && window.innerWidth > 1024;
     if (currentHasHScroll) {
-      const rect       = hWrap.getBoundingClientRect();
+      const wrapTop = hWrap.offsetTop;
       const scrollable = hWrap.offsetHeight - window.innerHeight;
-      const progress   = scrollable > 0 ? Math.max(0, Math.min(1, -rect.top / scrollable)) : 0;
+      const relativeScroll = sy - wrapTop;
+      const progress   = scrollable > 0 ? Math.max(0, Math.min(1, relativeScroll / scrollable)) : 0;
       const maxX       = -(hTrack.scrollWidth - window.innerWidth + 160);
       hTrack.style.transform = `translateX(${maxX * progress}px)`;
     } else if (hTrack) {
@@ -204,27 +208,62 @@ const REDUCED_MOTION   = window.matchMedia ? window.matchMedia('(prefers-reduced
 
     /* 4 — Parallax lifestyle image */
     if (paraImg && paraWrap && !REDUCED_MOTION) {
-      const rect   = paraWrap.getBoundingClientRect();
-      const center = rect.top + rect.height / 2 - window.innerHeight / 2;
+      const wrapTop = paraWrap.offsetTop;
+      const wrapHeight = paraWrap.offsetHeight;
+      const center = (wrapTop + wrapHeight / 2) - (sy + window.innerHeight / 2);
       paraImg.style.transform = `translateY(${center * 0.12}px)`;
     }
 
-    rafPending = false;
+    // Call dynamic sound engine modulation hook
+    if (typeof onScrollSpeedUpdate === 'function') {
+      onScrollSpeedUpdate(sy);
+    }
+  }
+
+  function tick() {
+    if (!isMoving) return;
+    const diff = targetY - currentY;
+    if (Math.abs(diff) < 0.1) {
+      currentY = targetY;
+      isMoving = false;
+    } else {
+      currentY += diff * ease;
+    }
+    window.scrollTo(0, currentY);
+    runAllScrollUpdates(currentY);
+    if (isMoving) {
+      requestAnimationFrame(tick);
+    }
+  }
+
+  if (HAS_FINE_POINTER && !REDUCED_MOTION) {
+    window.addEventListener('wheel', e => {
+      if (e.ctrlKey || e.shiftKey || e.altKey || e.metaKey) return;
+      e.preventDefault();
+      
+      const maxScroll = document.body.scrollHeight - window.innerHeight;
+      targetY += e.deltaY * 0.85; 
+      targetY = Math.max(0, Math.min(maxScroll, targetY));
+
+      if (!isMoving) {
+        isMoving = true;
+        requestAnimationFrame(tick);
+      }
+    }, { passive: false });
   }
 
   window.addEventListener('scroll', () => {
-    if (rafPending) return;
-    rafPending = true;
-    requestAnimationFrame(runAllScrollUpdates);
+    if (isMoving) return;
+    targetY = currentY = window.scrollY;
+    runAllScrollUpdates(window.scrollY);
   }, { passive: true });
-
-  runAllScrollUpdates();
 
   window.addEventListener('resize', () => {
-    if (rafPending) return;
-    rafPending = true;
-    requestAnimationFrame(runAllScrollUpdates);
+    targetY = currentY = window.scrollY;
+    runAllScrollUpdates(window.scrollY);
   }, { passive: true });
+
+  runAllScrollUpdates(window.scrollY);
 })();
 
 /* ─────────────────────────────────────────────
@@ -362,6 +401,9 @@ document.querySelectorAll('.ctr[data-t]').forEach(el => {
       bikeImg.style.opacity    = '1';
       bikeImg.style.transform  = 'scale(1)';
     }, 260);
+
+    // Play synthesized click feedback
+    if (typeof playClickSound === 'function') playClickSound();
   }
 
   document.querySelectorAll('.sw-dot').forEach(sw => {
@@ -523,4 +565,381 @@ document.querySelectorAll('.ctr[data-t]').forEach(el => {
         );
     }, { threshold: 0.4 }).observe(s);
   });
+})();
+
+/* ─────────────────────────────────────────────
+   WEB AUDIO API SYNTHESIZER & SOUND SYSTEM
+   ───────────────────────────────────────────── */
+let audioCtx = null;
+let engineOsc1 = null;
+let engineOsc2 = null;
+let engineFilter = null;
+let engineGain = null;
+let engineActive = false;
+
+function initAudio() {
+  if (audioCtx) return;
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  audioCtx = new AudioContextClass();
+}
+
+function playClickSound() {
+  initAudio();
+  if (!audioCtx || audioCtx.state === 'suspended') return;
+  try {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.08);
+
+    gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.08);
+  } catch (e) {}
+}
+
+function startEngine() {
+  initAudio();
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+  if (engineActive) return;
+  engineActive = true;
+
+  const now = audioCtx.currentTime;
+
+  // 1. Startup turbine sweep sound
+  const sweepOsc = audioCtx.createOscillator();
+  const sweepGain = audioCtx.createGain();
+  sweepOsc.type = 'sine';
+  sweepOsc.frequency.setValueAtTime(60, now);
+  sweepOsc.frequency.exponentialRampToValueAtTime(800, now + 1.2);
+  
+  sweepGain.gain.setValueAtTime(0.001, now);
+  sweepGain.gain.linearRampToValueAtTime(0.1, now + 0.6);
+  sweepGain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+
+  sweepOsc.connect(sweepGain);
+  sweepGain.connect(audioCtx.destination);
+  sweepOsc.start(now);
+  sweepOsc.stop(now + 1.2);
+
+  // 2. Idle Engine Drone
+  engineOsc1 = audioCtx.createOscillator();
+  engineOsc2 = audioCtx.createOscillator();
+  engineGain = audioCtx.createGain();
+  engineFilter = audioCtx.createBiquadFilter();
+
+  engineOsc1.type = 'sawtooth';
+  engineOsc1.frequency.setValueAtTime(65, now + 0.8);
+
+  engineOsc2.type = 'triangle';
+  engineOsc2.frequency.setValueAtTime(130, now + 0.8);
+
+  engineFilter.type = 'lowpass';
+  engineFilter.frequency.setValueAtTime(200, now + 0.8);
+  engineFilter.Q.setValueAtTime(4, now + 0.8);
+
+  engineGain.gain.setValueAtTime(0.001, now);
+  engineGain.gain.linearRampToValueAtTime(0.04, now + 1.2);
+
+  engineOsc1.connect(engineFilter);
+  engineOsc2.connect(engineFilter);
+  engineFilter.connect(engineGain);
+  engineGain.connect(audioCtx.destination);
+
+  engineOsc1.start(now + 0.8);
+  engineOsc2.start(now + 0.8);
+
+  const lfo = audioCtx.createOscillator();
+  const lfoGain = audioCtx.createGain();
+  lfo.type = 'sine';
+  lfo.frequency.setValueAtTime(3, now + 0.8);
+  lfoGain.gain.setValueAtTime(30, now + 0.8);
+
+  lfo.connect(lfoGain);
+  lfoGain.connect(engineFilter.frequency);
+  lfo.start(now + 0.8);
+
+  engineOsc1._lfo = lfo;
+}
+
+function stopEngine() {
+  if (!engineActive) return;
+  engineActive = false;
+  const now = audioCtx.currentTime;
+
+  if (engineGain) {
+    engineGain.gain.cancelScheduledValues(now);
+    engineGain.gain.setValueAtTime(engineGain.gain.value, now);
+    engineGain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+  }
+
+  setTimeout(() => {
+    try {
+      if (engineOsc1) {
+        engineOsc1.stop();
+        if (engineOsc1._lfo) engineOsc1._lfo.stop();
+      }
+      if (engineOsc2) engineOsc2.stop();
+    } catch(e){}
+    engineOsc1 = null;
+    engineOsc2 = null;
+    engineFilter = null;
+    engineGain = null;
+  }, 700);
+}
+
+// Bind engine startup triggers
+(function initEngineStartup() {
+  const btn = document.getElementById('btn-ignite');
+  const sweep = document.getElementById('ignition-sweep');
+  const txt = document.querySelector('.btn-ignite-txt');
+  const icon = document.querySelector('.btn-ignite-icon');
+  if (!btn) return;
+
+  btn.addEventListener('click', () => {
+    initAudio();
+    if (!engineActive) {
+      // Start
+      startEngine();
+      btn.classList.add('active');
+      if (txt) txt.textContent = "ENGINE ACTIVE // SYS_01";
+      if (icon) icon.textContent = "check_circle";
+      
+      // Trigger sweep visual
+      if (sweep) {
+        sweep.classList.remove('active');
+        void sweep.offsetWidth;
+        sweep.classList.add('active');
+      }
+    } else {
+      // Stop
+      stopEngine();
+      btn.classList.remove('active');
+      if (txt) txt.textContent = "START ENGINE";
+      if (icon) icon.textContent = "power_settings_new";
+    }
+  });
+
+  // Attach hover sounds to interactive elements
+  document.querySelectorAll('a, button, .sw-dot, .mode-c, .sdot, .trim-btn, .hotspot').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      if (audioCtx && audioCtx.state === 'running') {
+        playClickSound();
+      }
+    });
+  });
+})();
+
+// Scroll speed pitch modulator
+let lastScrollY = window.scrollY;
+let lastScrollTime = Date.now();
+let targetPitchMultiplier = 1.0;
+let currentPitchMultiplier = 1.0;
+
+function onScrollSpeedUpdate(sy) {
+  if (!engineActive || !engineOsc1 || !engineOsc2 || !engineFilter) return;
+
+  const now = Date.now();
+  const dt = Math.max(1, now - lastScrollTime);
+  const dy = Math.abs(sy - lastScrollY);
+  
+  lastScrollY = sy;
+  lastScrollTime = now;
+
+  const speed = dy / dt;
+  targetPitchMultiplier = 1.0 + Math.min(1.2, speed * 0.25);
+}
+
+(function updateSoundPitch() {
+  if (engineActive && engineOsc1 && engineOsc2 && engineFilter && audioCtx) {
+    currentPitchMultiplier += (targetPitchMultiplier - currentPitchMultiplier) * 0.1;
+    targetPitchMultiplier += (1.0 - targetPitchMultiplier) * 0.05;
+
+    const baseFreq1 = 65;
+    const baseFreq2 = 130;
+    const filterBase = 200;
+
+    try {
+      engineOsc1.frequency.setValueAtTime(baseFreq1 * currentPitchMultiplier, audioCtx.currentTime);
+      engineOsc2.frequency.setValueAtTime(baseFreq2 * currentPitchMultiplier, audioCtx.currentTime);
+      engineFilter.frequency.setValueAtTime(filterBase + (currentPitchMultiplier - 1.0) * 400, audioCtx.currentTime);
+    } catch(e){}
+  }
+  requestAnimationFrame(updateSoundPitch);
+})();
+
+/* ─────────────────────────────────────────────
+   CONFIGURATOR TRIM LEVEL SWITCHER
+   ───────────────────────────────────────────── */
+(function initTrimSwitcher() {
+  const btns = document.querySelectorAll('.trim-btn');
+  const power = document.getElementById('spec-power');
+  const torque = document.getElementById('spec-torque');
+  const range = document.getElementById('spec-range');
+  
+  if (!btns.length) return;
+
+  function setTrim(trim) {
+    btns.forEach(btn => {
+      const active = btn.dataset.trim === trim;
+      btn.classList.toggle('on', active);
+      btn.setAttribute('aria-checked', active ? 'true' : 'false');
+    });
+
+    if (trim === 'recon') {
+      if (power) { power.dataset.t = '30'; runCounter(power); }
+      if (torque) { torque.dataset.t = '100'; runCounter(torque); }
+      if (range) { range.dataset.t = '323'; runCounter(range); }
+    } else {
+      if (power) { power.dataset.t = '27'; runCounter(power); }
+      if (torque) { torque.dataset.t = '90'; runCounter(torque); }
+      if (range) { range.dataset.t = '211'; runCounter(range); }
+    }
+    
+    // Play sound click
+    if (typeof playClickSound === 'function') playClickSound();
+  }
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => setTrim(btn.dataset.trim));
+  });
+})();
+
+/* ─────────────────────────────────────────────
+   CHASSIS & TECH HOTSPOT BLUEPRINT EXPLORER
+   ───────────────────────────────────────────── */
+(function initHotspotExplorer() {
+  const hotspots = document.querySelectorAll('.hotspot');
+  const cardTitle = document.getElementById('hud-title');
+  const cardDesc = document.getElementById('hud-desc');
+  const cardSpecs = document.getElementById('hud-specs');
+  const cardTag = document.querySelector('.hud-tag');
+  
+  if (!hotspots.length) return;
+
+  const data = [
+    {
+      title: "SRB10 ENERGY CELL",
+      tag: "COMPONENT // 01",
+      desc: "10.3 kWh aviation-grade lithium-ion battery pack. Structured with five layers of safety, active BMS temperature checks, and IP67 waterproofing.",
+      specs: [
+        { label: "CAPACITY", val: "10.3 KWH" },
+        { label: "CHEMISTRY", val: "NMC HIGH-ENERGY" },
+        { label: "TESTED DISTANCE", val: "6,000,000+ KM" }
+      ]
+    },
+    {
+      title: "PMSM ELECTRIC MOTOR",
+      tag: "COMPONENT // 02",
+      desc: "Permanent Magnet Synchronous Motor delivering instant ballistic torque and smooth linear acceleration up to a verified 155 km/h.",
+      specs: [
+        { label: "PEAK OUTPUT", val: "30 KW (40.2 HP)" },
+        { label: "MAX TORQUE", val: "100 NM INSTANT" },
+        { label: "ACCELERATION", val: "0-60 KM/H IN 2.8S" }
+      ]
+    },
+    {
+      title: "AERO TRELLIS FRAME",
+      tag: "COMPONENT // 03",
+      desc: "Lightweight steel trellis chassis engineered with structural stiffness ratios inspired by race bikes. Optimised for ballistic cornering and stability.",
+      specs: [
+        { label: "TYPE", val: "AEROSPACE STEEL TRELLIS" },
+        { label: "WEIGHT RATIO", val: "OPTIMISED 50:50" },
+        { label: "STIFFNESS", val: "BALLISTIC STABILITY" }
+      ]
+    },
+    {
+      title: "VIOLETTE AI TELEMETRY",
+      tag: "COMPONENT // 04",
+      desc: "Active onboard computer running proprietary Violette OS. Connected 24/7 with Bluetooth, Wi-Fi, and LTE to manage vehicle updates and diagnostics.",
+      specs: [
+        { label: "DISPLAY", val: "5-INCH TFT HUD" },
+        { label: "CONNECTIVITY", val: "LTE / GPS / BLE" },
+        { label: "OTA UPDATES", val: "AUTOMATIC" }
+      ]
+    },
+    {
+      title: "REGEN & DUAL ABS",
+      tag: "COMPONENT // 05",
+      desc: "Dynamic braking system utilizing 10-level regenerative deceleration combined with high-grade switchable dual-channel ABS for total safety.",
+      specs: [
+        { label: "REGEN LEVELS", val: "10 ADJUSTABLE LEVELS" },
+        { label: "ABS", val: "SWITCHABLE DUAL-CHANNEL" },
+        { label: "DISC DIAMETER", val: "320MM FRONT / 230MM REAR" }
+      ]
+    }
+  ];
+
+  function activateHotspot(hs) {
+    hotspots.forEach(h => h.classList.remove('on'));
+    hs.classList.add('on');
+    
+    const idx = parseInt(hs.dataset.idx, 10);
+    const info = data[idx];
+    if (!info) return;
+
+    const card = document.getElementById('hud-card');
+    if (card) {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(12px)';
+    }
+
+    setTimeout(() => {
+      if (cardTitle) cardTitle.textContent = info.title;
+      if (cardTag) cardTag.textContent = info.tag;
+      if (cardDesc) cardDesc.textContent = info.desc;
+      
+      if (cardSpecs) {
+        cardSpecs.innerHTML = info.specs.map(s => 
+          `<div class="hud-spec-row"><span class="h-lbl">${s.label}</span><span class="h-val">${s.val}</span></div>`
+        ).join('');
+      }
+
+      if (card) {
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      }
+    }, 200);
+
+    if (typeof playClickSound === 'function') playClickSound();
+    drawHUDLine(hs);
+  }
+
+  function drawHUDLine(hs) {
+    const wrap = hs.closest('.schematic-wrap');
+    const path = document.getElementById('hud-line');
+    if (!wrap || !path) return;
+
+    const wrapRect = wrap.getBoundingClientRect();
+    const hsRect   = hs.getBoundingClientRect();
+    
+    const startX = hsRect.left - wrapRect.left + hsRect.width / 2;
+    const startY = hsRect.top - wrapRect.top + hsRect.height / 2;
+
+    const endX = wrapRect.width - 24;
+    const d = `M ${startX} ${startY} L ${endX - 30} ${startY} L ${endX} ${startY}`;
+    path.setAttribute('d', d);
+  }
+
+  hotspots.forEach(hs => {
+    hs.addEventListener('click', () => activateHotspot(hs));
+  });
+
+  window.addEventListener('resize', () => {
+    const active = document.querySelector('.hotspot.on');
+    if (active) drawHUDLine(active);
+  }, { passive: true });
+
+  setTimeout(() => {
+    const active = document.querySelector('.hotspot.on');
+    if (active) drawHUDLine(active);
+  }, 1000);
 })();
