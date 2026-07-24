@@ -2,7 +2,7 @@
    SERVICE WORKER — Offline Caching & PWA Support
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
-const CACHE_NAME = "mach-ev-cache-v5";
+const CACHE_NAME = "mach-ev-cache-v8";
 
 const STATIC_ASSETS = [
   "./",
