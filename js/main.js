@@ -138,48 +138,37 @@ function onScrollSpeedUpdate(sy) {
   document.addEventListener('mousemove', e => {
     mx = e.clientX; 
     my = e.clientY;
-    const c = document.getElementById('cur');
-    if (c) {
-      c.style.left = mx + 'px';
-      c.style.top  = my + 'px';
-    }
-  });
+  }, { passive: true });
 
-  (function animRing() {
-    rx += (mx - rx) * 0.1;
-    ry += (my - ry) * 0.1;
-    const cr = document.getElementById('cur-r');
-    if (cr) {
-      cr.style.left = rx + 'px';
-      cr.style.top  = ry + 'px';
-    }
-    requestAnimationFrame(animRing);
+  (function animCursor() {
+    rx += (mx - rx) * 0.15;
+    ry += (my - ry) * 0.15;
+    
+    cur.style.left = mx + 'px';
+    cur.style.top  = my + 'px';
+    
+    curR.style.left = rx + 'px';
+    curR.style.top  = ry + 'px';
+    
+    requestAnimationFrame(animCursor);
   })();
 
   /* Grow cursor on hoverable elements */
   document.querySelectorAll('a, button, .sw-dot, .mode-c, .gal-c, .soc-btn, .sdot, .hstat')
     .forEach(el => {
       el.addEventListener('mouseenter', () => {
-        const c = document.getElementById('cur');
-        const cr = document.getElementById('cur-r');
-        if (c && cr) {
-          c.style.width   = '20px'; 
-          c.style.height   = '20px';
-          cr.style.width  = '60px'; 
-          cr.style.height  = '60px';
-          cr.style.borderColor = 'rgba(123,44,191,.75)';
-        }
+        cur.style.width   = '20px'; 
+        cur.style.height   = '20px';
+        curR.style.width  = '60px'; 
+        curR.style.height  = '60px';
+        curR.style.borderColor = 'rgba(123,44,191,.75)';
       });
       el.addEventListener('mouseleave', () => {
-        const c = document.getElementById('cur');
-        const cr = document.getElementById('cur-r');
-        if (c && cr) {
-          c.style.width   = '10px'; 
-          c.style.height   = '10px';
-          cr.style.width  = '36px'; 
-          cr.style.height  = '36px';
-          cr.style.borderColor = 'rgba(123,44,191,.45)';
-        }
+        cur.style.width   = '10px'; 
+        cur.style.height   = '10px';
+        curR.style.width  = '36px'; 
+        curR.style.height  = '36px';
+        curR.style.borderColor = 'rgba(123,44,191,.45)';
       });
     });
 })();
@@ -218,32 +207,45 @@ function onScrollSpeedUpdate(sy) {
   const paraImg  = document.getElementById('para-img');
   const paraWrap = paraImg && typeof paraImg.closest === 'function' ? paraImg.closest('.life-img-wrap') : null;
 
-  let targetY = window.scrollY;  // Where the user wants to scroll to (instant)
-  let currentY = window.scrollY; // Where the viewport currently is (smoothed)
-  let isMoving = false;          // True when requestAnimationFrame tick loop is active
-  
-  // Ease factor determines scroll inertia. 
-  // 0.08 means the page scrolls 8% of the remaining distance per frame.
-  const ease = 0.08;
+  // Cached layout metrics
+  let maxScrollY = 0;
+  let wrapTop = 0;
+  let scrollable = 0;
+  let maxX = 0;
+  let paraWrapTop = 0;
+  let paraWrapHeight = 0;
 
-  function runAllScrollUpdates(yVal) {
-    const sy = typeof yVal === 'number' ? yVal : window.scrollY;
-    const bh = document.body.scrollHeight - window.innerHeight;
+  function cacheDimensions() {
+    maxScrollY = document.body.scrollHeight - window.innerHeight;
+    if (hWrap) {
+      wrapTop = hWrap.offsetTop;
+      scrollable = hWrap.offsetHeight - window.innerHeight;
+    }
+    if (hTrack) {
+      maxX = -(hTrack.scrollWidth - window.innerWidth + 160);
+    }
+    if (paraWrap) {
+      paraWrapTop = paraWrap.offsetTop;
+      paraWrapHeight = paraWrap.offsetHeight;
+    }
+  }
 
+  function runAllScrollUpdates(sy) {
     /* 1 — Scroll progress bar */
-    if (prog) prog.style.width = (bh > 0 ? (sy / bh * 100) : 0) + '%';
+    if (prog) {
+      prog.style.width = (maxScrollY > 0 ? (sy / maxScrollY * 100) : 0) + '%';
+    }
 
     /* 2 — Navbar glass effect */
-    if (nb) nb.classList.toggle('scrolled', sy > 60);
+    if (nb) {
+      nb.classList.toggle('scrolled', sy > 60);
+    }
 
     /* 3 — Horizontal scroll (narrative) */
     const currentHasHScroll = hWrap && hTrack && window.innerWidth > 1024;
     if (currentHasHScroll) {
-      const wrapTop = hWrap.offsetTop;
-      const scrollable = hWrap.offsetHeight - window.innerHeight;
       const relativeScroll = sy - wrapTop;
       const progress   = scrollable > 0 ? Math.max(0, Math.min(1, relativeScroll / scrollable)) : 0;
-      const maxX       = -(hTrack.scrollWidth - window.innerWidth + 160);
       hTrack.style.transform = `translateX(${maxX * progress}px)`;
     } else if (hTrack) {
       hTrack.style.transform = '';
@@ -251,9 +253,7 @@ function onScrollSpeedUpdate(sy) {
 
     /* 4 — Parallax lifestyle image */
     if (paraImg && paraWrap && !REDUCED_MOTION) {
-      const wrapTop = paraWrap.offsetTop;
-      const wrapHeight = paraWrap.offsetHeight;
-      const center = (wrapTop + wrapHeight / 2) - (sy + window.innerHeight / 2);
+      const center = (paraWrapTop + paraWrapHeight / 2) - (sy + window.innerHeight / 2);
       paraImg.style.transform = `translateY(${center * 0.12}px)`;
     }
 
@@ -263,101 +263,24 @@ function onScrollSpeedUpdate(sy) {
     }
   }
 
-  function tick() {
-    if (!isMoving) return;
-    const diff = targetY - currentY;
-    if (Math.abs(diff) < 0.1) {
-      currentY = targetY;
-      isMoving = false;
-    } else {
-      currentY += diff * ease;
-    }
-    window.scrollTo(0, currentY);
-    runAllScrollUpdates(currentY);
-    if (isMoving) {
-      requestAnimationFrame(tick);
-    }
-  }
-
-  if (HAS_FINE_POINTER && !REDUCED_MOTION) {
-    window.addEventListener('wheel', e => {
-      if (e.ctrlKey || e.shiftKey || e.altKey || e.metaKey) return;
-      e.preventDefault();
-      
-      const maxScroll = document.body.scrollHeight - window.innerHeight;
-      targetY += e.deltaY * 0.85; 
-      targetY = Math.max(0, Math.min(maxScroll, targetY));
-
-      if (!isMoving) {
-        isMoving = true;
-        requestAnimationFrame(tick);
-      }
-    }, { passive: false });
-
-    // Keyboard navigation scroll support
-    window.addEventListener('keydown', e => {
-      const activeEl = document.activeElement;
-      if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.isContentEditable)) {
-        return;
-      }
-      
-      const maxScroll = document.body.scrollHeight - window.innerHeight;
-      let handled = false;
-      
-      switch (e.key) {
-        case 'ArrowDown':
-          targetY += 100;
-          handled = true;
-          break;
-        case 'ArrowUp':
-          targetY -= 100;
-          handled = true;
-          break;
-        case ' ':
-          e.preventDefault();
-          targetY += window.innerHeight * (e.shiftKey ? -0.85 : 0.85);
-          handled = true;
-          break;
-        case 'PageDown':
-          targetY += window.innerHeight * 0.85;
-          handled = true;
-          break;
-        case 'PageUp':
-          targetY -= window.innerHeight * 0.85;
-          handled = true;
-          break;
-        case 'Home':
-          targetY = 0;
-          handled = true;
-          break;
-        case 'End':
-          targetY = maxScroll;
-          handled = true;
-          break;
-      }
-      
-      if (handled) {
-        targetY = Math.max(0, Math.min(maxScroll, targetY));
-        if (!isMoving) {
-          isMoving = true;
-          requestAnimationFrame(tick);
-        }
-      }
-    });
-  }
-
   window.addEventListener('scroll', () => {
-    if (isMoving) return;
-    targetY = currentY = window.scrollY;
     runAllScrollUpdates(window.scrollY);
   }, { passive: true });
 
   window.addEventListener('resize', () => {
-    targetY = currentY = window.scrollY;
+    cacheDimensions();
     runAllScrollUpdates(window.scrollY);
   }, { passive: true });
 
+  // Initial caching and updates
+  cacheDimensions();
   runAllScrollUpdates(window.scrollY);
+  
+  // Recache on load because lazy images and webfonts can shift heights
+  window.addEventListener('load', () => {
+    cacheDimensions();
+    runAllScrollUpdates(window.scrollY);
+  });
 })();
 
 /* ─────────────────────────────────────────────
@@ -477,6 +400,7 @@ document.querySelectorAll('.ctr[data-t]').forEach(el => {
     sw.setAttribute('aria-pressed', 'true');
     if (colourLbl) colourLbl.textContent = sw.dataset.clr || '';
 
+    bikeImg.style.transition = 'opacity 0.25s ease-in, transform 0.25s ease-in';
     bikeImg.style.opacity   = '0';
     bikeImg.style.transform = 'scale(.92)';
 
@@ -491,10 +415,10 @@ document.querySelectorAll('.ctr[data-t]').forEach(el => {
 
     setTimeout(() => {
       if (sw.dataset.img) bikeImg.src = sw.dataset.img;
-      bikeImg.style.transition = 'opacity .5s, transform .5s';
+      bikeImg.style.transition = 'opacity 0.25s ease-out, transform 0.25s ease-out';
       bikeImg.style.opacity    = '1';
       bikeImg.style.transform  = 'scale(1)';
-    }, 260);
+    }, 250);
 
     // Play synthesized click feedback
     if (typeof playClickSound === 'function') playClickSound();
@@ -694,6 +618,17 @@ document.querySelectorAll('.ctr[data-t]').forEach(el => {
       formBtn.textContent = 'INTEREST NOTED \u2713';
       formBtn.style.background = 'rgba(123,44,191,.45)';
       formBtn.setAttribute('aria-busy', 'false');
+
+      setTimeout(() => {
+        form.reset();
+        formBtn.disabled = false;
+        formBtn.textContent = 'REQUEST ACCESS';
+        formBtn.style.background = '';
+        if (formOk) {
+          formOk.style.display = 'none';
+          formOk.textContent = '';
+        }
+      }, 4000);
     }, 1400);
   });
 })();
@@ -1010,13 +945,13 @@ function stopEngine() {
     });
 
     if (trim === 'recon') {
-      if (power) { power.dataset.t = '30'; runCounter(power); }
-      if (torque) { torque.dataset.t = '100'; runCounter(torque); }
-      if (range) { range.dataset.t = '323'; runCounter(range); }
+      if (power) { power._done = 0; power.dataset.t = '30'; runCounter(power); }
+      if (torque) { torque._done = 0; torque.dataset.t = '100'; runCounter(torque); }
+      if (range) { range._done = 0; range.dataset.t = '323'; runCounter(range); }
     } else {
-      if (power) { power.dataset.t = '27'; runCounter(power); }
-      if (torque) { torque.dataset.t = '90'; runCounter(torque); }
-      if (range) { range.dataset.t = '211'; runCounter(range); }
+      if (power) { power._done = 0; power.dataset.t = '27'; runCounter(power); }
+      if (torque) { torque._done = 0; torque.dataset.t = '90'; runCounter(torque); }
+      if (range) { range._done = 0; range.dataset.t = '211'; runCounter(range); }
     }
     
     // Play sound click

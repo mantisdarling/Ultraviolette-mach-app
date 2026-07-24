@@ -696,7 +696,7 @@ section::before {
   object-fit: contain;
   position: relative;
   z-index: 1;
-  transition: opacity .5s var(--ease), transform .5s var(--ease);
+  transition: opacity .25s var(--ease), transform .25s var(--ease);
   filter: drop-shadow(0 40px 80px rgba(123,44,191,.35));
 }
 

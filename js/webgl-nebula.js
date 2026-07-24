@@ -21,6 +21,8 @@
     }
     if (typeof ResizeObserver !== 'undefined') {
       new ResizeObserver(sz).observe(c);
+    } else {
+      window.addEventListener('resize', sz, { passive: true });
     }
     sz();
 
@@ -122,7 +124,6 @@ void main(){
         rafId = null; 
         return; 
       }
-      sz();
       gl.viewport(0, 0, c.width, c.height);
       
       vel *= 0.94; // smooth velocity decay
