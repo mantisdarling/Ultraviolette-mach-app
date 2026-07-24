@@ -136,15 +136,30 @@ void main(){
       rafId = requestAnimationFrame(render);
     }
 
-    /* Pause render RAF loops when hero is scrolled out of viewport */
+    /* Pause render RAF loops when hero is scrolled out of viewport or tab is inactive */
     if (typeof IntersectionObserver !== 'undefined') {
       new IntersectionObserver(entries => {
-        isVisible = entries[0].isIntersecting;
+        isVisible = entries[0].isIntersecting && !document.hidden;
         if (isVisible && !rafId) {
           rafId = requestAnimationFrame(render);
         }
       }, { threshold: 0 }).observe(c);
     }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        isVisible = false;
+      } else {
+        const rc = c.getBoundingClientRect();
+        const isInViewport = typeof IntersectionObserver !== 'undefined'
+          ? isVisible
+          : (rc.top < window.innerHeight && rc.bottom > 0);
+        isVisible = isInViewport;
+      }
+      if (isVisible && !rafId) {
+        rafId = requestAnimationFrame(render);
+      }
+    });
 
     rafId = requestAnimationFrame(render);
   } catch (e) {
