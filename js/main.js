@@ -93,6 +93,8 @@ const REDUCED_MOTION   = window.matchMedia ? window.matchMedia('(prefers-reduced
    scroll velocity to dynamically adjust the synthesizer's pitch.
    ───────────────────────────────────────────── */
 let audioCtx = null;      // Global AudioContext (instantiated on user gesture)
+let masterGain = null;    // Global master volume gain node
+let isMuted = false;      // Master audio mute state
 let engineOsc1 = null;    // Main sawtooth oscillator (engine buzz)
 let engineOsc2 = null;    // Sub triangle oscillator (bass rumble)
 let engineFilter = null;  // Lowpass filter for tone shaping
@@ -405,6 +407,21 @@ document.querySelectorAll('.ctr[data-t]').forEach(el => {
     sw.setAttribute('aria-pressed', 'true');
     if (colourLbl) colourLbl.textContent = sw.dataset.clr || '';
 
+    const showcase = document.getElementById('showcase');
+    if (showcase) {
+      showcase.classList.remove('theme-red', 'theme-yellow', 'theme-grey', 'theme-blue');
+      const clrName = (sw.dataset.clr || '').toUpperCase();
+      if (clrName.includes('RED')) {
+        showcase.classList.add('theme-red');
+      } else if (clrName.includes('YELLOW')) {
+        showcase.classList.add('theme-yellow');
+      } else if (clrName.includes('BLUE')) {
+        showcase.classList.add('theme-blue');
+      } else {
+        showcase.classList.add('theme-grey');
+      }
+    }
+
     bikeImg.style.transition = 'opacity 0.25s ease-in, transform 0.25s ease-in';
     bikeImg.style.opacity   = '0';
     bikeImg.style.transform = 'scale(.92)';
@@ -503,22 +520,7 @@ document.querySelectorAll('.ctr[data-t]').forEach(el => {
     }
   };
 
-  function animateTFTNumbers(targetNum) {
-    if (!tftSpeed) return;
-    const startNum = parseInt(tftSpeed.textContent, 10) || 0;
-    if (startNum === targetNum) return;
-    
-    const dur = 800;
-    const startTime = performance.now();
-
-    (function tickNum(now) {
-      const p = Math.min((now - startTime) / dur, 1);
-      const ease = p * (2 - p);
-      tftSpeed.textContent = Math.round(startNum + ease * (targetNum - startNum));
-      if (p < 1) requestAnimationFrame(tickNum);
-      else tftSpeed.textContent = targetNum;
-    })(performance.now());
-  }
+  let activeAnimationId = null;
 
   function updateTFT(mode) {
     const data = tftData[mode];
@@ -526,7 +528,6 @@ document.querySelectorAll('.ctr[data-t]').forEach(el => {
 
     tftScreen.className = "tft-screen " + data.theme;
 
-    animateTFTNumbers(data.speed);
     if (tftModeBanner) tftModeBanner.textContent = data.banner;
     if (tftRange) tftRange.textContent = data.range;
     if (tftLoad) tftLoad.textContent = data.load;
@@ -540,8 +541,49 @@ document.querySelectorAll('.ctr[data-t]').forEach(el => {
       tftAlert.style.color = mode === 'ballistic_plus' ? '#E74C3C' : '';
     }
 
-    if (tftProgressFill) tftProgressFill.style.width = data.load;
-    if (tftRingFill) tftRingFill.style.strokeDashoffset = data.dashOffset;
+    // Diagnostics telemetry sweep animation for speed and gauge meters
+    if (activeAnimationId) cancelAnimationFrame(activeAnimationId);
+
+    const sweepMax = 188;
+    const phase1Duration = 250; // ms (fast sweep up)
+    const phase2Duration = 600; // ms (settle down to target mode telemetry)
+    const startTime = performance.now();
+
+    function tick(now) {
+      const elapsed = now - startTime;
+      if (elapsed < phase1Duration) {
+        const p = elapsed / phase1Duration;
+        const speedVal = Math.round(p * sweepMax);
+        if (tftSpeed) tftSpeed.textContent = speedVal;
+        
+        if (tftProgressFill) tftProgressFill.style.width = `${Math.round(p * 100)}%`;
+        if (tftRingFill) tftRingFill.style.strokeDashoffset = `${Math.round((1 - p) * 264)}`;
+        
+        activeAnimationId = requestAnimationFrame(tick);
+      } else {
+        const p = Math.min((elapsed - phase1Duration) / phase2Duration, 1);
+        const ease = p * (2 - p); // easeOutQuad
+        const speedVal = Math.round(sweepMax + ease * (data.speed - sweepMax));
+        if (tftSpeed) tftSpeed.textContent = speedVal;
+
+        const targetLoadPct = parseInt(data.load, 10) || 50;
+        const currentLoad = Math.round(100 + ease * (targetLoadPct - 100));
+        const currentDashOffset = Math.round(0 + ease * (data.dashOffset - 0));
+
+        if (tftProgressFill) tftProgressFill.style.width = `${currentLoad}%`;
+        if (tftRingFill) tftRingFill.style.strokeDashoffset = currentDashOffset;
+
+        if (p < 1) {
+          activeAnimationId = requestAnimationFrame(tick);
+        } else {
+          if (tftSpeed) tftSpeed.textContent = data.speed;
+          if (tftProgressFill) tftProgressFill.style.width = data.load;
+          if (tftRingFill) tftRingFill.style.strokeDashoffset = data.dashOffset;
+          activeAnimationId = null;
+        }
+      }
+    }
+    activeAnimationId = requestAnimationFrame(tick);
 
     if (typeof playClickSound === 'function') playClickSound();
   }
@@ -733,6 +775,9 @@ function initAudio() {
   if (audioCtx) return;
   const AudioContextClass = window.AudioContext || window.webkitAudioContext;
   audioCtx = new AudioContextClass();
+  masterGain = audioCtx.createGain();
+  masterGain.gain.setValueAtTime(isMuted ? 0 : 1, audioCtx.currentTime);
+  masterGain.connect(audioCtx.destination);
 }
 
 // Short synthesized chime for UI feedback (buttons & swatches)
@@ -743,7 +788,7 @@ function playClickSound() {
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
     osc.connect(gain);
-    gain.connect(audioCtx.destination);
+    gain.connect(masterGain || audioCtx.destination);
 
     osc.type = 'triangle'; // Smooth, friendly tone
     osc.frequency.setValueAtTime(800, audioCtx.currentTime);
@@ -768,6 +813,10 @@ function startEngine() {
 
   const now = audioCtx.currentTime;
 
+  // Update sound HUD UI state
+  const shud = document.getElementById('sound-hud');
+  if (shud) shud.classList.add('active');
+
   // 1. Startup turbine sweep sound: mimics charging capacitors / diagnostics scan
   const sweepOsc = audioCtx.createOscillator();
   const sweepGain = audioCtx.createGain();
@@ -780,7 +829,7 @@ function startEngine() {
   sweepGain.gain.exponentialRampToValueAtTime(0.001, now + 1.2); // Fade out
 
   sweepOsc.connect(sweepGain);
-  sweepGain.connect(audioCtx.destination);
+  sweepGain.connect(masterGain || audioCtx.destination);
   sweepOsc.start(now);
   sweepOsc.stop(now + 1.2);
 
@@ -809,7 +858,7 @@ function startEngine() {
   engineOsc1.connect(engineFilter);
   engineOsc2.connect(engineFilter);
   engineFilter.connect(engineGain);
-  engineGain.connect(audioCtx.destination);
+  engineGain.connect(masterGain || audioCtx.destination);
 
   engineOsc1.start(now + 0.8);
   engineOsc2.start(now + 0.8);
@@ -833,6 +882,9 @@ function stopEngine() {
   if (!engineActive) return;
   engineActive = false;
   const now = audioCtx.currentTime;
+
+  const shud = document.getElementById('sound-hud');
+  if (shud) shud.classList.remove('active');
 
   if (engineGain) {
     engineGain.gain.cancelScheduledValues(now);
@@ -863,27 +915,75 @@ function stopEngine() {
   const icon = document.querySelector('.btn-ignite-icon');
   if (!btn) return;
 
+  let booting = false;
+
   btn.addEventListener('click', () => {
     initAudio();
+    if (booting) return;
+
+    const consoleEl = document.getElementById('boot-console');
+
     if (!engineActive) {
-      // Start
-      startEngine();
-      btn.classList.add('active');
-      if (txt) txt.textContent = "ENGINE ACTIVE // SYS_01";
-      if (icon) icon.textContent = "check_circle";
-      
-      // Trigger sweep visual
-      if (sweep) {
-        sweep.classList.remove('active');
-        void sweep.offsetWidth;
-        sweep.classList.add('active');
+      booting = true;
+      if (txt) txt.textContent = "BOOTING DIAGNOSTICS...";
+      if (icon) icon.textContent = "hourglass_empty";
+      btn.style.pointerEvents = 'none';
+
+      if (consoleEl) {
+        consoleEl.style.display = 'block';
+        consoleEl.innerHTML = '';
       }
+
+      const logLines = [
+        { text: "⚡ CONNECTING TO VIOLETTE AI SYNAPSE... [OK]", type: "normal" },
+        { text: "🛰️ SYNCING GNSS TELEMETRY SATELLITES... [STABLE]", type: "normal" },
+        { text: "🛡️ ABS REGULATOR DIAGNOSTICS... [PHASE-2 OK]", type: "normal" },
+        { text: "🔋 BATTERY SRB10 CORE ENERGY CELL... [100% SECURE]", type: "success" },
+        { text: "🏍️ IGNITING 30KW PMSM POWERTRAIN MOTOR... [ACTIVE]", type: "success" }
+      ];
+
+      let lineIdx = 0;
+
+      function printNextLine() {
+        if (lineIdx < logLines.length) {
+          const lineData = logLines[lineIdx];
+          const lineDiv = document.createElement('p');
+          lineDiv.className = 'log-line active ' + lineData.type;
+          lineDiv.textContent = lineData.text;
+          if (consoleEl) {
+            consoleEl.appendChild(lineDiv);
+            consoleEl.scrollTop = consoleEl.scrollHeight;
+          }
+          lineIdx++;
+          setTimeout(printNextLine, 220);
+        } else {
+          booting = false;
+          btn.style.pointerEvents = 'auto';
+
+          startEngine();
+          btn.classList.add('active');
+          if (txt) txt.textContent = "ENGINE ACTIVE // SYS_01";
+          if (icon) icon.textContent = "check_circle";
+
+          if (sweep) {
+            sweep.classList.remove('active');
+            void sweep.offsetWidth;
+            sweep.classList.add('active');
+          }
+        }
+      }
+
+      printNextLine();
     } else {
-      // Stop
       stopEngine();
       btn.classList.remove('active');
       if (txt) txt.textContent = "START ENGINE";
       if (icon) icon.textContent = "power_settings_new";
+
+      if (consoleEl) {
+        consoleEl.style.display = 'none';
+        consoleEl.innerHTML = '';
+      }
     }
   });
 
@@ -1190,4 +1290,60 @@ function stopEngine() {
   });
 
   updateSimulation();
+})();
+
+/* ─────────────────────────────────────────────
+   TECHNICAL SPECS TABLE ACTIVE COLUMN SELECTOR
+   ───────────────────────────────────────────── */
+(function initSpecsTableToggle() {
+  const table = document.querySelector('.specs-table');
+  const btns = document.querySelectorAll('.spec-toggle-btn');
+  if (!table || !btns.length) return;
+
+  // Set default active column to 2 (F77 MACH 2 RECON)
+  table.classList.add('show-col-2');
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const col = btn.dataset.col;
+      table.classList.remove('show-col-1', 'show-col-2', 'show-col-3');
+      table.classList.add('show-col-' + col);
+
+      if (typeof playClickSound === 'function') playClickSound();
+    });
+  });
+})();
+
+/* ─────────────────────────────────────────────
+   FLOATING AUDIO EQUALIZER HUD CONTROL
+   ───────────────────────────────────────────── */
+(function initAudioHUD() {
+  const shud = document.getElementById('sound-hud');
+  if (!shud) return;
+
+  // Toggle audio engine mute state
+  shud.addEventListener('click', () => {
+    initAudio();
+    isMuted = !isMuted;
+    
+    // Toggle visual classes
+    shud.classList.toggle('muted', isMuted);
+    
+    const txtNode = shud.querySelector('.sound-hud-txt');
+    if (txtNode) {
+      txtNode.textContent = isMuted ? 'SOUND OFF' : 'SOUND ON';
+    }
+
+    // Set gain on master volume node
+    if (masterGain && audioCtx) {
+      masterGain.gain.setValueAtTime(isMuted ? 0 : 1, audioCtx.currentTime);
+    }
+
+    if (typeof playClickSound === 'function' && !isMuted) {
+      playClickSound();
+    }
+  });
 })();

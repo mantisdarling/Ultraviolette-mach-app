@@ -2647,6 +2647,55 @@ button:focus-visible,
   box-shadow: 0 0 15px rgba(168,85,247,0.3);
 }
 
+/* Showcase Color Themes */
+#showcase {
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+#showcase.theme-red {
+  --uv: #C0392B;
+  --uv2: #ff7d72;
+  --uv3: #E74C3C;
+  --glow: rgba(231,76,60,0.55);
+  --border-hi: rgba(231,76,60,0.45);
+  --border-glow: rgba(231,76,60,0.7);
+  --border: rgba(192,57,43,0.25);
+  --card-hi: rgba(192,57,43,0.06);
+}
+
+#showcase.theme-yellow {
+  --uv: #D8A000;
+  --uv2: #ffe580;
+  --uv3: #F1C40F;
+  --glow: rgba(241,196,15,0.55);
+  --border-hi: rgba(241,196,15,0.45);
+  --border-glow: rgba(241,196,15,0.7);
+  --border: rgba(216,160,0,0.25);
+  --card-hi: rgba(216,160,0,0.06);
+}
+
+#showcase.theme-blue {
+  --uv: #2980B9;
+  --uv2: #80c5ff;
+  --uv3: #3498DB;
+  --glow: rgba(52,152,219,0.55);
+  --border-hi: rgba(52,152,219,0.45);
+  --border-glow: rgba(52,152,219,0.7);
+  --border: rgba(41,128,185,0.25);
+  --card-hi: rgba(41,128,185,0.06);
+}
+
+#showcase.theme-grey {
+  --uv: #7F8C8D;
+  --uv2: #d1d5db;
+  --uv3: #95A5A6;
+  --glow: rgba(149,165,166,0.55);
+  --border-hi: rgba(149,165,166,0.45);
+  --border-glow: rgba(149,165,166,0.7);
+  --border: rgba(127,140,141,0.25);
+  --card-hi: rgba(127,140,141,0.06);
+}
+
 /* ─── INTERACTIVE SPECS EXPLORER ──────────────────── */
 #specs-explorer {
   background: var(--grad-dark);
@@ -3291,4 +3340,224 @@ button:focus-visible,
   .marquee-track {
     animation: none;
   }
+}
+
+/* Specs Table Toggles & Column isolation */
+.specs-toggles {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.spec-toggle-btn {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 30px;
+  color: #888;
+  padding: 10px 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.spec-toggle-btn:hover {
+  color: #fff;
+  border-color: rgba(255,255,255,0.2);
+}
+
+.spec-toggle-btn.active {
+  background: rgba(168,85,247,0.08);
+  border-color: var(--uv3);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(168,85,247,0.3);
+}
+
+.specs-table th, 
+.specs-table td {
+  transition: opacity 0.3s ease;
+}
+
+/* If column 1 active: dim col 2 and 3 */
+.specs-table.show-col-1 th:nth-child(3),
+.specs-table.show-col-1 td:not([colspan]):nth-child(3),
+.specs-table.show-col-1 th:nth-child(4),
+.specs-table.show-col-1 td:not([colspan]):nth-child(4) {
+  opacity: 0.15;
+}
+
+/* If column 2 active: dim col 1 and 3 */
+.specs-table.show-col-2 th:nth-child(2),
+.specs-table.show-col-2 td:not([colspan]):nth-child(2),
+.specs-table.show-col-2 th:nth-child(4),
+.specs-table.show-col-2 td:not([colspan]):nth-child(4) {
+  opacity: 0.15;
+}
+
+/* If column 3 active: dim col 1 and 2 */
+.specs-table.show-col-3 th:nth-child(2),
+.specs-table.show-col-3 td:not([colspan]):nth-child(2),
+.specs-table.show-col-3 th:nth-child(3),
+.specs-table.show-col-3 td:not([colspan]):nth-child(3) {
+  opacity: 0.15;
+}
+
+@media (max-width: 768px) {
+  .specs-table.show-col-1 th:nth-child(3),
+  .specs-table.show-col-1 td:not([colspan]):nth-child(3),
+  .specs-table.show-col-1 th:nth-child(4),
+  .specs-table.show-col-1 td:not([colspan]):nth-child(4) {
+    display: none;
+  }
+  .specs-table.show-col-2 th:nth-child(2),
+  .specs-table.show-col-2 td:not([colspan]):nth-child(2),
+  .specs-table.show-col-2 th:nth-child(4),
+  .specs-table.show-col-2 td:not([colspan]):nth-child(4) {
+    display: none;
+  }
+  .specs-table.show-col-3 th:nth-child(2),
+  .specs-table.show-col-3 td:not([colspan]):nth-child(2),
+  .specs-table.show-col-3 th:nth-child(3),
+  .specs-table.show-col-3 td:not([colspan]):nth-child(3) {
+    display: none;
+  }
+}
+
+/* Floating Sound HUD Button */
+.sound-hud-toggle {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: rgba(13,5,22,.85);
+  border: 1px solid rgba(168,85,247,.22);
+  padding: 10px 18px;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 1000;
+  cursor: pointer;
+  box-shadow: inset 0 0 15px rgba(123,44,191,.15), 0 10px 30px rgba(0,0,0,.6);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(.16,1,.3,1);
+}
+
+.sound-hud-toggle:hover {
+  border-color: var(--border-glow);
+  box-shadow: inset 0 0 20px rgba(168,85,247,.25), 0 12px 35px rgba(0,0,0,.7);
+  transform: translateY(-2px);
+}
+
+.sound-hud-txt {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  color: #a855f7;
+  transition: color 0.3s;
+}
+
+.sound-hud-toggle:hover .sound-hud-txt {
+  color: #fff;
+}
+
+/* Waveform Bars animation */
+.waveform {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 12px;
+  width: 17px;
+}
+
+.waveform .bar {
+  width: 2px;
+  height: 100%;
+  background: var(--uv3);
+  border-radius: 2px;
+  transform: scaleY(0.25);
+  transform-origin: bottom;
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+/* Equalizer bounce animation when engine active and not muted */
+.sound-hud-toggle.active .waveform .bar {
+  animation: eqBounce 0.8s ease-in-out infinite alternate;
+  background: var(--uv2);
+}
+
+.sound-hud-toggle.active .waveform .bar:nth-child(1) { animation-delay: 0.1s; height: 70%; }
+.sound-hud-toggle.active .waveform .bar:nth-child(2) { animation-delay: 0.4s; height: 100%; }
+.sound-hud-toggle.active .waveform .bar:nth-child(3) { animation-delay: 0.2s; height: 80%; }
+.sound-hud-toggle.active .waveform .bar:nth-child(4) { animation-delay: 0.5s; height: 50%; }
+
+/* If muted, override text color and collapse bars */
+.sound-hud-toggle.muted .sound-hud-txt {
+  color: #555;
+}
+
+.sound-hud-toggle.muted .waveform .bar {
+  animation: none !important;
+  transform: scaleY(0.15) !important;
+  background: #444;
+}
+
+@keyframes eqBounce {
+  0% { transform: scaleY(0.2); }
+  100% { transform: scaleY(1); }
+}
+
+/* Hero Aviation Boot Console styling */
+.boot-console {
+  background: rgba(13, 5, 22, 0.9);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  padding: 12px 18px;
+  border-radius: 8px;
+  max-width: 480px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  line-height: 1.6;
+  color: #a855f7;
+  text-shadow: 0 0 5px rgba(168, 85, 247, 0.4);
+  box-shadow: inset 0 0 15px rgba(123, 44, 191, 0.1), 0 10px 25px rgba(0,0,0,0.5);
+  animation: consolePulse 2s infinite alternate;
+}
+
+.boot-console .log-line {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid transparent;
+}
+
+.boot-console .log-line.active {
+  animation: typing 0.5s steps(30, end) forwards, blink-caret 0.75s step-end infinite;
+}
+
+.boot-console .log-line.success {
+  color: #2ecc71;
+  text-shadow: 0 0 5px rgba(46, 204, 113, 0.4);
+}
+
+.boot-console .log-line.warn {
+  color: #f1c40f;
+  text-shadow: 0 0 5px rgba(241, 196, 15, 0.4);
+}
+
+@keyframes consolePulse {
+  0% { border-color: rgba(168, 85, 247, 0.3); }
+  100% { border-color: rgba(168, 85, 247, 0.5); }
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: #a855f7; }
 }

@@ -221,6 +221,9 @@
         <a href="https://www.ultraviolette.com/f77" target="_blank" rel="noopener noreferrer" class="btn-p">DISCOVER F77 <span class="material-symbols-outlined" style="font-size:18px">arrow_forward</span></a>
         <a href="https://www.youtube.com/@UltravioletteEV" target="_blank" rel="noopener noreferrer" class="btn-g">WATCH FILM</a>
       </div>
+      
+      <!-- Hero Aviation Boot Diagnostics Sequence Overlay -->
+      <div id="boot-console" class="boot-console" aria-hidden="true" style="display:none"></div>
       <div class="hero-stats">
         <div class="hstat"><div class="hstat-n"><span class="ctr" data-t="155">0</span><span class="hstat-u">KM/H</span></div><div class="hstat-l">TOP SPEED</div></div>
         <div class="hstat"><div class="hstat-n"><span class="ctr" data-t="100">0</span><span class="hstat-u">NM</span></div><div class="hstat-l">PEAK TORQUE</div></div>
@@ -754,6 +757,14 @@
         <span class="label label-uv" style="display:block;margin-bottom:14px">TECHNICAL DATASHEET</span>
         <h2 style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(40px,7vw,96px);line-height:.85;letter-spacing:-.04em;color:#fff">FULL SPECS</h2>
       </div>
+
+      <!-- Specs Column Toggle Pills (especially for mobile screens) -->
+      <div class="specs-toggles reveal" style="transition-delay:.1s">
+        <button type="button" class="spec-toggle-btn" data-col="1">F77 BASE</button>
+        <button type="button" class="spec-toggle-btn active" data-col="2">MACH 2 RECON</button>
+        <button type="button" class="spec-toggle-btn" data-col="3">SUPERSTREET RECON</button>
+      </div>
+
       <div class="specs-table-wrap reveal">
         <table class="specs-table">
           <thead>
@@ -1038,6 +1049,17 @@
       </div>
     </div>
   </div>
+  <!-- Floating Audio HUD Control -->
+  <button type="button" class="sound-hud-toggle" id="sound-hud" aria-label="Toggle Sound Engine" title="Mute/Unmute Powertrain Audio">
+    <div class="waveform">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+    <span class="sound-hud-txt">SOUND OFF</span>
+  </button>
+
 </footer>
 
 <!-- ══════════════════ SCRIPTS ══════════════════ -->
