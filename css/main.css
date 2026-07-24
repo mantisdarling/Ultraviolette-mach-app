@@ -1077,6 +1077,14 @@ section::before {
   scrollbar-width: none;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
+  cursor: grab;
+  user-select: none;
+}
+
+.gal-scroll.dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+  scroll-snap-type: none;
 }
 
 .gal-scroll::-webkit-scrollbar { display: none; }
@@ -1116,6 +1124,29 @@ section::before {
 .gal-c:hover {
   border-color: rgba(168,85,247,.45);
   box-shadow: 0 40px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(168,85,247,.2);
+}
+
+.gal-c::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 100%
+  );
+  transform: skewX(-25deg);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.gal-c:hover::after {
+  left: 150%;
+  transition: left 0.9s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .gal-grad {

@@ -1187,10 +1187,6 @@ function stopEngine() {
     const endX   = wrapRect.width - 24; // Target right edge near HUD details card
 
     // Bending logic:
-    // targetY is the middle horizontal axis where the HUD details card sits.
-    // dx is the initial straight lead-out before the 45-degree angle starts.
-    // Since it's a 45-degree angle, the horizontal shift (diagonal width) 
-    // must exactly equal the vertical shift (dy).
     const targetY = wrapRect.height / 2;
     const dx = 40;
     const dy = targetY - startY;
@@ -1204,7 +1200,23 @@ function stopEngine() {
       // Fallback for tight spaces: simple horizontal line
       d = `M ${startX} ${startY} L ${endX - 30} ${startY} L ${endX} ${startY}`;
     }
+    
+    // Set the path coordinates
     path.setAttribute('d', d);
+
+    try {
+      // Trigger smooth draw-in sweep transition
+      const length = path.getTotalLength();
+      path.style.transition = 'none';
+      path.style.strokeDasharray = length;
+      path.style.strokeDashoffset = length;
+      
+      // Force layout reflow
+      void path.getBoundingClientRect();
+      
+      path.style.transition = 'stroke-dashoffset 0.35s cubic-bezier(0.25, 1, 0.5, 1)';
+      path.style.strokeDashoffset = '0';
+    } catch(e) {}
   }
 
   hotspots.forEach(hs => {
@@ -1347,5 +1359,44 @@ function stopEngine() {
     if (typeof playClickSound === 'function' && !isMuted) {
       playClickSound();
     }
+  });
+})();
+
+/* ─────────────────────────────────────────────
+   CAROUSEL MOUSE DRAG-TO-SCROLL INTERACTION
+   ───────────────────────────────────────────── */
+(function initGalleryDrag() {
+  const slider = document.querySelector('.gal-scroll');
+  if (!slider) return;
+
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+
+  slider.addEventListener('mousedown', (e) => {
+    isDown = true;
+    slider.classList.add('dragging');
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+  });
+
+  slider.addEventListener('mouseleave', () => {
+    if (!isDown) return;
+    isDown = false;
+    slider.classList.remove('dragging');
+  });
+
+  slider.addEventListener('mouseup', () => {
+    if (!isDown) return;
+    isDown = false;
+    slider.classList.remove('dragging');
+  });
+
+  slider.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - slider.offsetLeft;
+    const walk = (x - startX) * 1.5; // Drag scroll velocity modifier
+    slider.scrollLeft = scrollLeft - walk;
   });
 })();
