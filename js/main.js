@@ -223,14 +223,14 @@ function onScrollSpeedUpdate(sy) {
   function cacheDimensions() {
     maxScrollY = document.body.scrollHeight - window.innerHeight;
     if (hWrap) {
-      wrapTop = hWrap.offsetTop;
+      wrapTop = hWrap.getBoundingClientRect().top + window.scrollY;
       scrollable = hWrap.offsetHeight - window.innerHeight;
     }
     if (hTrack) {
       maxX = -(hTrack.scrollWidth - window.innerWidth + 160);
     }
     if (paraWrap) {
-      paraWrapTop = paraWrap.offsetTop;
+      paraWrapTop = paraWrap.getBoundingClientRect().top + window.scrollY;
       paraWrapHeight = paraWrap.offsetHeight;
     }
   }
