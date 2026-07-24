@@ -83,8 +83,8 @@ document.documentElement.classList.add('js');
 /* ─────────────────────────────────────────────
    POINTER ACCESSIBILITY AND DEVICE DETECTOR
 ───────────────────────────────────────────── */
-const HAS_FINE_POINTER = window.matchMedia ? window.matchMedia('(pointer: fine)').matches : true;
-const REDUCED_MOTION   = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false;
+const hasFinePointer = window.matchMedia ? window.matchMedia('(pointer: fine)').matches : true;
+const reducedMotion  = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false;
 
 /* ─────────────────────────────────────────────
    AUDIO SYSTEM & SCROLL SPEED GLOBAL VARIABLES
@@ -128,7 +128,7 @@ function onScrollSpeedUpdate(sy) {
    MAGNETIC CURSOR
 ───────────────────────────────────────────── */
 (function initCursor() {
-  if (!HAS_FINE_POINTER) return;
+  if (!hasFinePointer) return;
 
   const cur  = document.getElementById('cur');
   const curR = document.getElementById('cur-r');
@@ -179,7 +179,7 @@ function onScrollSpeedUpdate(sy) {
    MAGNETIC BUTTONS
 ───────────────────────────────────────────── */
 (function initMagneticButtons() {
-  if (!HAS_FINE_POINTER) return;
+  if (!hasFinePointer) return;
   document.querySelectorAll('.btn-p, .btn-o, .btn-g, .sub-btn, .nav-cta')
     .forEach(btn => {
       let r = null;
@@ -259,7 +259,7 @@ function onScrollSpeedUpdate(sy) {
     }
 
     /* 4 — Parallax lifestyle image */
-    if (paraImg && paraWrap && !REDUCED_MOTION) {
+    if (paraImg && paraWrap && !reducedMotion) {
       const center = (paraWrapTop + paraWrapHeight / 2) - (sy + window.innerHeight / 2);
       paraImg.style.transform = `translateY(${center * 0.12}px)`;
     }
@@ -344,8 +344,8 @@ document.querySelectorAll(
    COUNTER ANIMATION
 ───────────────────────────────────────────── */
 function runCounter(el) {
-  if (el._done) return;
-  el._done = 1;
+  if (el.isDone) return;
+  el.isDone = true;
   const target = parseInt(el.dataset.t, 10);
   if (isNaN(target)) return;
   const dur   = 2200;
@@ -380,7 +380,7 @@ document.querySelectorAll('.ctr[data-t]').forEach(el => {
     chars.forEach((ch, i) => {
       const s = document.createElement('span');
       s.className = 'wc';
-      if (!REDUCED_MOTION) s.style.animationDelay = (i * 0.13) + 's';
+      if (!reducedMotion) s.style.animationDelay = (i * 0.13) + 's';
       s.textContent = ch === ' ' ? '\u00a0' : ch;
       frag.appendChild(s);
     });
@@ -502,18 +502,18 @@ document.querySelectorAll('.ctr[data-t]').forEach(el => {
       range: "180 KM",
       load: "100%",
       temp: "46°C",
-      bms: "WARM // AIR_COOLING",
+      bms: "WARM // AIR COOLING",
       alert: "BALLISTIC THRUST // ARMED",
       dashOffset: 0,
       theme: "theme-ballistic"
     },
-    ballistic_plus: {
+    'ballistic-plus': {
       speed: 162,
       banner: "BALLISTIC+ // UNRESTRICTED",
       range: "150 KM",
       load: "120%",
       temp: "51°C",
-      bms: "ALERT // SYS_OVERRIDE",
+      bms: "ALERT // SYS OVERRIDE",
       alert: "WARNING // POWERTRAIN UNLIMITED",
       dashOffset: 0,
       theme: "theme-ballistic-plus"
@@ -534,11 +534,11 @@ document.querySelectorAll('.ctr[data-t]').forEach(el => {
     if (tftTemp) tftTemp.textContent = data.temp;
     if (tftBms) {
       tftBms.textContent = data.bms;
-      tftBms.style.color = mode === 'ballistic_plus' ? '#E74C3C' : (mode === 'ballistic' ? '#F1C40F' : '#2ECC71');
+      tftBms.style.color = mode === 'ballistic-plus' ? '#E74C3C' : (mode === 'ballistic' ? '#F1C40F' : '#2ECC71');
     }
     if (tftAlert) {
       tftAlert.textContent = data.alert;
-      tftAlert.style.color = mode === 'ballistic_plus' ? '#E74C3C' : '';
+      tftAlert.style.color = mode === 'ballistic-plus' ? '#E74C3C' : '';
     }
 
     // Diagnostics telemetry sweep animation for speed and gauge meters
@@ -744,7 +744,7 @@ document.querySelectorAll('.ctr[data-t]').forEach(el => {
 
   sdots.forEach(d => d.addEventListener('click', () => {
     const sec = document.getElementById(d.dataset.sec);
-    if (sec) sec.scrollIntoView({ behavior: REDUCED_MOTION ? 'auto' : 'smooth' });
+    if (sec) sec.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' });
   }));
 
   secEls.forEach(s => {
@@ -875,7 +875,7 @@ function startEngine() {
   lfoGain.connect(engineFilter.frequency);
   lfo.start(now + 0.8);
 
-  engineOsc1._lfo = lfo;
+  engineOsc1.lfoNode = lfo;
 }
 
 function stopEngine() {
@@ -896,7 +896,7 @@ function stopEngine() {
     try {
       if (engineOsc1) {
         engineOsc1.stop();
-        if (engineOsc1._lfo) engineOsc1._lfo.stop();
+        if (engineOsc1.lfoNode) engineOsc1.lfoNode.stop();
       }
       if (engineOsc2) engineOsc2.stop();
     } catch(e){}
@@ -963,7 +963,7 @@ function stopEngine() {
           startEngine();
           btn.classList.add('active');
           document.body.classList.add('engine-active');
-          if (txt) txt.textContent = "ENGINE ACTIVE // SYS_01";
+          if (txt) txt.textContent = "ENGINE ACTIVE // SYS 01";
           if (icon) icon.textContent = "check_circle";
 
           if (sweep) {
@@ -1052,13 +1052,13 @@ function stopEngine() {
     });
 
     if (trim === 'recon') {
-      if (power) { power._done = 0; power.dataset.t = '30'; runCounter(power); }
-      if (torque) { torque._done = 0; torque.dataset.t = '100'; runCounter(torque); }
-      if (range) { range._done = 0; range.dataset.t = '323'; runCounter(range); }
+      if (power) { power.isDone = false; power.dataset.t = '30'; runCounter(power); }
+      if (torque) { torque.isDone = false; torque.dataset.t = '100'; runCounter(torque); }
+      if (range) { range.isDone = false; range.dataset.t = '323'; runCounter(range); }
     } else {
-      if (power) { power._done = 0; power.dataset.t = '27'; runCounter(power); }
-      if (torque) { torque._done = 0; torque.dataset.t = '90'; runCounter(torque); }
-      if (range) { range._done = 0; range.dataset.t = '211'; runCounter(range); }
+      if (power) { power.isDone = false; power.dataset.t = '27'; runCounter(power); }
+      if (torque) { torque.isDone = false; torque.dataset.t = '90'; runCounter(torque); }
+      if (range) { range.isDone = false; range.dataset.t = '211'; runCounter(range); }
     }
     
     // Play sound click

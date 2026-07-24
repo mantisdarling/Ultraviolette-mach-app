@@ -4,8 +4,8 @@
 
 (function initWebGL() {
   try {
-    const REDUCED_MOTION = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false;
-    if (REDUCED_MOTION) return;
+    const reducedMotion = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false;
+    if (reducedMotion) return;
 
     const c = document.getElementById('shader');
     if (!c) return;

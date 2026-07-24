@@ -1,10 +1,8 @@
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   SERVICE WORKER — Offline Caching & PWA Support
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+/* Service Worker - Offline Caching and PWA Support */
 
-const CACHE_NAME = "mach-ev-cache-v8";
+const cacheName = "mach-ev-cache-v9";
 
-const STATIC_ASSETS = [
+const staticAssets = [
   "./",
   "./index.html",
   "./site.webmanifest",
@@ -40,9 +38,9 @@ const STATIC_ASSETS = [
 // Cache all static assets during installation
 self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
+    caches.open(cacheName).then(cache => {
       console.log("[Service Worker] Pre-caching offline assets");
-      return cache.addAll(STATIC_ASSETS);
+      return cache.addAll(staticAssets);
     })
   );
   self.skipWaiting();
@@ -54,7 +52,7 @@ self.addEventListener("activate", event => {
     caches.keys().then(cacheKeys => {
       return Promise.all(
         cacheKeys.map(key => {
-          if (key !== CACHE_NAME) {
+          if (key !== cacheName) {
             console.log("[Service Worker] Removing old cache:", key);
             return caches.delete(key);
           }
@@ -76,7 +74,7 @@ self.addEventListener("fetch", event => {
         .then(response => {
           // Put clone into cache for offline retrieval
           const resClone = response.clone();
-          caches.open(CACHE_NAME).then(cache => {
+          caches.open(cacheName).then(cache => {
             cache.put(event.request, resClone);
           });
           return response;
@@ -101,7 +99,7 @@ self.addEventListener("fetch", event => {
 
           // Dynamically cache external fonts and other fetched resources
           const resClone = response.clone();
-          caches.open(CACHE_NAME).then(cache => {
+          caches.open(cacheName).then(cache => {
             cache.put(event.request, resClone);
           });
           return response;
