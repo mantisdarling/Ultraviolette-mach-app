@@ -1,6 +1,6 @@
 # Ultraviolette F77 Mach 2 Clone
 
-A high-performance, cinematic, vanilla web recreation of the official **[Ultraviolette F77 Mach 2](https://www.ultraviolette.com)** website. Built strictly with standard HTML5, CSS3, and JavaScript, focusing on lightweight rendering, zero external library dependencies, and interactive WebGL/Web Audio systems.
+A high-performance, cinematic, vanilla web recreation of the official **[Ultraviolette F77 Mach 2](https://www.ultraviolette.com)** website. Built strictly with standard HTML5, CSS3, and JavaScript, focusing on lightweight rendering, hardware-accelerated scroll engines, and interactive WebGL/Web Audio systems.
 
 ---
 
@@ -16,109 +16,95 @@ A high-performance, cinematic, vanilla web recreation of the official **[Ultravi
 
 ---
 
-## About the Project
+## Project Overview
 
-This clone is a **pixel-close recreation** of the Ultraviolette Automotive landing page—one of the most visually refined EV brand sites on the web. 
-
-The goal was to rebuild the site from first principles without heavy libraries or frameworks, studying layout mechanics, animation states, and performant scroll triggers.
-
-> [!WARNING]
-> This repository is built strictly for **educational and portfolio purposes**. All trademarks, images, and logos belong to **Ultraviolette Automotive Pvt. Ltd., Bangalore**.
+This repository houses a high-fidelity recreation of the landing page for the Ultraviolette F77 Mach 2. The objective of this project is to implement advanced layout paradigms, custom audio synthesis, and hardware-accelerated rendering using vanilla web standards. By avoiding client-side framework libraries, the project achieves near-instantaneous load times and a highly performant execution pipeline.
 
 ---
 
-## Performance & Optimization Highlights
+## Architectural and Performance Engineering
 
-To ensure smooth animations and low CPU/GPU footprints, the following optimization techniques are implemented:
-* **Zero Scroll-Jacking:** Leverages hardware-accelerated native browser scrolling, keeping gesture momentum and kinetic responsiveness fully intact.
-* **Layout Dimension Caching:** Layout dimensions, offset measurements, and scroll heights are queried once on page load and cached on window resize events, completely eliminating forced reflows (layout thrashing) on scroll ticks.
-* **WebGL Activity Sleep:** Canvas viewport sizes are queried only during resize observer callbacks (not on every animation frame), and GL rendering pauses automatically when the tab is inactive or minimized.
-* **Magnetic Hover Bounding Rect Caching:** Bounding dimensions of interactive elements are cached on hover entry to prevent coordinate shifting loops during hover translations.
+### Kinematic Scroll Smoothing
+Scrolling velocity is virtualized and controlled via the Lenis scroll engine. By translating scroll inputs along mathematical deceleration curves, the layout achieves elastic inertia on mouse and touchpad events. This smoothing layer directly coordinates all viewport-relative scroll triggers.
 
----
+### GPU-Accelerated Parallax Threading
+Elements annotated with the parallax attribute are calculated dynamically relative to the viewport center. Calculations run inside a browser requestAnimationFrame loop, updating CSS translations via GPU compositor threads using will-change properties. This architecture mitigates layout thrashing and paint bottlenecks.
 
-## Core Features
+### Programmatic Web Audio Powertrain Synthesizer
+Rather than streaming compressed audio files, the app synthesizes motorcycle drone signatures in real-time. It configures native browser oscillator and lowpass filter nodes through a master gain control, adjusting pitch frequencies dynamically in response to scroll velocity.
 
-* **TFT Instrument Mockup:** An interactive digital dashboard cluster updating clock speeds, temperature levels, and alert parameters dynamically when toggling Glide, Combat, Ballistic, and Ballistic+ riding modes.
-* **Programmatic Web Audio Synth:** A raw Web Audio API synthesizer that generates a mechanical electric powertrain drone, pitch-modulating dynamically based on the user's scroll velocity.
-* **Hotspot Chassis Explorer:** An interactive blueprints page mapping vehicle parts with dynamic, responsive SVG indicator line sweeps.
-* **Trim Configuration Estimator:** Real-time calculation widgets estimating battery range and fast charging times relative to base and Recon trim parameters.
-* **PWA & Offline Support:** Integrated service worker (`sw.js`) cache registers to facilitate instantaneous subsequent loads and partial offline operation.
+### Service Worker Caching and Cache Invalidation
+A Progressive Web App service worker operates a cache-first strategy for structural assets. Upon updates, cache keys are incremented to trigger activate events that prune outdated cache allocations, forcing browsers to fetch newly deployed configurations and resources.
 
 ---
 
-## Tech Stack
+## Technical Specifications and Features
 
-| Technology | Role | Implementation Details |
-| :--- | :--- | :--- |
-| **HTML5** | Semantic Layout | Semantic structures, JSON-LD structured product tags, and responsive image configurations |
-| **CSS3** | Premium Aesthetics | Custom animations, responsive grids, dark theme gradients, and custom glassmorphism styles |
-| **JavaScript** | Interactivity | Vanilla DOM scripting, observer tracking, and programmatic number counters |
-| **WebGL (GLSL)** | Background shader | Fragment shader quad generating noise-driven cosmic nebula backgrounds |
-| **Web Audio API** | Synthesizer | Programmatic oscillator, filter, and low-frequency oscillator (LFO) nodes |
-| **Service Workers** | PWA Caching | Pre-caching static assets and offline cache-first strategies |
+* **Real-Time Range and Charge Simulator:** Implements mathematical models predicting battery depletion and charging curves based on base and Recon trim parameters.
+* **Interactive Specs Column Isolator:** Filters columns dynamically to highlight a chosen trim level. Hides inactive columns on responsive viewports to fit small displays without table overflows.
+* **TFT Instrument Dashboard Cluster Simulation:** Updates simulated motorcycle parameters (riding modes, alert statuses, time ticks) in response to click triggers.
+* **Typewriter Diagnostics Terminal Logs:** Sequential string rendering routine that logs diagnostic parameters on engine ignition sequences.
+* **Vector Path HUD Connector Lines:** Uses SVG stroke-dasharray and stroke-dashoffset transitions to sweep lines outward from schematic hotspots to information cards.
+* **Holographic Variant Card Shimmers:** Employs CSS linear gradients sliding horizontally on card container hover events.
 
 ---
 
-## Getting Started
+## Project Directory Structure
 
-### Local Development
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/mantisdarling/ultraviolette-website-clone.git
-   cd ultraviolette-website-clone
-   ```
-
-2. **Run a development server:**
-   Running a local server is recommended to enable WebGL and Service Worker assets to fetch properly:
-   ```bash
-   # Option A: Python Server
-   python -m http.server 8080
-
-   # Option B: Node.js Server
-   npx http-server . -p 8080
-   ```
-
-3. Open `http://localhost:8080` in your web browser.
-
----
-
-## Project Structure
-
-```directory
+```text
 ultraviolette-website-clone/
 ├── css/
-│   ├── critical.css      # Critical inline CSS loaded above-the-fold
-│   └── main.css          # Core styles, responsive layout overrides, and transitions
+│   ├── critical.css      # Above-the-fold inline styling
+│   └── main.css          # Core layouts, responsive design, and transitions
 ├── js/
-│   ├── main.js           # Core scroll updates, spec configuration, and audio synthesis
-│   └── webgl-nebula.js   # WebGL noise canvas fragment shader setup
+│   ├── main.js           # Interactive state controllers, simulators, and synth nodes
+│   └── webgl-nebula.js   # WebGL noise canvas fragment shader pipeline
 ├── assets/
-│   ├── images/           # Optimized WebP assets for bike trims and chapters
-│   └── icons/            # App icons for PWA configuration
-├── sw.js                 # Service worker cache register
-├── site.webmanifest      # PWA app metadata manifest
-├── preview.png           # Repository preview image
+│   ├── images/           # WebP bike variant images
+│   └── icons/            # Manifest and home icons
+├── sw.js                 # Service worker cache script
+├── site.webmanifest      # Progressive Web App configuration
+├── preview.png           # Repository thumbnail
 └── README.md             # Project documentation
 ```
 
 ---
 
-## UI Archaeology Series
+## Getting Started
 
-This project is the inaugural entry of the **UI Archaeology Series**, dedicated to reverse-engineering and rebuilding highly refined user interfaces to explore vanilla layout and animation paradigms.
+### Local Setup
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/mantisdarling/ultraviolette-website-clone.git
+   cd ultraviolette-website-clone
+   ```
+
+2. Start a local server to resolve WebGL and Service Worker assets:
+   ```bash
+   # Python server
+   python -m http.server 8080
+
+   # Node.js server
+   npx http-server . -p 8080
+   ```
+
+3. Navigate to `http://localhost:8080` in your web browser.
+
+---
+
+## UI Archaeology Series
+This project represents the inaugural entry in the UI Archaeology Series, dedicated to analyzing and recreating visual engineering designs using basic web APIs.
 
 | Entry | Target Project | Tech Stack | Status |
 | :---: | :--- | :--- | :---: |
-| **001** | **Ultraviolette Automotive Landing Page** | HTML5, CSS3, JS, WebGL, Web Audio API | Completed |
-| **002** | Coming soon... | — | Upcoming |
+| 001 | Ultraviolette Automotive Landing Page | HTML5, CSS3, JS, WebGL, Web Audio API | Completed |
+| 002 | Upcoming project | To be announced | In planning |
 
 ---
 
 <div align="center">
-  <p>Created by <strong>Mantis Darling</strong></p>
-  <a href="https://github.com/mantisdarling"><img src="https://img.shields.io/badge/GitHub-000000?style=flat-square&logo=github&logoColor=7B2CBF" alt="Mantis's GitHub" /></a>
+  <p>Created by Mantis Darling</p>
+  <a href="https://github.com/mantisdarling"><img src="https://img.shields.io/badge/GitHub-000000?style=flat-square&logo=github&logoColor=7B2CBF" alt="GitHub Profile" /></a>
   &nbsp;
-  <a href="https://github.com/mantisdarling/ultraviolette-website-clone"><img src="https://komarev.com/ghpvc/?username=mantisdarling&style=flat-square&color=6A0DAD&label=views" alt="views" /></a>
+  <a href="https://github.com/mantisdarling/ultraviolette-website-clone"><img src="https://komarev.com/ghpvc/?username=mantisdarling&style=flat-square&color=6A0DAD&label=views" alt="repository views" /></a>
 </div>
