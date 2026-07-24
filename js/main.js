@@ -180,14 +180,19 @@ function onScrollSpeedUpdate(sy) {
   if (!HAS_FINE_POINTER) return;
   document.querySelectorAll('.btn-p, .btn-o, .btn-g, .sub-btn, .nav-cta')
     .forEach(btn => {
+      let r = null;
+      btn.addEventListener('mouseenter', () => {
+        r = btn.getBoundingClientRect();
+      });
       btn.addEventListener('mousemove', e => {
-        const r  = btn.getBoundingClientRect();
+        if (!r) r = btn.getBoundingClientRect();
         const cx = e.clientX - r.left  - r.width  / 2;
         const cy = e.clientY - r.top   - r.height / 2;
         btn.style.transform = `translate(${cx * 0.18}px, ${cy * 0.18}px)`;
       });
       btn.addEventListener('mouseleave', () => {
         btn.style.transform = '';
+        r = null;
       });
     });
 })();
@@ -1165,14 +1170,6 @@ function stopEngine() {
     }
   }
 
-  function detectActiveTrim() {
-    const activeTrimBtn = document.querySelector('.trim-btn.on');
-    if (activeTrimBtn) {
-      activeTrim = activeTrimBtn.dataset.trim;
-    }
-    updateSimulation();
-  }
-
   slider.addEventListener('input', updateSimulation);
 
   modeBtns.forEach(btn => {
@@ -1192,6 +1189,5 @@ function stopEngine() {
     });
   });
 
-  setInterval(detectActiveTrim, 800);
   updateSimulation();
 })();
