@@ -4,13 +4,13 @@ A high-performance, cinematic, vanilla web recreation of the official **[Ultravi
 
 ---
 
-## ◼ Preview
+## Preview
 
-![Preview](preview.png)
+![Preview](./preview.png)
 
 <div align="center">
 
-`🔗` **[ultraviolette-automobile-clone.vercel.app](https://ultraviolette-automobile-clone.vercel.app/)**
+**[ultraviolette-automobile-clone.vercel.app](https://ultraviolette-automobile-clone.vercel.app/)**
 
 </div>
 
@@ -98,7 +98,6 @@ This project represents the inaugural entry in the UI Archaeology Series, dedica
 | Entry | Target Project | Tech Stack | Status |
 | :---: | :--- | :--- | :---: |
 | 001 | Ultraviolette Automotive Landing Page | HTML5, CSS3, JS, WebGL, Web Audio API | Completed |
-| 002 | Upcoming project | To be announced | In planning |
 
 ---
 
