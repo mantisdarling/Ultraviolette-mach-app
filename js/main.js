@@ -633,7 +633,7 @@ document.querySelectorAll('.ctr[data-t]').forEach(el => {
   const formBtn = document.getElementById('form-btn');
   if (!form) return;
 
-  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
   function showError(msg) {
     formBtn.textContent      = msg;
@@ -649,8 +649,8 @@ document.querySelectorAll('.ctr[data-t]').forEach(el => {
     const name  = (document.getElementById('fn')  || {}).value?.trim() || '';
     const email = (document.getElementById('fe')  || {}).value?.trim() || '';
 
-    if (!name || name.length < 2)         { showError('ENTER YOUR NAME');        return; }
-    if (!email || !EMAIL_RE.test(email))  { showError('INVALID EMAIL ADDRESS');  return; }
+    if (!name || name.length < 2)            { showError('ENTER YOUR NAME');        return; }
+    if (!email || !emailRegex.test(email))  { showError('INVALID EMAIL ADDRESS');  return; }
 
     formBtn.textContent = 'TRANSMITTING\u2026';
     formBtn.disabled    = true;

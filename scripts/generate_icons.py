@@ -1,7 +1,7 @@
 import os
 from PIL import Image, ImageDraw
 
-def generate_pwa_icons():
+def generatePwaIcons():
     os.makedirs(os.path.join("assets", "icons"), exist_ok=True)
     
     # Stylized M points for drawings
@@ -36,4 +36,4 @@ def generate_pwa_icons():
     print(f"Generated {path512}")
 
 if __name__ == "__main__":
-    generate_pwa_icons()
+    generatePwaIcons()
