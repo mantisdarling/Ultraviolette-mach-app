@@ -1456,3 +1456,38 @@ function stopEngine() {
   // Initial trigger to position elements
   updateParallax();
 })();
+
+/* ─────────────────────────────────────────────
+   CINEMATIC SPLIT TEXT REVEAL ENGINE
+   ───────────────────────────────────────────── */
+(function initSplitReveal() {
+  const elements = document.querySelectorAll('.split-reveal');
+  elements.forEach(el => {
+    // Preserve formatting and wrap each word
+    const text = el.innerText.trim();
+    const words = text.split(/\s+/);
+    el.innerHTML = words.map((word, idx) => {
+      return `<span class="word-mask" style="display:inline-block;overflow:hidden;vertical-align:top;margin-right:0.25em">
+        <span class="word-inner" style="display:inline-block;transform:translateY(105%);transition:transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);transition-delay:${idx * 0.05}s">
+          ${word}
+        </span>
+      </span>`;
+    }).join('');
+  });
+
+  // Observe reveal triggers
+  const splitRevealIO = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('on');
+        const inners = entry.target.querySelectorAll('.word-inner');
+        inners.forEach(inner => {
+          inner.style.transform = 'translateY(0)';
+        });
+        splitRevealIO.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  elements.forEach(el => splitRevealIO.observe(el));
+})();
