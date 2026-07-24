@@ -1,53 +1,8 @@
-<div align="center">
+# Ultraviolette F77 Mach 2 Clone
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=000000&height=250&section=header&text=Ultraviolette%20Website%20Clone&fontSize=36&fontColor=ffffff&fontAlignY=42&desc=UI%20Archaeology%20Series%20%E2%80%94%20Entry%20001&descAlignY=62&descSize=15&animation=fadeIn&stroke=6A0DAD&strokeWidth=3" />
+A high-performance, cinematic, vanilla web recreation of the official **[Ultraviolette F77 Mach 2](https://www.ultraviolette.com)** website. Built strictly with standard HTML5, CSS3, and JavaScript, focusing on lightweight rendering, zero external library dependencies, and interactive WebGL/Web Audio systems.
 
-<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=15&duration=3000&pause=1200&color=6A0DAD&center=true&vCenter=true&width=560&lines=Reverse-engineered+from+scratch.;No+frameworks.+Just+fundamentals.;Built+to+understand+how+great+UIs+work." alt="typing" />
-
-<br/><br/>
-
-[![Live Demo](https://img.shields.io/badge/▶_LIVE_DEMO-000000?style=for-the-badge&logoColor=6A0DAD&labelColor=000000&color=000000)](https://ultraviolette-website-clone.vercel.app)
-&nbsp;
-![HTML](https://img.shields.io/badge/HTML-000000?style=for-the-badge&logo=html5&logoColor=E34F26)
-&nbsp;
-![CSS](https://img.shields.io/badge/CSS-000000?style=for-the-badge&logo=css3&logoColor=1572B6)
-&nbsp;
-![JS](https://img.shields.io/badge/JavaScript-000000?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
-&nbsp;
-![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=ffffff)
-&nbsp;
-![Git](https://img.shields.io/badge/Git-000000?style=for-the-badge&logo=git&logoColor=F05032)
-
-<br/>
-
-[![Responsive](https://img.shields.io/badge/Responsive-000000?style=for-the-badge&logoColor=6A0DAD)](https://ultraviolette-website-clone.vercel.app)
-&nbsp;
-![Animations](https://img.shields.io/badge/Animations-000000?style=for-the-badge&logoColor=6A0DAD)
-&nbsp;
-![Vanilla JS](https://img.shields.io/badge/Vanilla_JS-000000?style=for-the-badge&logoColor=6A0DAD)
-&nbsp;
-![No Framework](https://img.shields.io/badge/No_Framework-000000?style=for-the-badge&logoColor=6A0DAD)
-&nbsp;
-![Status](https://img.shields.io/badge/COMPLETE_✅-000000?style=for-the-badge&logoColor=6A0DAD)
-
-<br/><br/>
-
-</div>
-
-<br/>
-
-```
- ██╗   ██╗██╗  ████████╗██████╗  █████╗ ██╗   ██╗██╗ ██████╗ ██╗     ███████╗████████╗████████╗███████╗
- ██║   ██║██║  ╚══██╔══╝██╔══██╗██╔══██╗██║   ██║██║██╔═══██╗██║     ██╔════╝╚══██╔══╝╚══██╔══╝██╔════╝
- ██║   ██║██║     ██║   ██████╔╝███████║██║   ██║██║██║   ██║██║     █████╗     ██║      ██║   █████╗
- ██║   ██║██║     ██║   ██╔══██╗██╔══██║╚██╗ ██╔╝██║██║   ██║██║     ██╔══╝     ██║      ██║   ██╔══╝
- ╚██████╔╝███████╗██║   ██║  ██║██║  ██║ ╚████╔╝ ██║╚██████╔╝███████╗███████╗   ██║      ██║   ███████╗
-  ╚═════╝ ╚══════╝╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝   ╚═╝      ╚═╝   ╚══════╝
-```
-
-<div align="center">💀━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━💀</div>
-
-
+---
 
 ## ◼ Preview
 
@@ -59,169 +14,111 @@
 
 </div>
 
-<div align="center">💀━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━💀</div>
+---
 
-## ◼ About
+## About the Project
 
-A **pixel-close recreation** of the [Ultraviolette Automotive](https://ultraviolette.com) website — one of the most visually refined EV brand sites out there.
+This clone is a **pixel-close recreation** of the Ultraviolette Automotive landing page—one of the most visually refined EV brand sites on the web. 
 
-Built entirely from scratch using pure HTML, CSS, and JavaScript. No React. No Tailwind. No shortcuts.
+The goal was to rebuild the site from first principles without heavy libraries or frameworks, studying layout mechanics, animation states, and performant scroll triggers.
 
-The goal wasn't just to make it *look* similar — it was to understand *why* it looks the way it does. Every section was studied, broken down, and rebuilt from first principles.
+> [!WARNING]
+> This repository is built strictly for **educational and portfolio purposes**. All trademarks, images, and logos belong to **Ultraviolette Automotive Pvt. Ltd., Bangalore**.
 
-> ⚠️ Built strictly for **educational and portfolio purposes only.**
-> Not affiliated with or endorsed by Ultraviolette Automotive Pvt. Ltd.
+---
 
-<div align="center">💀━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━💀</div>
+## Performance & Optimization Highlights
 
-## ◼ Features
+To ensure smooth animations and low CPU/GPU footprints, the following optimization techniques are implemented:
+* **Zero Scroll-Jacking:** Leverages hardware-accelerated native browser scrolling, keeping gesture momentum and kinetic responsiveness fully intact.
+* **Layout Dimension Caching:** Layout dimensions, offset measurements, and scroll heights are queried once on page load and cached on window resize events, completely eliminating forced reflows (layout thrashing) on scroll ticks.
+* **WebGL Activity Sleep:** Canvas viewport sizes are queried only during resize observer callbacks (not on every animation frame), and GL rendering pauses automatically when the tab is inactive or minimized.
+* **Magnetic Hover Bounding Rect Caching:** Bounding dimensions of interactive elements are cached on hover entry to prevent coordinate shifting loops during hover translations.
 
-```terminal
-┌─────────────────────────────────────────────────────────────────┐
-│                        FEATURES                                  │
-├──────────────────────────┬──────────────────────────────────────┤
-│  📱 Responsive Design    │  Fluid across all screen sizes       │
-│  🎞️  Smooth Animations   │  Scroll-triggered transitions        │
-│  🏎️  TFT Cluster Dashboard│  Interactive Speedometer Mockup      │
-│  🔋 Range Simulator      │  Dynamic state-of-charge estimator   │
-│  🛠️  Chassis Hotspot HUD │  Specs hotspots with HUD indicators  │
-│  🎵 Web Audio Engine     │  Synth engine drone & scroll throttle│
-│  🚀 PWA Caching Support  │  Offline Service Worker functionality│
-│  ⚡ Zero Dependencies    │  Pure vanilla — no libraries         │
-│  🎨 Premium Aesthetic    │  Ultraviolette's dark visual style   │
-└──────────────────────────┴──────────────────────────────────────┘
-```
+---
 
-<div align="center">💀━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━💀</div>
+## Core Features
 
-## ◼ Tech Stack
+* **TFT Instrument Mockup:** An interactive digital dashboard cluster updating clock speeds, temperature levels, and alert parameters dynamically when toggling Glide, Combat, Ballistic, and Ballistic+ riding modes.
+* **Programmatic Web Audio Synth:** A raw Web Audio API synthesizer that generates a mechanical electric powertrain drone, pitch-modulating dynamically based on the user's scroll velocity.
+* **Hotspot Chassis Explorer:** An interactive blueprints page mapping vehicle parts with dynamic, responsive SVG indicator line sweeps.
+* **Trim Configuration Estimator:** Real-time calculation widgets estimating battery range and fast charging times relative to base and Recon trim parameters.
+* **PWA & Offline Support:** Integrated service worker (`sw.js`) cache registers to facilitate instantaneous subsequent loads and partial offline operation.
 
-<div align="center">
-  <img src="https://skillicons.dev/icons?i=html,css,js,vercel,git&theme=dark" alt="stack" />
-</div>
+---
 
-<br/>
+## Tech Stack
 
-```terminal
-┌─────────────────────────────────────────────────────────────────┐
-│                        TECH STACK                                │
-├─────────────────┬───────────────────────────────────────────────┤
-│  HTML           │  Structure & semantic layout                  │
-│  CSS            │  Styling, animations, responsive design       │
-│  JavaScript     │  Interactivity & dynamic behaviour            │
-│  Git            │  Version control                              │
-│  Vercel         │  Deployment & hosting                         │
-└─────────────────┴───────────────────────────────────────────────┘
-```
+| Technology | Role | Implementation Details |
+| :--- | :--- | :--- |
+| **HTML5** | Semantic Layout | Semantic structures, JSON-LD structured product tags, and responsive image configurations |
+| **CSS3** | Premium Aesthetics | Custom animations, responsive grids, dark theme gradients, and custom glassmorphism styles |
+| **JavaScript** | Interactivity | Vanilla DOM scripting, observer tracking, and programmatic number counters |
+| **WebGL (GLSL)** | Background shader | Fragment shader quad generating noise-driven cosmic nebula backgrounds |
+| **Web Audio API** | Synthesizer | Programmatic oscillator, filter, and low-frequency oscillator (LFO) nodes |
+| **Service Workers** | PWA Caching | Pre-caching static assets and offline cache-first strategies |
 
-<div align="center">💀━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━💀</div>
+---
 
-## ◼ Trophies & Stats
+## Getting Started
 
-<div align="center">
+### Local Development
 
-[![Stars](https://img.shields.io/github/stars/mantisdarling/ultraviolette-website-clone?style=for-the-badge&logo=github&color=7B2CBF&logoColor=ffffff)](https://github.com/mantisdarling/ultraviolette-website-clone/stargazers)
-&nbsp;
-[![Forks](https://img.shields.io/github/forks/mantisdarling/ultraviolette-website-clone?style=for-the-badge&logo=github&color=7B2CBF&logoColor=ffffff)](https://github.com/mantisdarling/ultraviolette-website-clone/network/members)
-&nbsp;
-[![License](https://img.shields.io/github/license/mantisdarling/ultraviolette-website-clone?style=for-the-badge&color=7B2CBF)](https://github.com/mantisdarling/ultraviolette-website-clone/blob/main/LICENSE)
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/mantisdarling/ultraviolette-website-clone.git
+   cd ultraviolette-website-clone
+   ```
 
-<br/>
+2. **Run a development server:**
+   Running a local server is recommended to enable WebGL and Service Worker assets to fetch properly:
+   ```bash
+   # Option A: Python Server
+   python -m http.server 8080
 
-<img src="https://github-readme-stats.vercel.app/api?username=mantisdarling&show_icons=true&theme=rose_pine&bg_color=080808&title_color=7B2CBF&text_color=ffffff&icon_color=7B2CBF&border_color=1a0f2e" alt="Mantis's GitHub Stats" />
-&nbsp;
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=mantisdarling&layout=compact&theme=rose_pine&bg_color=080808&title_color=7B2CBF&text_color=ffffff&border_color=1a0f2e" alt="Top Languages" />
+   # Option B: Node.js Server
+   npx http-server . -p 8080
+   ```
 
-</div>
+3. Open `http://localhost:8080` in your web browser.
 
-<div align="center">💀━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━💀</div>
+---
 
-## ◼ Streak
+## Project Structure
 
-<div align="center">
-  <img src="https://streak-stats.demolab.com?user=mantisdarling&theme=dark&background=000000&border=6A0DAD&stroke=6A0DAD&ring=6A0DAD&fire=6A0DAD&currStreakNum=ffffff&sideNums=ffffff&currStreakLabel=6A0DAD&sideLabels=6A0DAD&dates=888888&hide_border=false" alt="streak" />
-</div>
-
-<div align="center">💀━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━💀</div>
-
-## ◼ Getting Started
-
-```bash
-# Clone
-git clone https://github.com/mantisdarling/ultraviolette-website-clone.git
-
-# Enter
-cd ultraviolette-website-clone
-
-# Run — Option A: double-click index.html
-# Run — Option B: VS Code + Live Server (recommended)
-open index.html
-```
-
-> Or just hit the live demo → **[ultraviolette-website-clone.vercel.app](https://ultraviolette-website-clone.vercel.app)**
-
-<div align="center">💀━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━💀</div>
-
-## ◼ Project Structure
-
-```
+```directory
 ultraviolette-website-clone/
-│
-├── index.html            ←  Primary HTML entry point
-├── css/                  ←  Stylesheets
-│   ├── critical.css      ←  Inline above-the-fold styles
-│   └── main.css          ←  Cinematic aesthetic styles
-├── js/                   ←  Logic & interactivity script modules
-│   ├── main.js           ←  Core scroll, audio, hotspot, & UI logic
-│   └── webgl-nebula.js   ←  WebGL noise-shaping ripple clouds
-├── assets/               ←  Optimized WebP visuals & app icons
-│   ├── images/           ←  High-res bike liveries & chapters WebPs
-│   └── icons/            ←  PWA launcher icon variants
-├── sw.js                 ←  Offline caching Service Worker PWA support
-├── site.webmanifest      ←  PWA app manifest
-├── preview.png           ←  Project screenshot preview
-└── README.md             ←  You are here
+├── css/
+│   ├── critical.css      # Critical inline CSS loaded above-the-fold
+│   └── main.css          # Core styles, responsive layout overrides, and transitions
+├── js/
+│   ├── main.js           # Core scroll updates, spec configuration, and audio synthesis
+│   └── webgl-nebula.js   # WebGL noise canvas fragment shader setup
+├── assets/
+│   ├── images/           # Optimized WebP assets for bike trims and chapters
+│   └── icons/            # App icons for PWA configuration
+├── sw.js                 # Service worker cache register
+├── site.webmanifest      # PWA app metadata manifest
+├── preview.png           # Repository preview image
+└── README.md             # Project documentation
 ```
 
-<div align="center">💀━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━💀</div>
+---
 
-## ◼ UI Archaeology Series
+## UI Archaeology Series
 
-```terminal
-$ cat ui-archaeology.log
+This project is the inaugural entry of the **UI Archaeology Series**, dedicated to reverse-engineering and rebuilding highly refined user interfaces to explore vanilla layout and animation paradigms.
 
-[INFO]  UI Archaeology — the practice of reverse-engineering
-        exceptional production interfaces to understand how
-        they are truly built. Not to copy. To learn.
+| Entry | Target Project | Tech Stack | Status |
+| :---: | :--- | :--- | :---: |
+| **001** | **Ultraviolette Automotive Landing Page** | HTML5, CSS3, JS, WebGL, Web Audio API | Completed |
+| **002** | Coming soon... | — | Upcoming |
 
-[LOG]   Series started by  :  mantisdarling
-[LOG]   Mission            :  rebuild one great UI at a time, from scratch.
-
-┌──────┬──────────────────────────────┬──────────────────┬──────────────┐
-│  #   │  Project                     │  Stack           │  Status      │
-├──────┼──────────────────────────────┼──────────────────┼──────────────┤
-│  001 │  Ultraviolette Automotive    │  HTML · CSS · JS │  ✅ DONE     │
-│  002 │  Coming soon...              │  —               │  🔲 UPCOMING │
-└──────┴──────────────────────────────┴──────────────────┴──────────────┘
-
-[END]   More entries loading...
-```
-
-
-<div align="center">💀━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━💀</div>
+---
 
 <div align="center">
-
-<br/>
-
-```
-  built by mantisdarling  ·  ui archaeology series  ·  github.com/mantisdarling
-```
-
-[![GitHub](https://img.shields.io/badge/mantisdarling-000000?style=flat-square&logo=github&logoColor=6A0DAD)](https://github.com/mantisdarling)
-&nbsp;
-[![Views](https://komarev.com/ghpvc/?username=mantisdarling&style=flat-square&color=6A0DAD&label=views)](https://github.com/mantisdarling/ultraviolette-website-clone)
-
-<img src="https://capsule-render.vercel.app/api?type=waving&color=000000&height=120&section=footer&animation=fadeIn&stroke=6A0DAD&strokeWidth=3" />
-
+  <p>Created by <strong>Mantis Darling</strong></p>
+  <a href="https://github.com/mantisdarling"><img src="https://img.shields.io/badge/GitHub-000000?style=flat-square&logo=github&logoColor=7B2CBF" alt="Mantis's GitHub" /></a>
+  &nbsp;
+  <a href="https://github.com/mantisdarling/ultraviolette-website-clone"><img src="https://komarev.com/ghpvc/?username=mantisdarling&style=flat-square&color=6A0DAD&label=views" alt="views" /></a>
 </div>
