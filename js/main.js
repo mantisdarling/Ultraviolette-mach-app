@@ -1400,3 +1400,59 @@ function stopEngine() {
     slider.scrollLeft = scrollLeft - walk;
   });
 })();
+
+/* ─────────────────────────────────────────────
+   SCROLL PARALLAX ENGINE
+   ───────────────────────────────────────────── */
+(function initScrollParallax() {
+  const targets = document.querySelectorAll('.px-shift');
+  if (!targets.length) return;
+
+  let ticking = false;
+
+  function updateParallax() {
+    const viewHeight = window.innerHeight;
+    const viewTop = window.scrollY;
+    const viewBottom = viewTop + viewHeight;
+
+    targets.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      const elTop = viewTop + rect.top;
+      const elHeight = rect.height;
+      const elBottom = elTop + elHeight;
+
+      // Check if element is inside the viewport bounds
+      if (elBottom >= viewTop && elTop <= viewBottom) {
+        // Calculate raw relative scroll position percentage
+        const progress = (viewBottom - elTop) / (viewHeight + elHeight);
+        
+        // Offset range from -0.5 to 0.5 (centered at 0)
+        const offset = progress - 0.5;
+
+        const speedX = parseFloat(el.dataset.pxX) || 0;
+        const speedY = parseFloat(el.dataset.pxY) || 0;
+
+        const tx = offset * speedX * 100;
+        const ty = offset * depthOffset(speedY) * 100; // Add fine parallax curve scaling
+
+        function depthOffset(s) {
+          return s;
+        }
+
+        el.style.transform = `translate3d(${tx}px, ${ty}px, 0)`;
+      }
+    });
+
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(updateParallax);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  // Initial trigger to position elements
+  updateParallax();
+})();

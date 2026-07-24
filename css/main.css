@@ -3619,3 +3619,12 @@ button:focus-visible,
   pointer-events: none;
   opacity: 0.35;
 }
+
+/* GPU-Accelerated Scroll Parallax offsets */
+.px-shift {
+  display: inline-block;
+  will-change: transform;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1);
+}
