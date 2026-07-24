@@ -659,13 +659,15 @@ body {
   font-weight: 800;
   font-size: clamp(56px, 12vw, 176px);
   line-height: .80;
-  letter-spacing: -.04em;
+  letter-spacing: -.05em;
   text-transform: uppercase;
+  transition: text-shadow 0.4s ease;
 }
 
 .hero-h1 .l1 {
   color: #fff;
   text-shadow: 0 0 100px rgba(168,85,247,.25);
+  transition: text-shadow 0.4s ease;
 }
 
 .hero-h1 .l2 {
@@ -674,6 +676,16 @@ body {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   filter: drop-shadow(0 0 40px rgba(168,85,247,.4));
+  transition: filter 0.4s ease;
+}
+
+/* Engine Active Pulsing Neon Glows */
+.engine-active .hero-h1 .l1 {
+  text-shadow: 0 0 15px rgba(168,85,247,0.65), 0 0 35px rgba(168,85,247,0.4);
+}
+
+.engine-active .hero-h1 .l2 {
+  filter: drop-shadow(0 0 20px rgba(168,85,247,0.75));
 }
 
 .hero-sub {

@@ -962,6 +962,7 @@ function stopEngine() {
 
           startEngine();
           btn.classList.add('active');
+          document.body.classList.add('engine-active');
           if (txt) txt.textContent = "ENGINE ACTIVE // SYS_01";
           if (icon) icon.textContent = "check_circle";
 
@@ -977,6 +978,7 @@ function stopEngine() {
     } else {
       stopEngine();
       btn.classList.remove('active');
+      document.body.classList.remove('engine-active');
       if (txt) txt.textContent = "START ENGINE";
       if (icon) icon.textContent = "power_settings_new";
 

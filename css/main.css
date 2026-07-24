@@ -648,11 +648,12 @@ section::before {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse at 50% 60%, rgba(123,44,191,.2) 0%, transparent 65%),
-    radial-gradient(ellipse at 50% 30%, rgba(168,85,247,.1) 0%, transparent 50%);
+    radial-gradient(ellipse at 50% 60%, var(--glow) 0%, transparent 65%),
+    radial-gradient(ellipse at 50% 30%, rgba(255,255,255,0.02) 0%, transparent 50%);
   filter: blur(30px);
   pointer-events: none;
   animation: bikeGlowPulse 5s ease-in-out infinite;
+  transition: background 0.4s ease;
 }
 
 @keyframes bikeGlowPulse {
@@ -3560,4 +3561,30 @@ button:focus-visible,
 @keyframes blink-caret {
   from, to { border-color: transparent; }
   50% { border-color: #a855f7; }
+}
+
+/* ─── TACTICAL HERO GRID & SCANLINE OVERLAYS ────── */
+.hero-grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(168,85,247,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168,85,247,0.025) 1px, transparent 1px);
+  background-size: 50px 50px;
+  background-position: center;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.scanlines {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.12) 50%
+  );
+  background-size: 100% 4px;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.35;
 }
