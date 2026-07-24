@@ -1491,3 +1491,32 @@ function stopEngine() {
 
   elements.forEach(el => splitRevealIO.observe(el));
 })();
+
+/* ─────────────────────────────────────────────
+   LENIS SMOOTH SCROLL ENGINE INITIALIZATION
+   ───────────────────────────────────────────── */
+(function initLenisSmoothScroll() {
+  if (typeof Lenis !== 'function') return;
+
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Luxurious deceleration profile
+    direction: 'vertical',
+    gestureDirection: 'vertical',
+    smooth: true,
+    mouseMultiplier: 1,
+    smoothTouch: false,
+    touchMultiplier: 2,
+    infinite: false,
+  });
+
+  // Bind Lenis updates to requestAnimationFrame ticks
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+
+  // Expose lenis instance globally for scroll synchronization if needed
+  window.lenis = lenis;
+})();
