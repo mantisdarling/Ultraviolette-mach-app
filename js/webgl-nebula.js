@@ -14,6 +14,7 @@
     let boundsDirty = true;
     let canvasBounds = { left: 0, top: 0, width: 1, height: 1 };
     let viewportDirty = true;
+    const renderScale = window.matchMedia?.('(pointer: fine)').matches ? 0.75 : 0.65;
 
     function updateCanvasBounds() {
       const rect = c.getBoundingClientRect();
@@ -27,8 +28,10 @@
     }
 
     function sz() {
-      const w = c.clientWidth  || window.innerWidth;
-      const h = c.clientHeight || window.innerHeight;
+      const cssWidth = c.clientWidth  || window.innerWidth;
+      const cssHeight = c.clientHeight || window.innerHeight;
+      const w = Math.max(1, Math.floor(cssWidth * renderScale));
+      const h = Math.max(1, Math.floor(cssHeight * renderScale));
       if (c.width !== w || c.height !== h) {
         c.width = w;
         c.height = h;
@@ -71,7 +74,7 @@ void main(){
   uv += vec2(sin(t + uv.y * 10.), cos(t + uv.x * 10.)) * warp;
   
   vec3 col=vec3(.015,.011,.02);
-  col+=vec3(.48,.17,.75)*n(uv*3.+t*.055)*n(uv*5.-t*.04)*.11;
+  col+=vec3(.48,.17,.75)*n(uv*3.+t*.055)*.14;
   col+=vec3(.48,.17,.75)*smoothstep(.78,0.,length(uv-vec2(.5+(ms.x-.5)*.14,.56+(ms.y-.5)*.12)))*.22;
   col+=vec3(.48,.17,.75)*smoothstep(1.,.3,uv.y)*.05;
   col*=.58+.42*(1.-smoothstep(.32,1.1,length((uv-.5)*vec2(1.,.72))));

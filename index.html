@@ -1131,7 +1131,7 @@
   };
   const schedule = () => {
     if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
-    const run = () => load('js/webgl-nebula.js?v=13');
+    const run = () => load('js/webgl-nebula.js?v=14');
     if ('requestIdleCallback' in window) requestIdleCallback(run, { timeout: 1800 });
     else setTimeout(run, 1200);
   };

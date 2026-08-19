@@ -1,6 +1,6 @@
 /* Service Worker - Offline Caching and PWA Support */
 
-const cacheName = "mach-ev-cache-v19";
+const cacheName = "mach-ev-cache-v20";
 
 const staticAssets = [
   "./",
