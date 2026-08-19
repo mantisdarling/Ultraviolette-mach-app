@@ -24,3 +24,7 @@ The product story then moves through a power section (“Go Ballistic”), media
 ## Local redesign verification notes
 
 The local redesign now renders a black, image-led hero with a red primary action, restrained six-item desktop navigation, a red/white Ultraviolette wordmark, an editorial “Super Sonic Performance” headline, and compact performance metrics. The clone-only chassis dashboard, riding-modes dashboard, and giant marquee are hidden from the default homepage flow; the F77 configurator/viewer, portfolio cards, Smart Tech, registration form, and technical sections remain available. CSS query versions were bumped to avoid stale service-worker styles, and the new red accent is active in the browser (`--uv3: #ef5546`).
+
+## Production redesign verification notes
+
+The pushed redesign is live on Vercel with the new six-item navigation, red accent variable (`#ef5546`), `css/main.css?v=5`, and the preserved `js/main.js?v=19`. Production browser checks confirmed the `replica-mode` body class, hidden clone-only dashboard chapters, active service-worker control, zero inline event attributes, no initial F77 viewer request, and no observed runtime errors.
