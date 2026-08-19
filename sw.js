@@ -1,6 +1,6 @@
 /* Service Worker - Offline Caching and PWA Support */
 
-const cacheName = "mach-ev-cache-v21";
+const cacheName = "mach-ev-cache-v24";
 
 const staticAssets = [
   "./",
@@ -66,6 +66,13 @@ self.addEventListener("activate", event => {
 // Intercept fetch requests and apply caching strategies
 self.addEventListener("fetch", event => {
   const url = new URL(event.request.url);
+  const isSameOrigin = url.origin === self.location.origin;
+  const isApprovedFontOrigin = url.hostname === "fonts.googleapis.com" || url.hostname === "fonts.gstatic.com";
+  const isStaticAsset = /\.(?:css|js|mjs|webp|png|jpe?g|gif|svg|ico|woff2?|webmanifest)$/i.test(url.pathname);
+
+  // Never intercept non-GET requests or unknown/dynamic URLs.
+  if (event.request.method !== "GET") return;
+  if (!isSameOrigin && !isApprovedFontOrigin) return;
 
   // Network-First strategy for HTML and Webmanifest documents to ensure fresh content
   if (event.request.mode === "navigate" || url.pathname.endsWith(".webmanifest") || url.pathname.endsWith("index.html")) {
@@ -85,7 +92,8 @@ self.addEventListener("fetch", event => {
         })
     );
   } else {
-    // Cache-First strategy for static assets (images, fonts, stylesheets, scripts)
+    // Cache-First strategy for approved static assets only.
+    if (!isStaticAsset) return;
     event.respondWith(
       caches.match(event.request).then(cachedResponse => {
         if (cachedResponse) {
@@ -93,7 +101,7 @@ self.addEventListener("fetch", event => {
         }
 
         return fetch(event.request).then(response => {
-          if (!response || response.status !== 200 || response.type !== "basic" && !url.href.includes("fonts.gstatic.com") && !url.href.includes("fonts.googleapis.com")) {
+          if (!response || response.status !== 200 || (response.type !== "basic" && !isApprovedFontOrigin)) {
             return response;
           }
 

@@ -287,7 +287,8 @@ if (root && canvas) {
       idleMotion = !idleMotion;
       idleButton.classList.toggle('on', idleMotion);
       idleButton.setAttribute('aria-pressed', String(idleMotion));
-      idleButton.querySelector('.f77-control-state').textContent = idleMotion ? 'ON' : 'OFF';
+      const state = idleButton.querySelector('.f77-control-state');
+      if (state) state.textContent = idleMotion ? 'ON' : 'OFF';
     });
 
     setEnvironment('studio');
@@ -309,8 +310,11 @@ if (root && canvas) {
     }
 
     function setPaint(name, fallbackColor) {
-      const key = (name || '').toUpperCase();
-      const color = paintMap[key] || fallbackColor || paintMap['TURBO RED'];
+      const key = (typeof name === 'string' ? name : '').toUpperCase();
+      const safeFallback = typeof fallbackColor === 'string' && /^#[0-9a-f]{6}$/i.test(fallbackColor)
+        ? fallbackColor
+        : paintMap['TURBO RED'];
+      const color = paintMap[key] || safeFallback;
       paintMaterials.forEach((material) => {
         material.color.set(color);
         material.emissive.set(color).multiplyScalar(0.08);
@@ -339,7 +343,8 @@ if (root && canvas) {
       controls.autoRotate = !controls.autoRotate;
       autoButton.classList.toggle('on', controls.autoRotate);
       autoButton.setAttribute('aria-pressed', String(controls.autoRotate));
-      autoButton.querySelector('.f77-control-state').textContent = controls.autoRotate ? 'ON' : 'OFF';
+      const state = autoButton.querySelector('.f77-control-state');
+      if (state) state.textContent = controls.autoRotate ? 'ON' : 'OFF';
     });
 
     resetButton?.addEventListener('click', resetView);

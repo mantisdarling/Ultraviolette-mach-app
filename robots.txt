@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ultraviolette-website-clone.vercel.app/sitemap.xml
+Sitemap: https://ultraviolette-automobile-clone.vercel.app/sitemap.xml

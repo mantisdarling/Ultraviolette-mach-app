@@ -44,7 +44,7 @@ This repository is built strictly using vanilla web technologies. Contributions 
 3. **Verify Code Quality:**
    * Run the syntax checker via Node.js:
      ```bash
-     node -e "new Function(require('fs').readFileSync('js/main.js', 'utf8'))"
+     node --check js/boot.js && node --check js/main.js && node --check js/f77-viewer.js && node --check sw.js
      ```
    * Verify that the Chrome/Edge DevTools console is clean and displays zero runtime exceptions during navigation.
 4. **Submit a Pull Request:** Describe the modification, details of visual testing, and the performance impact of your patch.

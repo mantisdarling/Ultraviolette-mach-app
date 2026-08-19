@@ -25,6 +25,23 @@ window.__uvPerformance = {
   allowNebula: hasFinePointer && !lowEndDevice && !reducedMotion
 };
 
+// Declarative, same-origin image fallbacks; avoid inline event-handler sinks.
+document.querySelectorAll('img[data-fallback]').forEach((img) => {
+  img.addEventListener('error', () => {
+    if (img.dataset.fallbackUsed) return;
+    const fallback = img.dataset.fallback || '';
+    let fallbackUrl;
+    try {
+      fallbackUrl = new URL(fallback, document.baseURI);
+    } catch {
+      return;
+    }
+    if (fallbackUrl.origin !== window.location.origin || !fallbackUrl.pathname.startsWith('/assets/images/')) return;
+    img.dataset.fallbackUsed = 'true';
+    img.src = fallbackUrl.href;
+  }, { once: true });
+});
+
 /* ─────────────────────────────────────────────
    LOADER — Boot sequence progress bar with telemetry logs
 ───────────────────────────────────────────── */
@@ -449,8 +466,7 @@ document.querySelectorAll('.ctr[data-t]').forEach(el => {
       s.textContent = ch === ' ' ? '\u00a0' : ch;
       frag.appendChild(s);
     });
-    el.innerHTML = '';
-    el.appendChild(frag);
+    el.replaceChildren(frag);
   }
   document.querySelectorAll('[data-wave]').forEach(buildWave);
 })();
@@ -774,7 +790,18 @@ document.querySelectorAll('.ctr[data-t]').forEach(el => {
     if (lastTrigger) lastTrigger.focus();
   };
 
-  /* Backdrop click closes modal */
+  document.querySelectorAll('[data-modal-open]').forEach(trigger => {
+    trigger.addEventListener('click', () => window.mO(trigger.dataset.modalOpen));
+  });
+
+  /* Backdrop click and explicit close buttons close modal */
+  document.querySelectorAll('[data-modal-close]').forEach(button => {
+    button.addEventListener('click', () => {
+      const modal = button.closest('.movl');
+      if (modal) window.mC(modal.id);
+    });
+  });
+
   document.querySelectorAll('.movl').forEach(m => {
     m.addEventListener('click', e => { if (e.target === m) window.mC(m.id); });
 
@@ -1077,12 +1104,12 @@ function stopEngine() {
     if (!engineActive) {
       booting = true;
       if (txt) txt.textContent = "BOOTING DIAGNOSTICS...";
-      if (icon) icon.textContent = "hourglass_empty";
+      if (icon) icon.textContent = "⌛";
       btn.style.pointerEvents = 'none';
 
       if (consoleEl) {
         consoleEl.style.display = 'block';
-        consoleEl.innerHTML = '';
+        consoleEl.replaceChildren();
       }
 
       const logLines = [
@@ -1115,7 +1142,7 @@ function stopEngine() {
           btn.classList.add('active');
           document.body.classList.add('engine-active');
           if (txt) txt.textContent = "ENGINE ACTIVE // SYS 01";
-          if (icon) icon.textContent = "check_circle";
+          if (icon) icon.textContent = "✓";
 
           if (sweep) {
             sweep.classList.remove('active');
@@ -1130,11 +1157,11 @@ function stopEngine() {
       btn.classList.remove('active');
       document.body.classList.remove('engine-active');
       if (txt) txt.textContent = "START ENGINE";
-      if (icon) icon.textContent = "power_settings_new";
+      if (icon) icon.textContent = "⏻";
 
       if (consoleEl) {
         consoleEl.style.display = 'none';
-        consoleEl.innerHTML = '';
+        consoleEl.replaceChildren();
       }
     }
   });
@@ -1312,9 +1339,19 @@ function updateSoundPitch() {
       if (cardDesc) cardDesc.textContent = info.desc;
       
       if (cardSpecs) {
-        cardSpecs.innerHTML = info.specs.map(s => 
-          `<div class="hud-spec-row"><span class="h-lbl">${s.label}</span><span class="h-val">${s.val}</span></div>`
-        ).join('');
+        const rows = info.specs.map((spec) => {
+          const row = document.createElement('div');
+          row.className = 'hud-spec-row';
+          const label = document.createElement('span');
+          label.className = 'h-lbl';
+          label.textContent = spec.label;
+          const value = document.createElement('span');
+          value.className = 'h-val';
+          value.textContent = spec.val;
+          row.append(label, value);
+          return row;
+        });
+        cardSpecs.replaceChildren(...rows);
       }
 
       if (card) {
@@ -1626,13 +1663,19 @@ function updateSoundPitch() {
     // Preserve formatting and wrap each word
     const text = el.textContent.trim();
     const words = text.split(/\s+/);
-    el.innerHTML = words.map((word, idx) => {
-      return `<span class="word-mask" style="display:inline-block;overflow:hidden;vertical-align:top;margin-right:0.25em">
-        <span class="word-inner" style="display:inline-block;transform:translateY(105%);transition:transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);transition-delay:${idx * 0.05}s">
-          ${word}
-        </span>
-      </span>`;
-    }).join('');
+    const fragment = document.createDocumentFragment();
+    words.forEach((word, idx) => {
+      const mask = document.createElement('span');
+      mask.className = 'word-mask';
+      mask.style.cssText = 'display:inline-block;overflow:hidden;vertical-align:top;margin-right:0.25em';
+      const inner = document.createElement('span');
+      inner.className = 'word-inner';
+      inner.style.cssText = `display:inline-block;transform:translateY(105%);transition:transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);transition-delay:${idx * 0.05}s`;
+      inner.textContent = word;
+      mask.appendChild(inner);
+      fragment.appendChild(mask);
+    });
+    el.replaceChildren(fragment);
   });
 
   // Observe reveal triggers
@@ -1723,6 +1766,9 @@ function updateSoundPitch() {
 
   const script = document.createElement('script');
   script.src = 'https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.36/dist/lenis.min.js';
+  script.integrity = 'sha384-KExt59QNywZwlFBi01DXcmXL+dvBseVxpGNPSti8o+lIeEhG3vMXD2Y2Qgb2HhU3';
+  script.crossOrigin = 'anonymous';
+  script.referrerPolicy = 'no-referrer';
   script.async = true;
   script.onload = boot;
   document.head.appendChild(script);

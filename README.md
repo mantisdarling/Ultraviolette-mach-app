@@ -52,7 +52,7 @@ A Progressive Web App service worker operates a cache-first strategy for structu
 ## Project Directory Structure
 
 ```text
-ultraviolette-website-clone/
+Ultraviolette-mach-app/
 ├── css/
 │   ├── critical.css      # Above-the-fold inline styling
 │   └── main.css          # Core layouts, responsive design, and transitions
@@ -75,8 +75,8 @@ ultraviolette-website-clone/
 ### Local Setup
 1. Clone the repository:
    ```bash
-   git clone https://github.com/mantisdarling/ultraviolette-website-clone.git
-   cd ultraviolette-website-clone
+   git clone https://github.com/mantisdarling/Ultraviolette-mach-app.git
+   cd Ultraviolette-mach-app
    ```
 
 2. Start a local server to resolve WebGL and Service Worker assets:
@@ -105,5 +105,5 @@ This project represents the inaugural entry in the UI Archaeology Series, dedica
   <p>Created by Mantis Darling</p>
   <a href="https://github.com/mantisdarling"><img src="https://img.shields.io/badge/GitHub-000000?style=flat-square&logo=github&logoColor=7B2CBF" alt="GitHub Profile" /></a>
   &nbsp;
-  <a href="https://github.com/mantisdarling/ultraviolette-website-clone"><img src="https://komarev.com/ghpvc/?username=mantisdarling&style=flat-square&color=6A0DAD&label=views" alt="repository views" /></a>
+  <a href="https://github.com/mantisdarling/Ultraviolette-mach-app"><img src="https://komarev.com/ghpvc/?username=mantisdarling&style=flat-square&color=6A0DAD&label=views" alt="repository views" /></a>
 </div>

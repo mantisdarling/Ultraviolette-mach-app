@@ -96,7 +96,7 @@
   fetchpriority="high"/>
 
 <!-- Load core fonts without blocking the first paint; display=swap preserves readable fallback text. -->
-<link rel="preload" as="style" fetchpriority="low" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700;800&family=JetBrains+Mono:wght@400;500;600&family=Hanken+Grotesk:wght@300;400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"/>
+<link id="font-preload" rel="preload" as="style" fetchpriority="low" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700;800&family=JetBrains+Mono:wght@400;500;600&family=Hanken+Grotesk:wght@300;400;600&display=swap"/>
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700;800&family=JetBrains+Mono:wght@400;500;600&family=Hanken+Grotesk:wght@300;400;600&display=swap"/></noscript>
 
 <!-- Critical Stylesheet -->
@@ -125,13 +125,13 @@
 
 <!-- Legal Modals -->
 <!-- Privacy Policy Modal -->
-<div class="movl" id="m-privacy" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="m-privacy-title"><div class="mbox"><button type="button" class="mcls" onclick="mC('m-privacy')" aria-label="Close Privacy Policy">✕</button><div class="mt" id="m-privacy-title">Privacy Policy</div><span class="mb">Last Updated: June 2024</span><div class="ms"><p>MACH-EV is committed to protecting your privacy. This policy explains how we collect, use, and safeguard your personal information.</p><div class="mdv"></div><h3>Information We Collect</h3><ul><li>Name, email, city when you register interest</li><li>Usage data and analytics to improve your experience</li><li>Device and browser information for optimisation</li></ul><div class="mdv"></div><h3>How We Use Your Information</h3><ul><li>To respond to your interest registration and send updates</li><li>To improve our website, services, and marketing</li><li>To comply with legal obligations</li></ul><div class="mdv"></div><h3>Data Security</h3><p>We implement industry-standard security including SSL encryption. We do not sell your personal information without consent.</p><div class="mdv"></div><h3>Your Rights</h3><p>Access, correct, or delete your data at any time: <a href="mailto:privacy@mach-ev.in">privacy@mach-ev.in</a></p><div class="mdv"></div><h3>Cookies</h3><p>We use cookies to enhance browsing. Disable via browser settings, though functionality may be affected.</p></div></div></div>
+<div class="movl" id="m-privacy" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="m-privacy-title"><div class="mbox"><button type="button" class="mcls" data-modal-close aria-label="Close Privacy Policy">✕</button><div class="mt" id="m-privacy-title">Privacy Policy</div><span class="mb">Last Updated: June 2024</span><div class="ms"><p>MACH-EV is committed to protecting your privacy. This policy explains how we collect, use, and safeguard your personal information.</p><div class="mdv"></div><h3>Information We Collect</h3><ul><li>Name, email, city when you register interest</li><li>Usage data and analytics to improve your experience</li><li>Device and browser information for optimisation</li></ul><div class="mdv"></div><h3>How We Use Your Information</h3><ul><li>To respond to your interest registration and send updates</li><li>To improve our website, services, and marketing</li><li>To comply with legal obligations</li></ul><div class="mdv"></div><h3>Data Security</h3><p>We implement industry-standard security including SSL encryption. We do not sell your personal information without consent.</p><div class="mdv"></div><h3>Your Rights</h3><p>Access, correct, or delete your data at any time: <a href="mailto:privacy@mach-ev.in">privacy@mach-ev.in</a></p><div class="mdv"></div><h3>Cookies</h3><p>We use cookies to enhance browsing. Disable via browser settings, though functionality may be affected.</p></div></div></div>
 
 <!-- Terms & Conditions Modal -->
-<div class="movl" id="m-terms" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="m-terms-title"><div class="mbox"><button type="button" class="mcls" onclick="mC('m-terms')" aria-label="Close Terms and Conditions">✕</button><div class="mt" id="m-terms-title">Terms &amp; Conditions</div><span class="mb">Effective: June 2024</span><div class="ms"><p>By accessing MACH-EV website, you accept and agree to these terms.</p><div class="mdv"></div><h3>Use of Website</h3><ul><li>Informational purposes about MACH-EV electric motorcycles</li><li>You agree not to misuse, hack, or disrupt our services</li><li>All content is the intellectual property of MACH-EV</li></ul><div class="mdv"></div><h3>Product Information</h3><p>Specifications, pricing, and availability are subject to change. Images may differ from final production vehicles.</p><div class="mdv"></div><h3>Interest Registration</h3><p>Form submissions do not constitute a purchase or binding agreement — only an indication of interest.</p><div class="mdv"></div><h3>Liability</h3><p>MACH-EV is not liable for indirect, incidental, or consequential damages from use of this website.</p></div></div></div>
+<div class="movl" id="m-terms" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="m-terms-title"><div class="mbox"><button type="button" class="mcls" data-modal-close aria-label="Close Terms and Conditions">✕</button><div class="mt" id="m-terms-title">Terms &amp; Conditions</div><span class="mb">Effective: June 2024</span><div class="ms"><p>By accessing MACH-EV website, you accept and agree to these terms.</p><div class="mdv"></div><h3>Use of Website</h3><ul><li>Informational purposes about MACH-EV electric motorcycles</li><li>You agree not to misuse, hack, or disrupt our services</li><li>All content is the intellectual property of MACH-EV</li></ul><div class="mdv"></div><h3>Product Information</h3><p>Specifications, pricing, and availability are subject to change. Images may differ from final production vehicles.</p><div class="mdv"></div><h3>Interest Registration</h3><p>Form submissions do not constitute a purchase or binding agreement — only an indication of interest.</p><div class="mdv"></div><h3>Liability</h3><p>MACH-EV is not liable for indirect, incidental, or consequential damages from use of this website.</p></div></div></div>
 
 <!-- Legal / Disclaimer Modal -->
-<div class="movl" id="m-legal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="m-legal-title"><div class="mbox"><button type="button" class="mcls" onclick="mC('m-legal')" aria-label="Close Legal Information">✕</button><div class="mt" id="m-legal-title">Legal Information</div><span class="mb">Jurisdiction: India</span><div class="ms"><p>This is a demonstration project inspired by Ultraviolette Automotive Pvt. Ltd., built for educational and portfolio purposes.</p><div class="mdv"></div><h3>Intellectual Property</h3><p>Product images sourced from Ultraviolette Automotive's public CDN. All Ultraviolette trademarks belong to Ultraviolette Automotive Pvt. Ltd., Bangalore.</p><div class="mdv"></div><h3>Disclaimer</h3><p>MACH-EV is a conceptual brand. All specs are from publicly available Ultraviolette data. Not a commercial offering.</p><div class="mdv"></div><h3>Governing Law</h3><p>Disputes governed by laws of India, courts of Bangalore, Karnataka.</p><div class="mdv"></div><h3>Contact</h3><p><a href="mailto:legal@mach-ev.in">legal@mach-ev.in</a></p></div></div></div>
+<div class="movl" id="m-legal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="m-legal-title"><div class="mbox"><button type="button" class="mcls" data-modal-close aria-label="Close Legal Information">✕</button><div class="mt" id="m-legal-title">Legal Information</div><span class="mb">Jurisdiction: India</span><div class="ms"><p>This is a demonstration project inspired by Ultraviolette Automotive Pvt. Ltd., built for educational and portfolio purposes.</p><div class="mdv"></div><h3>Intellectual Property</h3><p>Product images sourced from Ultraviolette Automotive's public CDN. All Ultraviolette trademarks belong to Ultraviolette Automotive Pvt. Ltd., Bangalore.</p><div class="mdv"></div><h3>Disclaimer</h3><p>MACH-EV is a conceptual brand. All specs are from publicly available Ultraviolette data. Not a commercial offering.</p><div class="mdv"></div><h3>Governing Law</h3><p>Disputes governed by laws of India, courts of Bangalore, Karnataka.</p><div class="mdv"></div><h3>Contact</h3><p><a href="mailto:legal@mach-ev.in">legal@mach-ev.in</a></p></div></div></div>
 
 <!-- Custom Cursor elements -->
 <div id="cur" aria-hidden="true"></div>
@@ -162,7 +162,7 @@
     <li><a href="#racing">UV RACING</a></li>
     <li><a href="#about">ABOUT</a></li>
   </ul>
-  <a href="https://www.ultraviolette.com/configure" target="_blank" rel="noopener" class="nav-cta">CONFIGURE</a>
+  <a href="https://www.ultraviolette.com/configure" target="_blank" rel="noopener noreferrer" class="nav-cta">CONFIGURE</a>
   <button type="button" class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mob-menu">
     <span class="icon icon-menu" style="font-size:26px" aria-hidden="true">☰</span>
   </button>
@@ -178,7 +178,7 @@
     <a href="#about" class="mob-lnk">ABOUT</a>
   </nav>
   <div style="margin-top:40px">
-    <a href="https://www.ultraviolette.com/configure" target="_blank" class="btn-p" style="justify-content:center; width: 100%;">CONFIGURE YOUR RIDE</a>
+    <a href="https://www.ultraviolette.com/configure" target="_blank" rel="noopener noreferrer" class="btn-p" style="justify-content:center; width: 100%;">CONFIGURE YOUR RIDE</a>
   </div>
 </div>
 
@@ -282,10 +282,10 @@
         </div>
       </div>
       <div class="awards-g stagger" style="margin-top:72px">
-        <a href="https://www.topgear.com" target="_blank" rel="noopener" style="text-decoration:none" class="award-c">
+        <a href="https://www.topgear.com" target="_blank" rel="noopener noreferrer" style="text-decoration:none" class="award-c">
           <div class="aw-name">BBC TopGear India</div><div class="aw-desc">Electric Motorcycle of the Year 2025</div>
         </a>
-        <a href="https://www.autocarindia.com" target="_blank" rel="noopener" style="text-decoration:none" class="award-c">
+        <a href="https://www.autocarindia.com" target="_blank" rel="noopener noreferrer" style="text-decoration:none" class="award-c">
           <div class="aw-name">Autocar India</div><div class="aw-desc">Best Performance Electric Motorcycle 2025</div>
         </a>
         <div class="award-c"><div class="aw-name">Acko Drive Awards</div><div class="aw-desc">Bike Design of the Year 2024</div></div>
@@ -333,7 +333,7 @@
           <div class="chapter">
             <picture>
               <source srcset="assets/images/ss06-mobile.webp 640w, assets/images/ss06-tablet.webp 1024w, assets/images/ss06-desktop.webp 1920w" sizes="(max-width: 1024px) 100vw, 640px" type="image/webp">
-              <img src="assets/images/ss06-desktop.webp" onerror="this.onerror=null;this.src='assets/images/ss05-desktop.webp'" alt="Chapter 3 — Intelligence Violette AI" width="640" height="400" loading="lazy" decoding="async"/>
+              <img src="assets/images/ss06-desktop.webp" data-fallback="assets/images/ss05-desktop.webp" alt="Chapter 3 — Intelligence Violette AI" width="640" height="400" loading="lazy" decoding="async"/>
             </picture>
             <div class="ch-grad"></div>
             <div class="ch-info">
@@ -510,8 +510,8 @@
           </div>
           
           <div class="showcase-btns">
-            <a href="https://www.ultraviolette.com/f77" target="_blank" rel="noopener" class="btn-p">EXPLORE F77 <span class="icon icon-arrow" style="font-size:16px" aria-hidden="true">→</span></a>
-            <a href="https://www.ultraviolette.com/configure?model=Mach+2&variant=Recon" target="_blank" rel="noopener" class="btn-o">CONFIGURE RECON</a>
+            <a href="https://www.ultraviolette.com/f77" target="_blank" rel="noopener noreferrer" class="btn-p">EXPLORE F77 <span class="icon icon-arrow" style="font-size:16px" aria-hidden="true">→</span></a>
+            <a href="https://www.ultraviolette.com/configure?model=Mach+2&variant=Recon" target="_blank" rel="noopener noreferrer" class="btn-o">CONFIGURE RECON</a>
           </div>
         </div>
         <div class="bike-wrap reveal-right">
@@ -674,7 +674,7 @@
             <span class="inv-tag">SPECIALE INVEST</span>
           </div>
           <div style="margin-top:32px">
-            <a href="https://www.ultraviolette.com/about" target="_blank" rel="noopener" class="btn-o">ABOUT US <span class="icon icon-arrow" style="font-size:15px" aria-hidden="true">→</span></a>
+            <a href="https://www.ultraviolette.com/about" target="_blank" rel="noopener noreferrer" class="btn-o">ABOUT US <span class="icon icon-arrow" style="font-size:15px" aria-hidden="true">→</span></a>
           </div>
         </div>
       </div>
@@ -691,7 +691,7 @@
           <span style="font-size:clamp(26px,4vw,52px);color:var(--uv);font-family:'JetBrains Mono',monospace;letter-spacing:-.01em">LEVELS OF SAFETY</span>
         </div>
         <p style="font-size:16px;color:var(--mid);max-width:640px;margin:18px auto 32px;line-height:1.75">The SRB-10 battery, validated over 6,000,000 km of real-world testing. Five layers of protection built directly into the pack.</p>
-        <a href="https://www.ultraviolette.com/smarttech" target="_blank" rel="noopener" class="btn-o">GEEK OUT</a>
+        <a href="https://www.ultraviolette.com/smarttech" target="_blank" rel="noopener noreferrer" class="btn-o">GEEK OUT</a>
       </div>
       <div class="safety-g stagger">
         <div class="safety-c"><span class="icon icon-thermostat safety-ic" aria-hidden="true">♨</span><div class="safety-n">THERMAL</div></div>
@@ -716,17 +716,17 @@
     </div>
     <div class="gal-scroll">
       <div class="gal-track">
-        <a href="https://www.ultraviolette.com/f77" target="_blank" rel="noopener" style="text-decoration:none;flex-shrink:0" class="gal-c">
+        <a href="https://www.ultraviolette.com/f77" target="_blank" rel="noopener noreferrer" style="text-decoration:none;flex-shrink:0" class="gal-c">
           <picture>
             <source srcset="assets/images/ss06-mobile.webp 640w, assets/images/ss06-tablet.webp 1024w, assets/images/ss06-desktop.webp 1920w" sizes="620px" type="image/webp">
-            <img src="assets/images/ss06-desktop.webp" onerror="this.onerror=null;this.src='assets/images/ss05-desktop.webp'" alt="F77 Mach 2 Profile" width="620" height="440" loading="lazy" decoding="async"/>
+            <img src="assets/images/ss06-desktop.webp" data-fallback="assets/images/ss05-desktop.webp" alt="F77 Mach 2 Profile" width="620" height="440" loading="lazy" decoding="async"/>
           </picture>
           <div class="gal-grad"></div>
           <div class="gal-info"><div class="gal-code">F77 MACH 2 RECON</div><div class="gal-name">MACH 2</div><div class="gal-price">FROM ₹3.99 L · BASE FROM ₹2.99 L</div></div>
           <span class="gal-cta">EXPLORE →</span>
         </a>
-        <a href="https://www.ultraviolette.com/f77?model=Superstreet" target="_blank" rel="noopener" style="text-decoration:none;flex-shrink:0;background:#0e0e0e" class="gal-c">
-          <img src="assets/images/superstreet-laser-turbo-red.webp" onerror="this.onerror=null;this.src='assets/images/laser-turbo-red.webp'" alt="F77 SuperStreet Track Spec" width="620" height="440" loading="lazy" style="object-fit:contain;padding:20px" decoding="async"/>
+        <a href="https://www.ultraviolette.com/f77?model=Superstreet" target="_blank" rel="noopener noreferrer" style="text-decoration:none;flex-shrink:0;background:#0e0e0e" class="gal-c">
+          <img src="assets/images/superstreet-laser-turbo-red.webp" data-fallback="assets/images/laser-turbo-red.webp" alt="F77 SuperStreet Track Spec" width="620" height="440" loading="lazy" style="object-fit:contain;padding:20px" decoding="async"/>
           <div class="gal-grad"></div>
           <div class="gal-info"><div class="gal-code">F77 SUPERSTREET RECON</div><div class="gal-name">SUPERSTREET</div><div class="gal-price">FROM ₹3.99 L · BASE FROM ₹2.99 L</div></div>
           <span class="gal-cta">EXPLORE →</span>
@@ -734,7 +734,7 @@
         <a href="https://www.ultraviolette.com/tesseract" target="_blank" rel="noopener noreferrer" style="text-decoration:none;flex-shrink:0" class="gal-c gal-coming">
           <picture>
             <source srcset="assets/images/ss06-mobile.webp 640w, assets/images/ss06-tablet.webp 1024w, assets/images/ss06-desktop.webp 1920w" sizes="620px" type="image/webp">
-            <img src="assets/images/ss06-desktop.webp" onerror="this.onerror=null;this.src='assets/images/ss05-desktop.webp'" alt="Tesseract Concept EV" width="620" height="440" loading="lazy" style="object-fit:cover;filter:hue-rotate(260deg) brightness(0.35) saturate(2)" decoding="async"/>
+            <img src="assets/images/ss06-desktop.webp" data-fallback="assets/images/ss05-desktop.webp" alt="Tesseract Concept EV" width="620" height="440" loading="lazy" style="object-fit:cover;filter:hue-rotate(260deg) brightness(0.35) saturate(2)" decoding="async"/>
           </picture>
           <div class="gal-grad"></div>
           <div class="gal-info">
@@ -862,7 +862,7 @@
           <div class="aero-d"><div class="aero-d-lbl">FRONT TYRE</div><div class="aero-d-val">110/70 R17</div></div>
           <div class="aero-d"><div class="aero-d-lbl">REAR TYRE</div><div class="aero-d-val">150/60 R17</div></div>
         </div>
-        <a href="https://www.ultraviolette.com/f77" target="_blank" rel="noopener" class="btn-o">ACCESS DESIGN SPECS</a>
+        <a href="https://www.ultraviolette.com/f77" target="_blank" rel="noopener noreferrer" class="btn-o">ACCESS DESIGN SPECS</a>
       </div>
     </div>
   </section>
@@ -881,7 +881,7 @@
             <div class="tech-f"><div class="tech-f-title">Ride Analytics</div><p class="tech-f-desc">Performance telemetry, efficiency scores and trip logs.</p></div>
             <div class="tech-f"><div class="tech-f-title">OTA Updates</div><p class="tech-f-desc">Always current — firmware delivered over-the-air.</p></div>
           </div>
-          <a href="https://www.ultraviolette.com/smarttech" target="_blank" rel="noopener" class="btn-p">DISCOVER VIOLETTE AI <span class="icon icon-arrow" style="font-size:16px" aria-hidden="true">→</span></a>
+          <a href="https://www.ultraviolette.com/smarttech" target="_blank" rel="noopener noreferrer" class="btn-p">DISCOVER VIOLETTE AI <span class="icon icon-arrow" style="font-size:16px" aria-hidden="true">→</span></a>
         </div>
         <div class="phone-wrap reveal-right">
           <div class="phone-glow"></div>
@@ -926,7 +926,7 @@
             <div class="region" style="border-bottom:none"><div class="rdot" style="background:#2a2a2a"></div>TÜRKİYE</div>
           </div>
           <div style="margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.06)">
-            <a href="https://www.ultraviolette.com/location" target="_blank" rel="noopener" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;color:var(--uv);text-decoration:none;text-transform:uppercase">VIEW ALL LOCATIONS →</a>
+            <a href="https://www.ultraviolette.com/location" target="_blank" rel="noopener noreferrer" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;color:var(--uv);text-decoration:none;text-transform:uppercase">VIEW ALL LOCATIONS →</a>
           </div>
         </div>
         <div class="glass reveal-right" style="padding:38px">
@@ -945,7 +945,7 @@
             <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.22em;color:var(--uv)">TARGET: 100 SPACESTATIONS BY END 2026</span>
           </div>
           <div style="margin-top:18px;padding-top:18px;border-top:1px solid rgba(255,255,255,.06)">
-            <a href="https://www.ultraviolette.com/location" target="_blank" rel="noopener" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;color:var(--uv);text-decoration:none;text-transform:uppercase">FIND A SPACESTATION →</a>
+            <a href="https://www.ultraviolette.com/location" target="_blank" rel="noopener noreferrer" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;color:var(--uv);text-decoration:none;text-transform:uppercase">FIND A SPACESTATION →</a>
           </div>
         </div>
       </div>
@@ -964,7 +964,7 @@
     <div class="racing-bg">
       <picture>
         <source srcset="assets/images/ss06-mobile.webp 640w, assets/images/ss06-tablet.webp 1024w, assets/images/ss06-desktop.webp 1920w" sizes="100vw" type="image/webp">
-        <img src="assets/images/ss06-desktop.webp" onerror="this.onerror=null;this.src='assets/images/ss05-desktop.webp'" alt="UV Racing track bike" width="1920" height="1080" loading="lazy" decoding="async"/>
+        <img src="assets/images/ss06-desktop.webp" data-fallback="assets/images/ss05-desktop.webp" alt="UV Racing track bike" width="1920" height="1080" loading="lazy" decoding="async"/>
       </picture>
       <div class="racing-ovl"></div>
     </div>
@@ -983,7 +983,7 @@
             <div class="racing-s-c"><div class="label" style="margin-bottom:7px">TRACK DAYS</div><div style="font-family:'Sora',sans-serif;font-weight:700;font-size:24px;color:#fff">PRIVATE</div></div>
             <div class="racing-s-c"><div class="label" style="margin-bottom:7px">LEADERBOARD</div><div style="font-family:'Sora',sans-serif;font-weight:700;font-size:24px;color:#fff">GLOBAL</div></div>
           </div>
-          <a href="https://www.ultraviolette.com/f99" target="_blank" rel="noopener" class="btn-o">EXPLORE UV RACING <span class="icon icon-arrow" style="font-size:16px" aria-hidden="true">→</span></a>
+          <a href="https://www.ultraviolette.com/f99" target="_blank" rel="noopener noreferrer" class="btn-o">EXPLORE UV RACING <span class="icon icon-arrow" style="font-size:16px" aria-hidden="true">→</span></a>
         </div>
         <div class="form-wrap reveal-right">
           <div class="form-head">
@@ -1024,16 +1024,16 @@
         <div class="foot-brand">MACH-EV</div>
         <p class="foot-tag">The future of performance mobility is electric. Experience the Ultraviolette F77 Mach 2.</p>
         <div class="soc-row">
-          <a href="https://www.instagram.com/ultraviolette_automotive/" target="_blank" rel="noopener" class="soc-btn" aria-label="Instagram">
+          <a href="https://www.instagram.com/ultraviolette_automotive/" target="_blank" rel="noopener noreferrer" class="soc-btn" aria-label="Instagram">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
           </a>
           <a href="https://www.youtube.com/@UltravioletteEV" target="_blank" rel="noopener noreferrer" class="soc-btn" aria-label="YouTube — Ultraviolette Automotive">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
           </a>
-          <a href="https://www.x.com/ultravioletteEV" target="_blank" rel="noopener" class="soc-btn" aria-label="Twitter X">
+          <a href="https://www.x.com/ultravioletteEV" target="_blank" rel="noopener noreferrer" class="soc-btn" aria-label="Twitter X">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           </a>
-          <a href="https://www.linkedin.com/company/ultraviolette-automotive/" target="_blank" rel="noopener" class="soc-btn" aria-label="LinkedIn">
+          <a href="https://www.linkedin.com/company/ultraviolette-automotive/" target="_blank" rel="noopener noreferrer" class="soc-btn" aria-label="LinkedIn">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
           </a>
         </div>
@@ -1042,31 +1042,31 @@
         <div>
           <div class="fc-title">PRODUCTS</div>
           <ul class="fc-list">
-            <li><a href="https://www.ultraviolette.com/f77?model=Superstreet" target="_blank" rel="noopener">F77 SuperStreet</a></li>
-            <li><a href="https://www.ultraviolette.com/f77" target="_blank" rel="noopener">F77 Mach 2</a></li>
-            <li><a href="https://www.ultraviolette.com/tesseract" target="_blank" rel="noopener">Tesseract</a></li>
-            <li><a href="https://www.ultraviolette.com/shockwave" target="_blank" rel="noopener">Shockwave</a></li>
-            <li><a href="https://www.ultraviolette.com/configure" target="_blank" rel="noopener">Configure</a></li>
+            <li><a href="https://www.ultraviolette.com/f77?model=Superstreet" target="_blank" rel="noopener noreferrer">F77 SuperStreet</a></li>
+            <li><a href="https://www.ultraviolette.com/f77" target="_blank" rel="noopener noreferrer">F77 Mach 2</a></li>
+            <li><a href="https://www.ultraviolette.com/tesseract" target="_blank" rel="noopener noreferrer">Tesseract</a></li>
+            <li><a href="https://www.ultraviolette.com/shockwave" target="_blank" rel="noopener noreferrer">Shockwave</a></li>
+            <li><a href="https://www.ultraviolette.com/configure" target="_blank" rel="noopener noreferrer">Configure</a></li>
           </ul>
         </div>
         <div>
           <div class="fc-title">COMPANY</div>
           <ul class="fc-list">
-            <li><a href="https://www.ultraviolette.com/about" target="_blank" rel="noopener">About Us</a></li>
-            <li><a href="https://www.ultraviolette.com/smarttech" target="_blank" rel="noopener">Smart Tech</a></li>
-            <li><a href="https://www.ultraviolette.com/f99" target="_blank" rel="noopener">UV Racing</a></li>
-            <li><a href="https://www.ultraviolette.com/location" target="_blank" rel="noopener">Locate Us</a></li>
-            <li><a href="https://www.ultraviolette.com/press" target="_blank" rel="noopener">Press</a></li>
+            <li><a href="https://www.ultraviolette.com/about" target="_blank" rel="noopener noreferrer">About Us</a></li>
+            <li><a href="https://www.ultraviolette.com/smarttech" target="_blank" rel="noopener noreferrer">Smart Tech</a></li>
+            <li><a href="https://www.ultraviolette.com/f99" target="_blank" rel="noopener noreferrer">UV Racing</a></li>
+            <li><a href="https://www.ultraviolette.com/location" target="_blank" rel="noopener noreferrer">Locate Us</a></li>
+            <li><a href="https://www.ultraviolette.com/press" target="_blank" rel="noopener noreferrer">Press</a></li>
           </ul>
         </div>
         <div>
           <div class="fc-title">FOLLOW</div>
           <ul class="fc-list">
-            <li><a href="https://www.instagram.com/ultraviolette_automotive/" target="_blank" rel="noopener">Instagram</a></li>
-            <li><a href="https://www.youtube.com/@UltravioletteEV" target="_blank" rel="noopener">YouTube</a></li>
-            <li><a href="https://www.x.com/ultravioletteEV" target="_blank" rel="noopener">Twitter / X</a></li>
-            <li><a href="https://www.linkedin.com/company/ultraviolette-automotive/" target="_blank" rel="noopener">LinkedIn</a></li>
-            <li><a href="https://www.ultraviolette.com/blog" target="_blank" rel="noopener">UV Blog</a></li>
+            <li><a href="https://www.instagram.com/ultraviolette_automotive/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+            <li><a href="https://www.youtube.com/@UltravioletteEV" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+            <li><a href="https://www.x.com/ultravioletteEV" target="_blank" rel="noopener noreferrer">Twitter / X</a></li>
+            <li><a href="https://www.linkedin.com/company/ultraviolette-automotive/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="https://www.ultraviolette.com/blog" target="_blank" rel="noopener noreferrer">UV Blog</a></li>
           </ul>
         </div>
       </div>
@@ -1074,9 +1074,9 @@
     <div class="foot-bot">
       <div class="foot-copy">© 2026 MACH-EV. THE FUTURE TAKES OFF WITH US.</div>
       <div class="foot-legal">
-        <button type="button" onclick="mO('m-privacy')" aria-label="Open Privacy Policy">PRIVACY</button>
-        <button type="button" onclick="mO('m-terms')" aria-label="Open Terms and Conditions">TERMS</button>
-        <button type="button" onclick="mO('m-legal')" aria-label="Open Legal Information">LEGAL</button>
+        <button type="button" data-modal-open="m-privacy" aria-label="Open Privacy Policy">PRIVACY</button>
+        <button type="button" data-modal-open="m-terms" aria-label="Open Terms and Conditions">TERMS</button>
+        <button type="button" data-modal-open="m-legal" aria-label="Open Legal Information">LEGAL</button>
       </div>
     </div>
   </div>
@@ -1095,51 +1095,9 @@
 
 <!-- ══════════════════ SCRIPTS ══════════════════ -->
 
-<!-- Register PWA Service Worker -->
-<script>
-  if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js')
-        .then(reg => console.log('Service Worker registered successfully:', reg.scope))
-        .catch(err => console.error('Service Worker registration failed:', err));
-    });
-  }
-  // Safety fallback: dismiss loader if main JS scripts fail to load or execute
-  setTimeout(() => {
-    const ld = document.getElementById('loader');
-    if (ld && !ld.classList.contains('gone')) {
-      console.warn('Mach-EV: Triggered fallback loader dismissal.');
-      ld.classList.add('gone');
-      document.querySelectorAll('.hero-content .sw').forEach(el => el.classList.add('on'));
-      document.querySelectorAll('#hero .ctr[data-t]').forEach(el => {
-        if (typeof runCounter === 'function') runCounter(el);
-        else el.textContent = el.dataset.t;
-      });
-    }
-  }, 4500);
-</script>
-
-<!-- Load critical interaction code in order, while keeping the non-critical smooth-scroll library non-blocking. -->
-<script src="js/main.js?v=17" defer></script>
-<script>
-(() => {
-  const load = (src) => {
-    const script = document.createElement('script');
-    script.src = src;
-    script.defer = true;
-    document.body.appendChild(script);
-  };
-  const schedule = () => {
-    const profile = window.__uvPerformance;
-    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches || !profile?.allowNebula) return;
-    const run = () => load('js/webgl-nebula.js?v=15');
-    if ('requestIdleCallback' in window) requestIdleCallback(run, { timeout: 1800 });
-    else setTimeout(run, 1200);
-  };
-  window.addEventListener('load', schedule, { once: true });
-})();
-</script>
-
+<!-- Coordinated boot and critical interaction bundles. -->
+<script src="js/boot.js?v=3" defer></script>
+<script src="js/main.js?v=18" defer></script>
 <!-- Three.js import map for the interactive F77 viewer. The module itself loads only near the showcase. -->
 <script type="importmap">
 {
@@ -1149,33 +1107,7 @@
   }
 }
 </script>
-<script>
-(() => {
-  const viewer = document.getElementById('f77-viewer');
-  if (!viewer) return;
-  let loaded = false;
-  const loadViewer = () => {
-    if (loaded) return;
-    loaded = true;
-    const script = document.createElement('script');
-    script.type = 'module';
-    script.src = 'js/f77-viewer.js?v=6';
-    script.crossOrigin = 'anonymous';
-    document.body.appendChild(script);
-  };
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-      if (entries.some((entry) => entry.isIntersecting)) {
-        observer.disconnect();
-        loadViewer();
-      }
-    }, { rootMargin: '600px 0px' });
-    observer.observe(viewer);
-  } else {
-    loadViewer();
-  }
-})();
-</script>
+
 
 </body>
 </html>
