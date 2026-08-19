@@ -28,3 +28,11 @@ The local redesign now renders a black, image-led hero with a red primary action
 ## Production redesign verification notes
 
 The pushed redesign is live on Vercel with the new six-item navigation, red accent variable (`#ef5546`), `css/main.css?v=5`, and the preserved `js/main.js?v=19`. Production browser checks confirmed the `replica-mode` body class, hidden clone-only dashboard chapters, active service-worker control, zero inline event attributes, no initial F77 viewer request, and no observed runtime errors.
+
+## Image replacement audit
+
+The strongest local assets are `ss04-desktop.webp` (1920×752, sharp full-width white F77 in a cinematic garage) and `laser-turbo-red.webp` (1200×1200, close product view with the Mach 2 mark). The current 3D viewer is visually over-styled with purple HUD chrome and creates a large dark canvas. The replacement should use `ss04` as the responsive showcase background and `laser-turbo-red` as a compact product detail panel, retaining color/trim controls as lightweight HTML rather than rendering a canvas.
+
+## Image-first local verification
+
+The local showcase now displays the sharp `ss04-desktop.webp` asset at its native 1920×752 dimensions within a compact 16:9 frame. The old viewer canvas and module request are gone; only the hidden shader canvas remains in the DOM and no `#f77-canvas` exists. The prior blank dashboard sections remain `display:none`. A live swatch test successfully changed the image to `laser-afterburner-yellow.webp` without runtime errors, confirming the static color switching still works.

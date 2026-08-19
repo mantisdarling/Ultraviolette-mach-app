@@ -520,40 +520,16 @@
         </div>
         <div class="bike-wrap reveal-right">
           <div class="bike-glow"></div>
-          <div id="f77-viewer" class="f77-viewer" role="region" aria-label="Interactive F77 Mach 2 3D viewer" aria-describedby="f77-viewer-help">
-            <canvas id="f77-canvas" aria-label="Interactive 3D model of the F77 Mach 2 motorcycle"></canvas>
-            <div class="f77-viewer-vignette" aria-hidden="true"></div>
-            <div class="f77-viewer-hud">
-              <div class="f77-viewer-topline">
-                <span class="f77-viewer-kicker">LIVE CONFIGURATOR // 3D</span>
-                <span id="f77-viewer-status" class="f77-viewer-status">SURFACE ONLINE // TURBO RED</span>
-              </div>
-              <div class="f77-viewer-caption">
-                <span class="f77-viewer-index">F77 // MACH 2</span>
-                <span id="f77-trim-readout">MACH 2 RECON</span>
-              </div>
-              <div class="f77-viewer-preset-row" role="group" aria-label="Lighting environment presets">
-                <span class="f77-preset-label">ENVIRONMENT</span>
-                <button type="button" class="f77-preset on" data-environment="studio" aria-pressed="true">STUDIO</button>
-                <button type="button" class="f77-preset" data-environment="twilight" aria-pressed="false">TWILIGHT</button>
-                <button type="button" class="f77-preset" data-environment="track" aria-pressed="false">TRACK</button>
-                <span id="f77-environment-readout" class="f77-environment-readout">STUDIO LIGHTING</span>
-              </div>
-              <div class="f77-viewer-controls" role="group" aria-label="3D viewer controls">
-                <button type="button" id="f77-auto" class="f77-control on" aria-pressed="true">
-                  AUTO ROTATE <span class="f77-control-state">ON</span>
-                </button>
-                <button type="button" id="f77-idle" class="f77-control on" aria-pressed="true">
-                  IDLE MOTION <span class="f77-control-state">ON</span>
-                </button>
-                <button type="button" id="f77-reset" class="f77-control">RESET VIEW</button>
-              </div>
-              <p id="f77-viewer-help" class="f77-viewer-help">Drag to orbit · scroll or pinch to zoom</p>
-            </div>
+          <div class="image-showcase-shell">
+            <picture class="image-showcase-picture">
+              <source media="(max-width: 600px)" srcset="assets/images/ss04-mobile.webp" type="image/webp">
+              <source media="(max-width: 1024px)" srcset="assets/images/ss04-tablet.webp" type="image/webp">
+              <img id="bike-img" src="assets/images/ss04-desktop.webp" data-fallback="assets/images/ss04-desktop.webp" alt="White Ultraviolette F77 Mach 2 motorcycle in a cinematic studio" width="1920" height="752" loading="lazy" decoding="async">
+            </picture>
+            <div class="image-showcase-scrim" aria-hidden="true"></div>
+            <div class="image-showcase-topline"><span>F77 // MACH 2</span><span>STATIC STUDIO / 01</span></div>
+            <div class="image-showcase-caption"><strong>F77 MACH 2 RECON</strong><span>AVIATION-DERIVED ELECTRIC PERFORMANCE</span></div>
           </div>
-          <!-- Raster fallback remains available if WebGL or module loading is unavailable. -->
-          <img id="bike-img" src="assets/images/laser-turbo-red.webp" alt="F77 Mach 2 Showcase" class="fl" width="800" height="480" style="animation-duration:9s" loading="lazy" decoding="async"/>
-          <div class="scan-bar" aria-hidden="true"></div>
         </div>
       </div>
     </div>
@@ -1100,18 +1076,8 @@
 <!-- ══════════════════ SCRIPTS ══════════════════ -->
 
 <!-- Coordinated boot and critical interaction bundles. -->
-<script src="js/boot.js?v=3" defer></script>
-<script src="js/main.js?v=19" defer></script>
-<!-- Three.js import map for the interactive F77 viewer. The module itself loads only near the showcase. -->
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
-  }
-}
-</script>
-
+<script src="js/boot.js?v=4" defer></script>
+<script src="js/main.js?v=20" defer></script>
 
 </body>
 </html>

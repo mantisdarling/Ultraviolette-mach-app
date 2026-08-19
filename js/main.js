@@ -477,6 +477,7 @@ document.querySelectorAll('.ctr[data-t]').forEach(el => {
 ───────────────────────────────────────────── */
 (function initColourPicker() {
   const bikeImg   = document.getElementById('bike-img');
+  const bikeSources = document.querySelectorAll('.image-showcase-picture source');
   const colourLbl = document.getElementById('clbl');
   if (!bikeImg) return;
 
@@ -520,7 +521,10 @@ document.querySelectorAll('.ctr[data-t]').forEach(el => {
     }
 
     setTimeout(() => {
-      if (sw.dataset.img) bikeImg.src = sw.dataset.img;
+      if (sw.dataset.img) {
+        bikeSources.forEach(source => source.removeAttribute('srcset'));
+        bikeImg.src = sw.dataset.img;
+      }
       bikeImg.style.transition = 'opacity 0.25s ease-out, transform 0.25s ease-out';
       bikeImg.style.opacity    = '1';
       bikeImg.style.transform  = 'scale(1)';

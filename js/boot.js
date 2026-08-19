@@ -50,25 +50,5 @@ window.addEventListener('load', () => {
   else setTimeout(loadNebula, 1200);
 }, { once: true });
 
-(() => {
-  const viewer = document.getElementById('f77-viewer');
-  if (!viewer) return;
-  let loaded = false;
-  const loadViewer = () => {
-    if (loaded) return;
-    loaded = true;
-    loadScript('js/f77-viewer.js?v=7', { type: 'module', crossOrigin: 'anonymous' });
-  };
-
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-      if (entries.some((entry) => entry.isIntersecting)) {
-        observer.disconnect();
-        loadViewer();
-      }
-    }, { rootMargin: '600px 0px' });
-    observer.observe(viewer);
-  } else {
-    loadViewer();
-  }
-})();
+// The product showcase is intentionally image-led. No Three.js module is loaded
+// on the landing page, keeping the first view sharp and lightweight on mobile.
