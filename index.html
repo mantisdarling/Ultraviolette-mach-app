@@ -536,9 +536,19 @@
                 <span class="f77-viewer-index">F77 // MACH 2</span>
                 <span id="f77-trim-readout">MACH 2 RECON</span>
               </div>
+              <div class="f77-viewer-preset-row" role="group" aria-label="Lighting environment presets">
+                <span class="f77-preset-label">ENVIRONMENT</span>
+                <button type="button" class="f77-preset on" data-environment="studio" aria-pressed="true">STUDIO</button>
+                <button type="button" class="f77-preset" data-environment="twilight" aria-pressed="false">TWILIGHT</button>
+                <button type="button" class="f77-preset" data-environment="track" aria-pressed="false">TRACK</button>
+                <span id="f77-environment-readout" class="f77-environment-readout">STUDIO LIGHTING</span>
+              </div>
               <div class="f77-viewer-controls" role="group" aria-label="3D viewer controls">
                 <button type="button" id="f77-auto" class="f77-control on" aria-pressed="true">
                   AUTO ROTATE <span class="f77-control-state">ON</span>
+                </button>
+                <button type="button" id="f77-idle" class="f77-control on" aria-pressed="true">
+                  IDLE MOTION <span class="f77-control-state">ON</span>
                 </button>
                 <button type="button" id="f77-reset" class="f77-control">RESET VIEW</button>
               </div>
@@ -1126,7 +1136,7 @@
   }
 }
 </script>
-<script type="module" src="js/f77-viewer.js?v=3" crossorigin="anonymous"></script>
+<script type="module" src="js/f77-viewer.js?v=4" crossorigin="anonymous"></script>
 
 </body>
 </html>

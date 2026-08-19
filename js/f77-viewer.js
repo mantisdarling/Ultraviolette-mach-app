@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 const root = document.getElementById('f77-viewer');
 const canvas = document.getElementById('f77-canvas');
@@ -9,7 +10,15 @@ if (root && canvas) {
   const autoButton = document.getElementById('f77-auto');
   const resetButton = document.getElementById('f77-reset');
   const trimReadout = document.getElementById('f77-trim-readout');
+  const environmentReadout = document.getElementById('f77-environment-readout');
+  const environmentButtons = document.querySelectorAll('[data-environment]');
+  const idleButton = document.getElementById('f77-idle');
   const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const environmentPresets = {
+    studio: { label: 'STUDIO LIGHTING', background: 0x090612, fog: 0x08050d, envIntensity: 0.78, key: 4.4, fill: 2.1, rim: 4.6, accent: 0xa855f7 },
+    twilight: { label: 'TWILIGHT RUN', background: 0x100713, fog: 0x12081a, envIntensity: 0.58, key: 3.2, fill: 3.8, rim: 7.2, accent: 0xef4b4b },
+    track: { label: 'TRACK LIGHTING', background: 0x05080d, fog: 0x05080d, envIntensity: 0.92, key: 5.4, fill: 1.2, rim: 3.8, accent: 0x45a6ff }
+  };
 
   const paintMap = {
     'TURBO RED': '#c0392b',
@@ -42,9 +51,18 @@ if (root && canvas) {
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.15;
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     const scene = new THREE.Scene();
     scene.fog = new THREE.FogExp2(0x08050d, 0.055);
+    scene.background = new THREE.Color(0x090612);
+
+    const pmremGenerator = new THREE.PMREMGenerator(renderer);
+    const roomEnvironment = new RoomEnvironment(renderer);
+    scene.environment = pmremGenerator.fromScene(roomEnvironment, 0.04).texture;
+    roomEnvironment.dispose();
+    pmremGenerator.dispose();
 
     const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
     const defaultCamera = new THREE.Vector3(4.8, 2.6, 5.6);
@@ -62,26 +80,31 @@ if (root && canvas) {
     controls.autoRotate = !reducedMotion;
     controls.autoRotateSpeed = 1.4;
 
-    const ambient = new THREE.HemisphereLight(0xd9c4ff, 0x08050d, 1.5);
+    const ambient = new THREE.HemisphereLight(0xd9c4ff, 0x08050d, 1.35);
     scene.add(ambient);
 
-    const keyLight = new THREE.DirectionalLight(0xffffff, 3.2);
+    const keyLight = new THREE.DirectionalLight(0xffffff, 4.4);
     keyLight.position.set(4, 6, 6);
+    keyLight.castShadow = true;
+    keyLight.shadow.mapSize.set(1024, 1024);
+    keyLight.shadow.camera.near = 0.1;
+    keyLight.shadow.camera.far = 18;
     scene.add(keyLight);
 
-    const purpleLight = new THREE.PointLight(0xa855f7, 9, 8, 2);
-    purpleLight.position.set(-2, 1.8, 2.2);
-    scene.add(purpleLight);
+    const fillLight = new THREE.PointLight(0xa855f7, 2.1, 9, 2);
+    fillLight.position.set(-3, 2.2, 3.2);
+    scene.add(fillLight);
 
-    const redLight = new THREE.PointLight(0xef4b4b, 5, 5, 2);
-    redLight.position.set(2, 0.7, -2.5);
-    scene.add(redLight);
+    const rimLight = new THREE.PointLight(0xef4b4b, 4.6, 8, 2);
+    rimLight.position.set(2.4, 1.4, -3.4);
+    scene.add(rimLight);
 
     const platform = new THREE.Mesh(
       new THREE.CylinderGeometry(2.5, 2.5, 0.08, 64),
       new THREE.MeshStandardMaterial({ color: 0x10091a, metalness: 0.85, roughness: 0.3 })
     );
     platform.position.y = 0.04;
+    platform.receiveShadow = true;
     scene.add(platform);
 
     const platformRing = new THREE.Mesh(
@@ -101,6 +124,8 @@ if (root && canvas) {
     const bike = new THREE.Group();
     bike.position.y = 0.12;
     scene.add(bike);
+    const baseBikeY = bike.position.y;
+    let idleMotion = !reducedMotion;
 
     const paintMaterials = [];
     const glowMaterials = [];
@@ -134,6 +159,8 @@ if (root && canvas) {
       if (position) item.position.set(...position);
       if (scale) item.scale.set(...scale);
       if (rotation) item.rotation.set(...rotation);
+      item.castShadow = true;
+      item.receiveShadow = true;
       bike.add(item);
       return item;
     }
@@ -145,6 +172,8 @@ if (root && canvas) {
       const item = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius, direction.length(), segments), material);
       item.position.copy(a).add(b).multiplyScalar(0.5);
       item.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction.normalize());
+      item.castShadow = true;
+      item.receiveShadow = true;
       bike.add(item);
       return item;
     }
@@ -220,6 +249,38 @@ if (root && canvas) {
     shadow.position.set(0, 0.11, 0);
     scene.add(shadow);
 
+    function setEnvironment(name = 'studio') {
+      const preset = environmentPresets[name] || environmentPresets.studio;
+      scene.background.setHex(preset.background);
+      scene.fog.color.setHex(preset.fog);
+      ambient.intensity = 1.05 + preset.envIntensity * 0.45;
+      keyLight.intensity = preset.key;
+      fillLight.intensity = preset.fill;
+      rimLight.intensity = preset.rim;
+      fillLight.color.setHex(preset.accent);
+      rimLight.color.setHex(preset.accent);
+      if (environmentReadout) environmentReadout.textContent = preset.label;
+      environmentButtons.forEach((button) => {
+        const active = button.dataset.environment === name;
+        button.classList.toggle('on', active);
+        button.setAttribute('aria-pressed', String(active));
+      });
+      root.dataset.environment = name;
+    }
+
+    environmentButtons.forEach((button) => {
+      button.addEventListener('click', () => setEnvironment(button.dataset.environment));
+    });
+
+    idleButton?.addEventListener('click', () => {
+      idleMotion = !idleMotion;
+      idleButton.classList.toggle('on', idleMotion);
+      idleButton.setAttribute('aria-pressed', String(idleMotion));
+      idleButton.querySelector('.f77-control-state').textContent = idleMotion ? 'ON' : 'OFF';
+    });
+
+    setEnvironment('studio');
+
     function resize() {
       const width = Math.max(root.clientWidth, 320);
       const height = Math.max(root.clientHeight, 420);
@@ -278,8 +339,18 @@ if (root && canvas) {
     const resizeObserver = new ResizeObserver(resize);
     resizeObserver.observe(root);
 
+    const animationClock = new THREE.Clock();
     function animate() {
       requestAnimationFrame(animate);
+      const elapsed = animationClock.getElapsedTime();
+      if (idleMotion) {
+        bike.position.y = baseBikeY + Math.sin(elapsed * 1.7) * 0.028;
+        platformRing.rotation.z = elapsed * 0.06;
+        shadow.material.opacity = 0.075 + Math.sin(elapsed * 1.7) * 0.012;
+      } else {
+        bike.position.y = baseBikeY;
+        shadow.material.opacity = 0.08;
+      }
       controls.update();
       renderer.render(scene, camera);
     }

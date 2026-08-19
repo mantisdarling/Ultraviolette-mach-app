@@ -3997,3 +3997,105 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .f77-control { transition: none; }
 }
+
+
+/* ─────────────────────────────────────────────────────────
+   VIEWER LIGHTING PRESETS + RESPONSIVE LANDING-PAGE PASS
+   ───────────────────────────────────────────────────────── */
+.f77-viewer {
+  contain: layout paint;
+}
+
+.f77-viewer-preset-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 12px;
+  pointer-events: auto;
+}
+.f77-preset-label,
+.f77-environment-readout {
+  font-family: var(--ff-mono);
+  font-size: 8px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.f77-preset-label { color: rgba(255,255,255,.38); margin-right: 4px; }
+.f77-environment-readout { color: var(--viewer-paint); margin-left: auto; }
+.f77-preset {
+  min-height: 28px;
+  padding: 6px 9px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(8,5,14,.52);
+  color: rgba(255,255,255,.48);
+  font-family: var(--ff-mono);
+  font-size: 7px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color .3s, border-color .3s, background .3s, box-shadow .3s;
+}
+.f77-preset:hover,
+.f77-preset.on {
+  color: #fff;
+  border-color: var(--viewer-paint);
+  background: color-mix(in srgb, var(--viewer-paint) 18%, rgba(8,5,14,.7));
+  box-shadow: 0 0 16px color-mix(in srgb, var(--viewer-paint) 25%, transparent);
+}
+.f77-control { flex: 0 1 auto; }
+.f77-control.on .f77-control-state { text-shadow: 0 0 10px var(--viewer-paint); }
+
+/* Tablet keeps the showcase balanced while reducing the amount of empty vertical space. */
+@media (max-width: 1200px) {
+  .con { padding-inline: 56px; }
+  section { padding-block: 112px; }
+  .hero-content { padding-inline: 56px; }
+  .showcase-g, .life-g, .tech-g, .racing-g { gap: 36px; }
+}
+
+@media (max-width: 900px) {
+  .con { padding-inline: 32px; }
+  section { padding-block: 92px; }
+  .hero-content { padding-inline: 32px; }
+  .showcase-g { gap: 28px; }
+  .bike-wrap { height: 480px; }
+  .f77-viewer { min-height: 460px; }
+  .tech-feats { gap: 10px; }
+  .life-img-wrap { height: 440px; }
+  .phone-wrap { height: 360px; }
+}
+
+@media (max-width: 700px) {
+  .con { padding-inline: 20px; }
+  section { padding-block: 76px; }
+  .hero-content { padding-inline: 20px; }
+  .bike-wrap { height: 430px; }
+  .f77-viewer { min-height: 410px; }
+  .f77-viewer-preset-row { gap: 5px; }
+  .f77-preset-label { flex-basis: 100%; margin-bottom: 2px; }
+  .f77-environment-readout { margin-left: 3px; font-size: 7px; }
+  .f77-preset { min-height: 30px; padding-inline: 8px; }
+  .f77-viewer-controls { flex-wrap: wrap; }
+  .f77-control { min-width: calc(50% - 4px); }
+  .f77-control:last-child { flex-basis: 100%; }
+  .life-img-wrap { height: 360px; }
+  .phone-wrap { height: 330px; }
+}
+
+@media (max-width: 480px) {
+  .bike-wrap { height: 390px; }
+  .f77-viewer { min-height: 370px; }
+  .f77-viewer-hud { padding: 12px; }
+  .f77-viewer-index { font-size: 22px; }
+  .f77-viewer-preset-row { margin-bottom: 8px; }
+  .f77-preset { font-size: 6px; padding-inline: 7px; }
+  .f77-environment-readout { display: none; }
+  .f77-control { min-height: 32px; font-size: 6px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .f77-viewer-preset-row,
+  .f77-control,
+  .f77-preset { transition: none; }
+}
