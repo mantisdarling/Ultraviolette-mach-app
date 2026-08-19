@@ -40,3 +40,9 @@ The local showcase now displays the sharp `ss04-desktop.webp` asset at its nativ
 ## Production image-first verification
 
 The live Vercel build serves `ss04-desktop.webp` at 1920×752 inside a 641×360 image frame, with no `#f77-canvas`, no `f77-viewer.js` request, and no Three.js module request. The blank spacer sections remain hidden, service-worker control is active, inline event attributes remain at zero, and no runtime errors were observed.
+
+## Blank-gap diagnosis and local fix
+
+The screenshots’ blank page came from `.h-scroll-wrap { height: 350vh; }`, which was intended for a pinned scroll animation but remained after the image-first redesign. The new replica override changes the wrapper to a compact auto-height rail, makes the sticky container static, and enables a normal horizontal overflow track. Local measurements now show the story wrapper at about 634px tall instead of 350 viewport heights, with the F77 showcase starting immediately after it.
+
+The local visual boundary check confirms the next F77 showcase begins directly after the compact story rail; the former full-black viewport is no longer present.
