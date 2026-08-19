@@ -1,11 +1,11 @@
 {
-  "name": "MACH-EV — Ultraviolette F77 Experience",
-  "short_name": "MACH-EV",
+  "name": "Ultraviolette F77 Mach 2",
+  "short_name": "Ultraviolette",
   "description": "India's most advanced electric motorcycle fan experience. Built with pure vanilla HTML, CSS, and JS.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#080808",
-  "theme_color": "#7B2CBF",
+  "theme_color": "#090909",
   "orientation": "any",
   "icons": [
     {

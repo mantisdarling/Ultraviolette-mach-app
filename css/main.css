@@ -4765,3 +4765,122 @@ body.replica-mode .h-scroll-track::-webkit-scrollbar-thumb { background: var(--u
     min-height: 0;
   }
 }
+
+
+/* ─────────────────────────────────────────────────────
+   ULTRAVIOLETTE BRAND + MOBILE TOUCH REFINEMENT
+───────────────────────────────────────────────────── */
+body.replica-mode {
+  overflow-x: hidden;
+  --uv: #d83b32;
+  --uv2: #ffd7d1;
+  --uv3: #f05a4d;
+  --uv4: #9c2420;
+  --uv5: #ffaaa0;
+}
+body.replica-mode .nav-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .28em;
+  text-shadow: none;
+  white-space: nowrap;
+}
+body.replica-mode .nav-logo::before {
+  content: '';
+  display: inline-block;
+  width: 13px;
+  height: 15px;
+  flex: 0 0 13px;
+  background: var(--uv3);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  transform: rotate(180deg);
+}
+body.replica-mode .hero-h1 .l1 {
+  text-shadow: none;
+}
+body.replica-mode .hero-h1 .l2 {
+  background: none;
+  color: var(--uv3);
+  -webkit-text-fill-color: var(--uv3);
+  filter: none;
+  text-shadow: none;
+}
+body.replica-mode .hero-eye { text-shadow: none; }
+body.replica-mode .hero-h1 { text-shadow: none; }
+body.replica-mode .hero-stats { border-color: rgba(255,255,255,.18); }
+body.replica-mode .nav-links a::after { background: var(--uv3); box-shadow: none; }
+body.replica-mode .nav-cta { min-height: 44px; }
+
+body.replica-mode a,
+body.replica-mode button,
+body.replica-mode [role="button"],
+body.replica-mode input[type="range"] {
+  touch-action: manipulation;
+}
+body.replica-mode .sw-dot {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  margin: 2px;
+}
+body.replica-mode .trim-btn,
+body.replica-mode .sim-mode-btn,
+body.replica-mode .btn-p,
+body.replica-mode .btn-o,
+body.replica-mode .btn-g,
+body.replica-mode .sub-btn {
+  min-height: 44px;
+}
+body.replica-mode .hamburger,
+body.replica-mode .mob-close {
+  min-width: 48px;
+  min-height: 48px;
+}
+body.replica-mode #mob-menu {
+  overscroll-behavior: contain;
+}
+body.replica-mode .mob-nav a {
+  display: flex;
+  align-items: center;
+  min-height: 54px;
+  padding-block: 10px;
+}
+
+@media (max-width: 860px) {
+  body.replica-mode #navbar { padding-inline: 18px; }
+  body.replica-mode .nav-logo { font-size: 11px; letter-spacing: .2em; }
+  body.replica-mode .hero-content { inset: auto 20px 30px; padding: 0; }
+  body.replica-mode .hero-h1 { font-size: clamp(42px, 12vw, 76px); }
+  body.replica-mode .hero-btns > * { min-width: 0; }
+}
+
+@media (max-width: 600px) {
+  body.replica-mode #hero { min-height: 760px; }
+  body.replica-mode .hero-bike-wrap img { object-position: 64% center; }
+  body.replica-mode .hero-content { bottom: 24px; }
+  body.replica-mode .hero-eye { margin-bottom: 14px; letter-spacing: .16em; }
+  body.replica-mode .hero-h1 { font-size: clamp(40px, 13vw, 66px); line-height: .9; }
+  body.replica-mode .hero-sub { max-width: 330px; margin-block: 16px 22px; font-size: 13px; }
+  body.replica-mode .hero-btns { grid-template-columns: 1fr; gap: 8px; }
+  body.replica-mode .hero-btns .btn-ignite { grid-column: auto; }
+  body.replica-mode .hero-stats { margin-top: 22px; }
+  body.replica-mode .hstat-n { font-size: clamp(22px, 8vw, 32px); }
+  body.replica-mode .hstat { padding: 13px 8px; }
+  body.replica-mode .hstat-l { font-size: 6px; letter-spacing: .12em; }
+  body.replica-mode .swatches { gap: 4px; }
+  body.replica-mode .sw-dot { margin: 0; }
+}
+
+@media (max-width: 380px) {
+  body.replica-mode .nav-logo { font-size: 10px; letter-spacing: .14em; gap: 7px; }
+  body.replica-mode .nav-logo::before { width: 11px; height: 13px; flex-basis: 11px; }
+  body.replica-mode #hero { min-height: 720px; }
+  body.replica-mode .hero-h1 { font-size: clamp(37px, 12.8vw, 56px); }
+  body.replica-mode .hero-sub { font-size: 12px; }
+  body.replica-mode .hstat-n { font-size: 21px; }
+}

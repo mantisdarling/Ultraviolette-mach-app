@@ -50,3 +50,13 @@ The local visual boundary check confirms the next F77 showcase begins directly a
 ## Production blank-gap verification
 
 The live deployment serves `css/main.css?v=6`. Production measurements confirm the story rail is approximately 634px tall with a static sticky wrapper, and the F77 showcase begins immediately at the next section boundary. The old 350vh spacer is no longer active, and the intentionally hidden dashboard sections remain `display:none`.
+
+## Branding and mobile refinement audit
+
+The current official homepage uses a compact black header with a small Ultraviolette wordmark/logo, product-family navigation, a red Configure CTA, and a photographic SuperStreet hero with visible performance metrics. Its product discovery language is category-based: Street, Sport, Scooter, and Funduro, with a “Choose Your Ride” module. The clone still uses the generic text wordmark and a large neon gradient hero headline, so the refinement should reduce the gradient/purple treatment, use a red-and-white identity, and make the header and hero more editorial.
+
+The clone’s live page has the expected mobile navigation controls in the DOM, but the desktop-width browser view does not yet expose a true narrow-screen touch audit. The next pass will use CSS touch-target rules and browser viewport emulation checks for compact widths.
+
+## Branding and touch verification
+
+The local build now reports an Ultraviolette title and wordmark, the hero accent is red (`#f05a4d`) rather than purple, and the main stylesheet is served as `css/main.css?v=7`. The mobile menu simulation successfully opened with `aria-hidden=false` and body scroll lock, then closed through the new outside-tap listener with `aria-hidden=true` and scroll restored. Hidden spacer sections remain removed and inline event attributes remain at zero.

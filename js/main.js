@@ -400,6 +400,9 @@ window.addEventListener('resize', () => scheduleScrollFrame(), { passive: true }
 
   if (mobClose) mobClose.addEventListener('click', closeMenu);
   document.querySelectorAll('.mob-lnk').forEach(l => l.addEventListener('click', closeMenu));
+  mob.addEventListener('click', (event) => {
+    if (event.target === mob) closeMenu();
+  });
 
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && mob.classList.contains('open')) closeMenu();

@@ -1,5 +1,5 @@
 /*
- * MACH-EV boot coordinator.
+ * Ultraviolette boot coordinator.
  * Keeps executable boot logic in a reviewed same-origin bundle instead of inline handlers.
  */
 
