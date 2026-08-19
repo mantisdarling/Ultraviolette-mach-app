@@ -173,7 +173,8 @@ function onScrollSpeedUpdate(sy) {
    MAGNETIC CURSOR
 ───────────────────────────────────────────── */
 (function initCursor() {
-  if (!hasFinePointer || performanceTier !== 'full') return;
+  // The cursor is lightweight enough for lite devices; only magnetic button transforms remain full-tier.
+  if (!hasFinePointer) return;
 
   const cur  = document.getElementById('cur');
   const curR = document.getElementById('cur-r');

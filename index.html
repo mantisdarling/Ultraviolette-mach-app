@@ -100,12 +100,12 @@
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700;800&family=JetBrains+Mono:wght@400;500;600&family=Hanken+Grotesk:wght@300;400;600&display=swap"/></noscript>
 
 <!-- Critical Stylesheet -->
-<link rel="stylesheet" href="css/critical.css"/>
+<link rel="stylesheet" href="css/critical.css?v=2"/>
 
 <!-- Main Stylesheet -->
-<link rel="stylesheet" href="css/main.css"/>
+<link rel="stylesheet" href="css/main.css?v=5"/>
 </head>
-<body>
+<body class="replica-mode">
 
 <!-- Startup diagnostic sweep overlay -->
 <div id="ignition-sweep" class="ignition-sweep" aria-hidden="true"></div>
@@ -154,13 +154,15 @@
 
 <!-- Header Navigation -->
 <nav id="navbar">
-  <a href="#main-content" class="nav-logo">MACH<b>-EV</b></a>
+  <a href="#main-content" class="nav-logo" aria-label="Ultraviolette home">ULTRAVIOLETTE</a>
   <div class="nav-status" aria-label="Vehicle system status"><span class="nav-status-dot" aria-hidden="true"></span> SYSTEMS ONLINE</div>
   <ul class="nav-links">
     <li><a href="#showcase" class="on">VEHICLES</a></li>
     <li><a href="#smarttech">SMART TECH</a></li>
     <li><a href="#racing">UV RACING</a></li>
     <li><a href="#about">ABOUT</a></li>
+    <li><a href="#discovery">DISCOVER</a></li>
+    <li><a href="#racing">REGISTER YOUR INTEREST</a></li>
   </ul>
   <a href="https://www.ultraviolette.com/configure" target="_blank" rel="noopener noreferrer" class="nav-cta">CONFIGURE</a>
   <button type="button" class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mob-menu">
@@ -176,6 +178,8 @@
     <a href="#smarttech" class="mob-lnk">SMART TECH</a>
     <a href="#racing" class="mob-lnk">UV RACING</a>
     <a href="#about" class="mob-lnk">ABOUT</a>
+    <a href="#discovery" class="mob-lnk">DISCOVER</a>
+    <a href="#racing" class="mob-lnk">REGISTER YOUR INTEREST</a>
   </nav>
   <div style="margin-top:40px">
     <a href="https://www.ultraviolette.com/configure" target="_blank" rel="noopener noreferrer" class="btn-p" style="justify-content:center; width: 100%;">CONFIGURE YOUR RIDE</a>
@@ -201,19 +205,19 @@
     <div class="scan"></div>
 
     <div class="hero-content">
-      <div class="hero-eye">SYS ACTIVE // PROTOCOL 01</div>
+      <div class="hero-eye">F77 MACH 2 // SUPER SONIC PERFORMANCE</div>
       <h1 class="hero-h1">
-        <div class="sw" style="transition-delay:.1s"><span class="sw-inner l1 px-shift" data-px-x="-1.6">THE FUTURE</span></div><br/>
-        <div class="sw" style="transition-delay:.26s"><span class="sw-inner l2 px-shift" data-px-x="1.6">TAKES OFF</span></div>
+        <div class="sw" style="transition-delay:.1s"><span class="sw-inner l1 px-shift" data-px-x="-1.6">SUPER SONIC</span></div><br/>
+        <div class="sw" style="transition-delay:.26s"><span class="sw-inner l2 px-shift" data-px-x="1.6">PERFORMANCE</span></div>
       </h1>
-      <p class="hero-sub px-shift" data-px-y="0.35">Aviation-inspired engineering meets ballistic performance. The F77 — India's most advanced electric motorcycle — built to dominate every road and track.</p>
+      <p class="hero-sub px-shift" data-px-y="0.35">Armed with an aviation-derived electric drivetrain, the F77 Mach 2 delivers uncompromising performance across every riding condition.</p>
       <div class="hero-btns">
         <button type="button" class="btn-p btn-ignite" id="btn-ignite" aria-live="polite">
           <span class="icon icon-power btn-ignite-icon" style="font-size:18px" aria-hidden="true">⏻</span>
           <span class="btn-ignite-txt">START ENGINE</span>
         </button>
         <a href="https://www.ultraviolette.com/f77" target="_blank" rel="noopener noreferrer" class="btn-p">DISCOVER F77 <span class="icon icon-arrow" style="font-size:18px" aria-hidden="true">→</span></a>
-        <a href="https://www.youtube.com/@UltravioletteEV" target="_blank" rel="noopener noreferrer" class="btn-g">WATCH FILM</a>
+        <a href="#racing" class="btn-g">REGISTER INTEREST</a>
       </div>
       
       <!-- Hero Aviation Boot Diagnostics Sequence Overlay -->
@@ -709,10 +713,10 @@
   </section>
 
   <!-- Precision Gallery Carousel -->
-  <section style="padding-bottom:0; border-top:1px solid rgba(255,255,255,.04)">
+  <section id="discovery" class="replica-discovery" style="padding-bottom:0; border-top:1px solid rgba(255,255,255,.04)">
     <div class="con reveal" style="margin-bottom:36px">
-      <span class="label" style="display:block;margin-bottom:12px">SPEC 01X // VARIANTS</span>
-      <h2 class="split-reveal" style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(42px,7vw,88px);line-height:.88;color:#fff;letter-spacing:-.04em">MACH-PRECISION GALLERY</h2>
+      <span class="label" style="display:block;margin-bottom:12px">CHOOSE YOUR BALLISTIC MACHINE</span>
+      <h2 class="split-reveal" style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(42px,7vw,88px);line-height:.88;color:#fff;letter-spacing:-.04em">CHOOSE YOUR RIDE</h2>
     </div>
     <div class="gal-scroll">
       <div class="gal-track">
@@ -1021,8 +1025,8 @@
   <div class="con">
     <div class="foot-g">
       <div>
-        <div class="foot-brand">MACH-EV</div>
-        <p class="foot-tag">The future of performance mobility is electric. Experience the Ultraviolette F77 Mach 2.</p>
+        <div class="foot-brand">ULTRAVIOLETTE</div>
+        <p class="foot-tag">The future takes off with us. High-performance electric motorcycles, engineered in Bengaluru.</p>
         <div class="soc-row">
           <a href="https://www.instagram.com/ultraviolette_automotive/" target="_blank" rel="noopener noreferrer" class="soc-btn" aria-label="Instagram">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
@@ -1097,7 +1101,7 @@
 
 <!-- Coordinated boot and critical interaction bundles. -->
 <script src="js/boot.js?v=3" defer></script>
-<script src="js/main.js?v=18" defer></script>
+<script src="js/main.js?v=19" defer></script>
 <!-- Three.js import map for the interactive F77 viewer. The module itself loads only near the showcase. -->
 <script type="importmap">
 {

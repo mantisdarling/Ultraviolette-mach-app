@@ -2454,10 +2454,7 @@ button:focus-visible,
 }
 
 /* ─── ADAPTIVE LITE PERFORMANCE MODE ─────────────── */
-html[data-performance="lite"] #grain,
-html[data-performance="lite"] #cur,
-html[data-performance="lite"] #cur-r,
-html[data-performance="lite"] #cur-txt {
+html[data-performance="lite"] #grain {
   display: none;
 }
 
@@ -4229,3 +4226,395 @@ body {
 .icon-shield,
 .icon-speed,
 .icon-location { font-family: Arial, Helvetica, sans-serif; }
+
+
+/* ─────────────────────────────────────────────────────
+   OFFICIAL ULTRAVIOLETTE REPLICA PRESENTATION LAYER
+   A quieter, image-led product system inspired by the
+   current ultraviolette.com homepage.
+───────────────────────────────────────────────────── */
+body.replica-mode {
+  --uv: #c9342d;
+  --uv2: #ffd2cc;
+  --uv3: #ef5546;
+  --uv4: #8f1e1b;
+  --uv5: #ff9e92;
+  --neon: #ef5546;
+  --glow: rgba(201,52,45,.34);
+  --rich: #080808;
+  --black: #050505;
+  --dim: #8b8883;
+  --mid: #c7c3bd;
+  --border: rgba(255,255,255,.14);
+  --border-hi: rgba(255,255,255,.34);
+  --border-glow: rgba(201,52,45,.7);
+  --card: rgba(255,255,255,.035);
+  --card-hi: rgba(255,255,255,.08);
+  --glass: rgba(12,12,12,.84);
+  --glass-edge: rgba(255,255,255,.16);
+  background: #050505;
+  color: #f2f0eb;
+}
+
+body.replica-mode::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9996;
+  opacity: .035;
+  background: linear-gradient(115deg, transparent 0 48%, rgba(255,255,255,.16) 49%, transparent 50% 100%);
+  background-size: 6px 6px;
+  mix-blend-mode: soft-light;
+}
+
+body.replica-mode #ignition-sweep,
+body.replica-mode #grain,
+body.replica-mode .hero-grid-overlay,
+body.replica-mode .scanlines,
+body.replica-mode .scan,
+body.replica-mode #shader,
+body.replica-mode #side-nav,
+body.replica-mode .h-grad1 {
+  display: none;
+}
+
+body.replica-mode #navbar {
+  height: 72px;
+  padding: 0 clamp(20px, 4vw, 64px);
+  background: rgba(5,5,5,.9);
+  border-bottom: 1px solid rgba(255,255,255,.12);
+  box-shadow: none;
+  backdrop-filter: blur(18px);
+}
+
+body.replica-mode .nav-logo {
+  min-width: 176px;
+  font-family: var(--ff-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .28em;
+  color: #fff;
+}
+
+body.replica-mode .nav-logo b { color: var(--uv3); }
+body.replica-mode .nav-status { display: none; }
+body.replica-mode .nav-links {
+  gap: clamp(12px, 2.2vw, 34px);
+  margin: 0 auto;
+}
+body.replica-mode .nav-links a,
+body.replica-mode .mob-lnk {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  letter-spacing: .12em;
+  color: rgba(255,255,255,.75);
+}
+body.replica-mode .nav-links a:hover,
+body.replica-mode .nav-links a.on,
+body.replica-mode .mob-lnk:hover { color: #fff; }
+body.replica-mode .nav-cta {
+  min-width: 130px;
+  justify-content: center;
+  background: var(--uv);
+  border: 1px solid var(--uv);
+  color: #fff;
+  box-shadow: none;
+  border-radius: 0;
+  letter-spacing: .1em;
+}
+body.replica-mode .nav-cta:hover { background: #e24a40; box-shadow: none; }
+
+body.replica-mode #hero {
+  min-height: 100svh;
+  background: #050505;
+  overflow: hidden;
+}
+body.replica-mode .hero-bike-wrap {
+  inset: 72px 0 0;
+  opacity: .96;
+}
+body.replica-mode .hero-bike-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(5,5,5,.84) 0%, rgba(5,5,5,.22) 47%, rgba(5,5,5,.05) 100%), linear-gradient(0deg, rgba(5,5,5,.96) 0%, transparent 42%);
+}
+body.replica-mode .hero-bike-wrap img {
+  filter: saturate(.82) contrast(1.06) brightness(.86);
+}
+body.replica-mode .h-grad2 {
+  background: linear-gradient(180deg, transparent 40%, rgba(5,5,5,.92) 100%);
+}
+body.replica-mode .hero-content {
+  inset: auto clamp(24px, 7vw, 120px) clamp(92px, 12vh, 148px);
+  max-width: 820px;
+}
+body.replica-mode .hero-eye,
+body.replica-mode .label,
+body.replica-mode .hstat-l,
+body.replica-mode .sh-txt,
+body.replica-mode .col-lbl,
+body.replica-mode .line-title,
+body.replica-mode .spec-lbl,
+body.replica-mode .sim-title,
+body.replica-mode .gal-code,
+body.replica-mode .press-desc,
+body.replica-mode .fc-title {
+  color: var(--dim);
+  letter-spacing: .18em;
+}
+body.replica-mode .hero-eye { color: var(--uv3); }
+body.replica-mode .hero-h1 {
+  font-size: clamp(48px, 8.6vw, 136px);
+  line-height: .86;
+  letter-spacing: -.065em;
+  text-transform: uppercase;
+}
+body.replica-mode .hero-h1 .l1 { color: #f6f3ee; }
+body.replica-mode .hero-h1 .l2 { color: var(--uv3); }
+body.replica-mode .hero-sub {
+  max-width: 510px;
+  color: rgba(246,243,238,.76);
+  font-size: 16px;
+  line-height: 1.7;
+}
+body.replica-mode .hero-btns { gap: 12px; }
+body.replica-mode .btn-p,
+body.replica-mode .btn-o,
+body.replica-mode .btn-g {
+  min-height: 48px;
+  border-radius: 0;
+  letter-spacing: .14em;
+  box-shadow: none;
+}
+body.replica-mode .btn-p { background: var(--uv); border-color: var(--uv); }
+body.replica-mode .btn-p:hover { background: #e24a40; box-shadow: none; }
+body.replica-mode .btn-o,
+body.replica-mode .btn-g { border-color: rgba(255,255,255,.42); color: #fff; background: transparent; }
+body.replica-mode .btn-o:hover,
+body.replica-mode .btn-g:hover { border-color: #fff; color: #fff; background: rgba(255,255,255,.08); box-shadow: none; }
+body.replica-mode .hero-stats {
+  right: 0;
+  bottom: -104px;
+  left: 0;
+  width: min(760px, 100%);
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(5,5,5,.72);
+  box-shadow: none;
+}
+body.replica-mode .hstat { border-right-color: rgba(255,255,255,.16); }
+body.replica-mode .hstat-n { color: #fff; }
+body.replica-mode .hstat-u { color: var(--uv3); }
+body.replica-mode .scroll-hint { bottom: 26px; }
+body.replica-mode .sh-line { background: var(--uv); }
+
+body.replica-mode .ticker-bar {
+  padding: 13px 0;
+  border-top: 1px solid rgba(255,255,255,.1);
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  background: #090909;
+  backdrop-filter: none;
+}
+body.replica-mode .ticker-item { color: rgba(255,255,255,.55); }
+body.replica-mode .tick-dot { background: var(--uv); box-shadow: none; }
+
+body.replica-mode section,
+body.replica-mode .cine-section {
+  border-top-color: rgba(255,255,255,.1) !important;
+  background: #050505;
+}
+body.replica-mode .cine-section,
+body.replica-mode #about,
+body.replica-mode #smarttech,
+body.replica-mode #specs {
+  background: #050505;
+}
+body.replica-mode .cine-section { padding-top: clamp(110px, 14vw, 190px); padding-bottom: clamp(110px, 14vw, 190px); }
+body.replica-mode .cine-big { color: rgba(255,255,255,.94); }
+body.replica-mode .cine-big span,
+body.replica-mode .cine-big span:hover {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  color: inherit;
+}
+body.replica-mode .cine-big:nth-child(3) { color: var(--uv3); }
+body.replica-mode .cine-num { text-shadow: none; }
+body.replica-mode .cine-unit { color: var(--uv3); }
+body.replica-mode .awards-g { gap: 0; }
+body.replica-mode .award-c {
+  border-color: rgba(255,255,255,.13);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+body.replica-mode .award-c:hover {
+  transform: none;
+  border-color: var(--uv);
+  box-shadow: inset 0 -2px 0 var(--uv);
+}
+body.replica-mode .aw-name { font-weight: 500; }
+
+body.replica-mode .chapter {
+  border-color: rgba(255,255,255,.16);
+  border-radius: 0;
+  background: #0c0c0c;
+  box-shadow: none;
+}
+body.replica-mode .chapter::after { display: none; }
+body.replica-mode .ch-grad { background: linear-gradient(to top, rgba(5,5,5,.96), transparent 70%); }
+body.replica-mode .ch-explore { color: var(--uv3); opacity: 1; }
+body.replica-mode .ch-num { color: var(--uv3); }
+
+body.replica-mode #specs-explorer,
+body.replica-mode #showcase,
+body.replica-mode .replica-discovery {
+  background: #0b0b0b;
+}
+body.replica-mode .schematic-wrap,
+body.replica-mode .hud-card,
+body.replica-mode .sim-card,
+body.replica-mode .spec-c,
+body.replica-mode .f77-viewer,
+body.replica-mode .glass,
+body.replica-mode .form-wrap {
+  border-color: rgba(255,255,255,.16);
+  border-radius: 0;
+  box-shadow: none;
+}
+body.replica-mode .hud-card,
+body.replica-mode .sim-card,
+body.replica-mode .glass,
+body.replica-mode .form-wrap { background: rgba(255,255,255,.025); }
+body.replica-mode .trim-btn.on,
+body.replica-mode .trim-btn:hover,
+body.replica-mode .sim-mode-btn.on,
+body.replica-mode .sim-mode-btn:hover,
+body.replica-mode .spec-toggle-btn.active {
+  border-color: var(--uv);
+  background: var(--uv);
+  color: #fff;
+}
+body.replica-mode .spec-c { border-left-color: var(--uv) !important; }
+body.replica-mode .spec-num,
+body.replica-mode .spec-unit,
+body.replica-mode .gal-price,
+body.replica-mode .city-c.uv { color: var(--uv3); }
+body.replica-mode .bike-glow,
+body.replica-mode .phone-glow { opacity: .18; filter: grayscale(1); }
+body.replica-mode .f77-viewer { background: #080808; }
+
+body.replica-mode .life-g,
+body.replica-mode .tech-g,
+body.replica-mode .aero-wrap,
+body.replica-mode .racing-g { gap: clamp(36px, 7vw, 120px); }
+body.replica-mode .life-img-wrap,
+body.replica-mode .aero-bg-img,
+body.replica-mode .racing-bg { filter: saturate(.72); }
+body.replica-mode .big-h,
+body.replica-mode .tech-g h2,
+body.replica-mode .aero-content h2,
+body.replica-mode .racing-g h2 { letter-spacing: -.06em; }
+body.replica-mode .hi-txt { color: var(--uv3); }
+body.replica-mode .inv-tag { border-color: rgba(255,255,255,.16); color: var(--mid); }
+body.replica-mode .safety-c { border-color: rgba(255,255,255,.13); background: transparent; }
+body.replica-mode .safety-c:hover { border-color: var(--uv); box-shadow: none; }
+body.replica-mode .safety-ic { color: var(--uv3); }
+body.replica-mode .gal-c {
+  border-color: rgba(255,255,255,.15);
+  border-radius: 0;
+  background: #0c0c0c;
+  box-shadow: none;
+}
+body.replica-mode .gal-c:hover { border-color: var(--uv); box-shadow: inset 0 -3px 0 var(--uv); }
+body.replica-mode .gal-grad { background: linear-gradient(to top, rgba(5,5,5,.96), transparent 68%); }
+body.replica-mode .gal-cta { color: var(--uv3); }
+body.replica-mode .press-c { border-color: rgba(255,255,255,.13); }
+body.replica-mode .press-c:hover { border-color: var(--uv); background: rgba(201,52,45,.08); }
+body.replica-mode .specs-table th,
+body.replica-mode .specs-table td { border-color: rgba(255,255,255,.13); }
+body.replica-mode .spec-th-highlight,
+body.replica-mode .spec-td-highlight { color: var(--uv3); background: rgba(201,52,45,.08); }
+body.replica-mode .giant-marquee { border-color: rgba(255,255,255,.1); background: #050505; }
+body.replica-mode .giant-marquee .solid-txt { color: var(--uv3); }
+body.replica-mode .racing-wrap { background: #080808; }
+body.replica-mode .racing-ovl { background: linear-gradient(90deg, rgba(5,5,5,.96), rgba(5,5,5,.42), rgba(5,5,5,.76)); }
+body.replica-mode .racing-s-c { border-color: rgba(255,255,255,.13); }
+body.replica-mode .form-badge { color: var(--uv3); border-color: rgba(201,52,45,.5); }
+body.replica-mode .field:focus { border-color: var(--uv); }
+body.replica-mode .field-ln { background: var(--uv); }
+body.replica-mode .sub-btn { background: var(--uv); border-color: var(--uv); }
+
+body.replica-mode footer {
+  background: #090909;
+  border-top-color: rgba(255,255,255,.12);
+}
+body.replica-mode .foot-brand { color: #fff; letter-spacing: .16em; }
+body.replica-mode .foot-tag { color: var(--mid); }
+body.replica-mode .fc-title { color: var(--uv3); }
+body.replica-mode .fc-list a:hover { color: var(--uv3); }
+body.replica-mode .soc-btn { border-color: rgba(255,255,255,.18); }
+body.replica-mode .soc-btn:hover { border-color: var(--uv); background: var(--uv); }
+
+@media (max-width: 1180px) {
+  body.replica-mode .nav-logo { min-width: 132px; }
+  body.replica-mode .nav-links { gap: 14px; }
+  body.replica-mode .nav-links a { font-size: 8px; letter-spacing: .08em; }
+}
+
+@media (max-width: 860px) {
+  body.replica-mode #navbar { height: 64px; }
+  body.replica-mode .nav-logo { min-width: 0; font-size: 11px; letter-spacing: .18em; }
+  body.replica-mode .nav-links,
+  body.replica-mode .nav-cta { display: none; }
+  body.replica-mode .hero-bike-wrap { inset: 64px 0 0; }
+  body.replica-mode .hero-content { inset: auto 22px 56px; }
+  body.replica-mode .hero-h1 { font-size: clamp(42px, 13vw, 74px); }
+  body.replica-mode .hero-sub { font-size: 14px; }
+  body.replica-mode .hero-stats { position: relative; right: auto; bottom: auto; margin-top: 30px; }
+  body.replica-mode .hstat { padding: 14px 10px; }
+  body.replica-mode .hstat-n { font-size: 28px; }
+  body.replica-mode .hstat-l { font-size: 7px; }
+  body.replica-mode .hero-btns { flex-wrap: wrap; }
+  body.replica-mode .hero-btns > * { flex: 1 1 150px; }
+}
+
+@media (max-width: 560px) {
+  body.replica-mode .hero-bike-wrap { inset: 64px 0 0; }
+  body.replica-mode .hero-bike-wrap img { object-position: 63% center; }
+  body.replica-mode .hero-content { bottom: 32px; }
+  body.replica-mode .hero-eye { font-size: 8px; letter-spacing: .12em; }
+  body.replica-mode .hero-stats { grid-template-columns: repeat(2, 1fr); }
+  body.replica-mode .hstat:nth-child(2) { border-right: 0; }
+  body.replica-mode .hstat:nth-child(-n+2) { border-bottom: 1px solid rgba(255,255,255,.16); }
+  body.replica-mode .cine-stat-row { gap: 38px 24px; }
+  body.replica-mode .cine-stat:not(:last-child)::after { display: none; }
+  body.replica-mode .h-scroll-track { padding-left: 22px !important; }
+  body.replica-mode .chapter { width: 82vw; }
+}
+
+
+/* Remove clone-only dashboard chapters from the default homepage flow. The same
+   features remain available through the F77 viewer and technical sections. */
+body.replica-mode #specs-explorer,
+body.replica-mode #modes,
+body.replica-mode .giant-marquee {
+  display: none;
+}
+
+body.replica-mode #showcase {
+  padding-top: clamp(120px, 15vw, 210px);
+}
+
+body.replica-mode #showcase::before,
+body.replica-mode #smarttech::before,
+body.replica-mode #racing::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: clamp(22px, 7vw, 120px);
+  width: min(180px, 24vw);
+  height: 1px;
+  background: var(--uv);
+  box-shadow: 0 0 18px rgba(201,52,45,.45);
+}
