@@ -11,13 +11,31 @@
     if (!c) return;
 
     /* Resize canvas to match display size */
+    let boundsDirty = true;
+    let canvasBounds = { left: 0, top: 0, width: 1, height: 1 };
+    let viewportDirty = true;
+
+    function updateCanvasBounds() {
+      const rect = c.getBoundingClientRect();
+      canvasBounds = {
+        left: rect.left,
+        top: rect.top,
+        width: rect.width || c.clientWidth || window.innerWidth,
+        height: rect.height || c.clientHeight || window.innerHeight
+      };
+      boundsDirty = false;
+    }
+
     function sz() {
       const w = c.clientWidth  || window.innerWidth;
       const h = c.clientHeight || window.innerHeight;
-      if (c.width !== w || c.height !== h) { 
-        c.width = w; 
-        c.height = h; 
+      if (c.width !== w || c.height !== h) {
+        c.width = w;
+        c.height = h;
+        viewportDirty = true;
       }
+      boundsDirty = true;
+      updateCanvasBounds();
     }
     if (typeof ResizeObserver !== 'undefined') {
       new ResizeObserver(sz).observe(c);
@@ -26,18 +44,23 @@
     }
     sz();
 
-    const gl = c.getContext('webgl') || c.getContext('experimental-webgl');
+    const contextOptions = {
+      alpha: true,
+      antialias: false,
+      depth: false,
+      stencil: false,
+      powerPreference: 'low-power',
+      preserveDrawingBuffer: false
+    };
+    const gl = c.getContext('webgl', contextOptions) || c.getContext('experimental-webgl', contextOptions);
     if (!gl) return; /* CSS fallback gradient in stylesheet takes over */
 
     /* Vertex shader: full-screen quad */
     const vs = `attribute vec2 p;varying vec2 v;void main(){v=p*.5+.5;gl_Position=vec4(p,0.0,1.0);}`;
 
-    /* Fragment shader: noise-driven purple nebula with mouse parallax and velocity ripples */
-    const fs = `#ifdef GL_FRAGMENT_PRECISION_HIGH
-precision highp float;
-#else
-precision mediump float;
-#endif
+    /* Fragment shader: noise-driven purple nebula with mouse parallax and velocity ripples.
+       This decorative background does not require highp precision. */
+    const fs = `precision mediump float;
 varying vec2 v;uniform float t;uniform vec2 r,m;uniform float vL;
 float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5);}
 float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),f.x),f.y);}
@@ -102,13 +125,18 @@ void main(){
     let lmx = 0.5, lmy = 0.5;
     let vel = 0.0;
     
+    window.addEventListener('scroll', () => {
+      boundsDirty = true;
+    }, { passive: true });
+
     window.addEventListener('mousemove', e => {
-      const rc = c.getBoundingClientRect();
-      if (rc.width && rc.height) {
-        lmx = mmx;
-        lmy = mmy;
-        mmx = (e.clientX - rc.left) / rc.width;
-        mmy = 1 - (e.clientY - rc.top)  / rc.height;
+        if (boundsDirty) updateCanvasBounds();
+        const rc = canvasBounds;
+        if (rc.width && rc.height) {
+          lmx = mmx;
+          lmy = mmy;
+          mmx = (e.clientX - rc.left) / rc.width;
+          mmy = 1 - (e.clientY - rc.top)  / rc.height;
         
         const dx = mmx - lmx;
         const dy = mmy - lmy;
@@ -118,14 +146,24 @@ void main(){
 
     let isVisible = true;
     let rafId     = null;
+    let lastFrameTime = -Infinity;
+    const frameInterval = 1000 / 30;
 
     function render(t) {
       if (!isVisible) { 
         rafId = null; 
         return; 
       }
-      gl.viewport(0, 0, c.width, c.height);
-      
+      if (t - lastFrameTime < frameInterval) {
+        rafId = requestAnimationFrame(render);
+        return;
+      }
+      lastFrameTime = t;
+      if (viewportDirty) {
+        gl.viewport(0, 0, c.width, c.height);
+        viewportDirty = false;
+      }
+
       vel *= 0.94; // smooth velocity decay
       
       gl.uniform1f(uT, t * 0.001);

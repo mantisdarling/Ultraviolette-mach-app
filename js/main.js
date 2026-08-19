@@ -1642,15 +1642,46 @@ function updateSoundPitch() {
       infinite: false,
     });
 
-    // Bind Lenis updates to requestAnimationFrame ticks only on desktop.
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
+    // Keep Lenis dormant at idle. Pointer/keyboard input wakes it, and the loop
+    // reschedules only while Lenis is still animating toward its target.
+    let lenisRafId = null;
+    const isLenisActive = () => {
+      const state = lenis.isScrolling;
+      if (state === true || state === 'smooth') return true;
+      const animated = Number(lenis.animatedScroll);
+      const target = Number(lenis.targetScroll);
+      return Number.isFinite(animated) && Number.isFinite(target) && Math.abs(animated - target) > 0.5;
+    };
 
-    // Expose lenis instance globally for scroll synchronization if needed.
+    const wakeLenis = () => {
+      if (lenisRafId !== null) return;
+      lenisRafId = requestAnimationFrame(function tick(time) {
+        lenis.raf(time);
+        if (isLenisActive()) {
+          lenisRafId = requestAnimationFrame(tick);
+        } else {
+          lenisRafId = null;
+        }
+      });
+    };
+
+    lenis.on('scroll', ({ scroll }) => {
+      scheduleScrollFrame(scroll);
+      wakeLenis();
+    });
+    window.addEventListener('wheel', wakeLenis, { passive: true });
+    window.addEventListener('touchstart', wakeLenis, { passive: true });
+    window.addEventListener('resize', wakeLenis, { passive: true });
+    window.addEventListener('keydown', event => {
+      if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', 'Space'].includes(event.code || event.key)) {
+        wakeLenis();
+      }
+    }, { passive: true });
+
+    // Expose Lenis and its wake hook globally for browser verification and any
+    // programmatic navigation that needs to resume the dormant loop.
     window.lenis = lenis;
+    window.wakeLenis = wakeLenis;
   };
 
   if (typeof Lenis === 'function') {
