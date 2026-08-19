@@ -78,3 +78,11 @@ The new F77 Design Studio renders as a distinct premium section with a BUILD YOU
 The configurator interaction probe passed: the Design step becomes visible, Airstrike selection updates the summary to AIRSTRIKE / STELLAR WHITE and swaps the preview to `airstrike-stellar-white.webp` after the transition, Ballistic profile updates the output to 180 KM, and Reset returns the active step to Model with Laser / Turbo Red / Glide defaults.
 
 The primary desktop Configure link now jumps to `#configurator` in the local browser, placing the user directly at the Design Studio with the active Model step and synchronized summary visible.
+
+## Production Design Studio verification
+
+The live Vercel build serves `css/main.css?v=8` and `js/main.js?v=23`. The Design Studio is present with 3 steps, 3 panels, 16 interactive controls, and 2 in-page Configure links. The live preview lazy-loads into the dedicated configurator section, service-worker control remains active, inline event attributes remain at zero, and no runtime errors were observed. The production screenshot shows the new BUILD YOUR F77 composition, preview panel, model cards, progress rail, and build summary together as a unified section.
+
+The final production interaction probe passed: Airstrike changes the preview to `airstrike-stellar-white.webp` and updates the summary to AIRSTRIKE / STELLAR WHITE; Ballistic changes the ride profile and output to 180 KM; Reset returns to Model / Laser / Glide; inline event attributes remain at zero and no runtime errors were observed.
+
+The final Lighthouse invocation completed without a runtime error and produced valid mobile timing audits of 4.2s FCP, 4.2s LCP, and 0.001 CLS, plus a passing viewport audit, but Lighthouse did not emit a performance category score or TBT/TTI values in that run. The earlier mobile audit before the configurator reported 68/100 performance with 3.4s FCP, 3.6s LCP, 450ms TBT, 0.001 CLS, and 4.1s TTI.
