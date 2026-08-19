@@ -60,3 +60,9 @@ The clone’s live page has the expected mobile navigation controls in the DOM, 
 ## Branding and touch verification
 
 The local build now reports an Ultraviolette title and wordmark, the hero accent is red (`#f05a4d`) rather than purple, and the main stylesheet is served as `css/main.css?v=7`. The mobile menu simulation successfully opened with `aria-hidden=false` and body scroll lock, then closed through the new outside-tap listener with `aria-hidden=true` and scroll restored. Hidden spacer sections remain removed and inline event attributes remain at zero.
+
+## Production branding and mobile verification
+
+The live deployment now serves `css/main.css?v=7` and `js/main.js?v=22`. The page title and visible logo are Ultraviolette, the hero accent computes to red (`#f05a4d`), 35 interactive controls expose a minimum visible touch dimension of 40px in the desktop browser context, and the menu open/outside-tap simulation passes. Service-worker control remains active, inline event attributes remain at zero, and no runtime errors were observed.
+
+The simulated 412×915 mobile Lighthouse audit reported a 68/100 performance score, 3.4s FCP, 3.6s LCP, 450ms TBT, 0.001 CLS, 4.1s TTI, and a passing viewport audit.
