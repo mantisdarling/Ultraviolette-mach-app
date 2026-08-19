@@ -588,7 +588,7 @@ document.querySelectorAll('.ctr[data-t]').forEach(el => {
     }
     activeAnimationId = requestAnimationFrame(tick);
 
-    if (typeof playClickSound === 'function') playClickSound();
+    window.dispatchEvent(new CustomEvent('f77:mode', { detail: { mode, data } }));
   }
 
   const activate = (c) => {
@@ -775,18 +775,26 @@ document.querySelectorAll('.ctr[data-t]').forEach(el => {
    generated in real-time using native browser oscillator nodes.
    ───────────────────────────────────────────── */
 function initAudio() {
-  if (audioCtx) return;
+  if (audioCtx) return audioCtx;
   const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-  audioCtx = new AudioContextClass();
-  masterGain = audioCtx.createGain();
-  masterGain.gain.setValueAtTime(isMuted ? 0 : 1, audioCtx.currentTime);
-  masterGain.connect(audioCtx.destination);
+  if (!AudioContextClass) return null;
+  try {
+    audioCtx = new AudioContextClass();
+    masterGain = audioCtx.createGain();
+    masterGain.gain.setValueAtTime(isMuted ? 0 : 1, audioCtx.currentTime);
+    masterGain.connect(audioCtx.destination);
+  } catch (error) {
+    audioCtx = null;
+    masterGain = null;
+    console.info('[Audio] Web Audio is unavailable; continuing silently.', error);
+  }
+  return audioCtx;
 }
 
 // Short synthesized chime for UI feedback (buttons & swatches)
 function playClickSound() {
   initAudio();
-  if (!audioCtx || audioCtx.state === 'suspended') return;
+  if (!audioCtx || audioCtx.state !== 'running' || isMuted) return;
   try {
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
@@ -805,11 +813,86 @@ function playClickSound() {
   } catch (e) {}
 }
 
+const modeAudioProfiles = {
+  glide: { copy: 'GLIDE AUDIO // EFFICIENCY MAP', type: 'triangle', from: 520, to: 220, duration: 0.16, color: '#2ecc71' },
+  combat: { copy: 'COMBAT AUDIO // TORQUE MAP', type: 'square', from: 320, to: 640, duration: 0.18, color: '#f1c40f' },
+  ballistic: { copy: 'BALLISTIC AUDIO // THRUST ARMED', type: 'sawtooth', from: 180, to: 920, duration: 0.34, color: '#ff9866' },
+  'ballistic-plus': { copy: 'BALLISTIC+ AUDIO // OVERRIDE WARNING', type: 'sawtooth', from: 880, to: 440, duration: 0.24, color: '#ef4b4b' }
+};
+
+let telemetryAudioTimer = null;
+
+function updateTelemetryAudio(mode = 'glide') {
+  const profile = modeAudioProfiles[mode] || modeAudioProfiles.glide;
+  const overlay = document.getElementById('telemetry-audio-status');
+  const copy = document.getElementById('telemetry-audio-copy');
+  if (!overlay) return;
+  overlay.dataset.audioMode = mode;
+  overlay.style.color = profile.color;
+  if (copy) copy.textContent = profile.copy;
+  overlay.classList.remove('is-pulsing');
+  if (telemetryAudioTimer) clearTimeout(telemetryAudioTimer);
+  if (!reducedMotion) {
+    requestAnimationFrame(() => overlay.classList.add('is-pulsing'));
+    telemetryAudioTimer = setTimeout(() => overlay.classList.remove('is-pulsing'), 850);
+  }
+}
+
+function playModeCue(mode = 'glide') {
+  const profile = modeAudioProfiles[mode] || modeAudioProfiles.glide;
+  const ctx = initAudio();
+  if (!ctx || isMuted) return;
+  if (ctx.state === 'suspended') {
+    ctx.resume().then(() => playModeCue(mode)).catch(() => {});
+    return;
+  }
+  if (ctx.state !== 'running' || !masterGain) return;
+
+  const now = ctx.currentTime;
+  try {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    const filter = ctx.createBiquadFilter();
+    osc.type = profile.type;
+    osc.frequency.setValueAtTime(profile.from, now);
+    osc.frequency.exponentialRampToValueAtTime(profile.to, now + profile.duration);
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(mode === 'ballistic-plus' ? 1200 : 2200, now);
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.linearRampToValueAtTime(mode === 'ballistic-plus' ? 0.055 : 0.04, now + 0.015);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + profile.duration);
+    osc.connect(filter).connect(gain).connect(masterGain);
+    osc.start(now);
+    osc.stop(now + profile.duration + 0.025);
+
+    if (mode === 'ballistic-plus') {
+      const warning = ctx.createOscillator();
+      const warningGain = ctx.createGain();
+      warning.type = 'sine';
+      warning.frequency.setValueAtTime(220, now);
+      warning.frequency.exponentialRampToValueAtTime(110, now + profile.duration);
+      warningGain.gain.setValueAtTime(0.0001, now);
+      warningGain.gain.linearRampToValueAtTime(0.035, now + 0.02);
+      warningGain.gain.exponentialRampToValueAtTime(0.0001, now + profile.duration);
+      warning.connect(warningGain).connect(masterGain);
+      warning.start(now);
+      warning.stop(now + profile.duration + 0.025);
+    }
+  } catch (error) {}
+}
+
+window.addEventListener('f77:mode', event => {
+  const mode = event.detail?.mode || 'glide';
+  updateTelemetryAudio(mode);
+  playModeCue(mode);
+});
+
 // Starts the electric motorcycle engine sweep and idle drone
 function startEngine() {
-  initAudio();
-  if (audioCtx.state === 'suspended') {
-    audioCtx.resume();
+  const ctx = initAudio();
+  if (!ctx) return;
+  if (ctx.state === 'suspended') {
+    ctx.resume().catch(() => {});
   }
   if (engineActive) return;
   engineActive = true;

@@ -643,6 +643,11 @@
               <div class="tft-foot-stat">BMS STATE: <span style="color:#2ECC71" id="tft-bms">OPTIMAL</span></div>
               <div class="tft-foot-alert" id="tft-alert">TELEMETRY SECURE // GPS LOCK</div>
             </div>
+            <div id="telemetry-audio-status" class="telemetry-audio-status" role="status" aria-live="polite" data-audio-mode="glide">
+              <span class="telemetry-audio-led" aria-hidden="true"></span>
+              <span id="telemetry-audio-copy">GLIDE AUDIO // EFFICIENCY MAP</span>
+              <span class="telemetry-audio-meter" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+            </div>
           </div>
         </div>
       </div>
@@ -1124,7 +1129,7 @@
 
 <!-- Load deferred modular scripts -->
 <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.36/dist/lenis.min.js"></script>
-<script src="js/main.js?v=10" defer></script>
+<script src="js/main.js?v=11" defer></script>
 <script src="js/webgl-nebula.js?v=10" defer></script>
 
 <!-- Three.js import map for the interactive F77 viewer -->
