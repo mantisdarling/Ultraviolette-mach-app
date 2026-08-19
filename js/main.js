@@ -103,7 +103,7 @@ let engineActive = false; // Flag to check if engine is running
 let pitchRaf = null;      // Audio pitch loop runs only while the engine is active
 
 // Scroll speed tracking variables
-let lastScrollY = window.scrollY;
+let lastScrollY = null;
 let lastScrollTime = Date.now();
 let targetPitchMultiplier = 1.0;
 let currentPitchMultiplier = 1.0;
@@ -115,8 +115,13 @@ function onScrollSpeedUpdate(sy) {
 
   const now = Date.now();
   const dt = Math.max(1, now - lastScrollTime); // Avoid division by zero
+  if (lastScrollY === null) {
+    lastScrollY = sy;
+    lastScrollTime = now;
+    return;
+  }
   const dy = Math.abs(sy - lastScrollY);
-  
+
   lastScrollY = sy;
   lastScrollTime = now;
 
@@ -202,18 +207,42 @@ function onScrollSpeedUpdate(sy) {
 
 /* ─────────────────────────────────────────────
    UNIFIED PASSIVE SCROLL & RESIZE MANAGER
-   
-   Implements a custom momentum-based scroll (inertial scroll) for devices
-   with fine pointers. It uses linear interpolation (lerping) to smoothly
-   slide the viewport towards the target position.
+
+   Batch all scroll-driven reads and writes into one animation frame. This
+   prevents the parallax and progress systems from scheduling separate frame
+   callbacks and keeps layout reads away from style writes.
 ───────────────────────────────────────────── */
+const scrollFrameSubscribers = new Set();
+let scrollFrameId = null;
+let pendingScrollY = window.scrollY;
+
+function scheduleScrollFrame(scrollY = window.scrollY) {
+  pendingScrollY = scrollY;
+  if (scrollFrameId !== null) return;
+  scrollFrameId = requestAnimationFrame(() => {
+    scrollFrameId = null;
+    const currentScrollY = pendingScrollY;
+    scrollFrameSubscribers.forEach(subscriber => subscriber(currentScrollY));
+  });
+}
+
+function subscribeToScrollFrame(subscriber) {
+  scrollFrameSubscribers.add(subscriber);
+  return () => scrollFrameSubscribers.delete(subscriber);
+}
+
+window.addEventListener('scroll', () => scheduleScrollFrame(), { passive: true });
+window.addEventListener('resize', () => scheduleScrollFrame(), { passive: true });
+
 (function initScrollSystems() {
   const prog   = document.getElementById('prog');
   const nb     = document.getElementById('navbar');
   const hWrap  = document.getElementById('h-scroll-section');
   const hTrack = document.getElementById('h-track');
   const paraImg  = document.getElementById('para-img');
-  const paraWrap = paraImg && typeof paraImg.closest === 'function' ? paraImg.closest('.life-img-wrap') : null;
+  const paraWrap = hasFinePointer && !reducedMotion && paraImg && typeof paraImg.closest === 'function'
+    ? paraImg.closest('.life-img-wrap')
+    : null;
 
   // Cached layout metrics
   let maxScrollY = 0;
@@ -222,9 +251,12 @@ function onScrollSpeedUpdate(sy) {
   let maxX = 0;
   let paraWrapTop = 0;
   let paraWrapHeight = 0;
+  let navScrolled = false;
+  let hScrollEnabled = false;
 
   function cacheDimensions() {
     maxScrollY = document.body.scrollHeight - window.innerHeight;
+    hScrollEnabled = Boolean(hWrap && hTrack && hasFinePointer && !reducedMotion && window.innerWidth > 1024);
     if (hWrap) {
       wrapTop = hWrap.getBoundingClientRect().top + window.scrollY;
       scrollable = hWrap.offsetHeight - window.innerHeight;
@@ -241,26 +273,30 @@ function onScrollSpeedUpdate(sy) {
   function runAllScrollUpdates(sy) {
     /* 1 — Scroll progress bar */
     if (prog) {
-      prog.style.width = (maxScrollY > 0 ? (sy / maxScrollY * 100) : 0) + '%';
+      const progress = maxScrollY > 0 ? sy / maxScrollY : 0;
+      prog.style.transform = `scaleX(${Math.max(0, Math.min(1, progress))})`;
     }
 
     /* 2 — Navbar glass effect */
     if (nb) {
-      nb.classList.toggle('scrolled', sy > 60);
+      const nextNavScrolled = sy > 60;
+      if (nextNavScrolled !== navScrolled) {
+        navScrolled = nextNavScrolled;
+        nb.classList.toggle('scrolled', navScrolled);
+      }
     }
 
     /* 3 — Horizontal scroll (narrative) */
-    const currentHasHScroll = hWrap && hTrack && window.innerWidth > 1024;
-    if (currentHasHScroll) {
+    if (hScrollEnabled) {
       const relativeScroll = sy - wrapTop;
       const progress   = scrollable > 0 ? Math.max(0, Math.min(1, relativeScroll / scrollable)) : 0;
       hTrack.style.transform = `translateX(${maxX * progress}px)`;
-    } else if (hTrack) {
+    } else if (hTrack && hTrack.style.transform) {
       hTrack.style.transform = '';
     }
 
     /* 4 — Parallax lifestyle image */
-    if (paraImg && paraWrap && !reducedMotion) {
+    if (paraImg && paraWrap && hasFinePointer && !reducedMotion) {
       const center = (paraWrapTop + paraWrapHeight / 2) - (sy + window.innerHeight / 2);
       paraImg.style.transform = `translateY(${center * 0.12}px)`;
     }
@@ -271,23 +307,21 @@ function onScrollSpeedUpdate(sy) {
     }
   }
 
-  window.addEventListener('scroll', () => {
-    runAllScrollUpdates(window.scrollY);
-  }, { passive: true });
+  subscribeToScrollFrame(runAllScrollUpdates);
 
   window.addEventListener('resize', () => {
     cacheDimensions();
-    runAllScrollUpdates(window.scrollY);
+    scheduleScrollFrame(window.scrollY);
   }, { passive: true });
 
   // Initial caching and updates
   cacheDimensions();
   runAllScrollUpdates(window.scrollY);
-  
-  // Recache on load because lazy images and webfonts can shift heights
+
+  // Recache on load because lazy images and webfonts can shift heights.
   window.addEventListener('load', () => {
     cacheDimensions();
-    runAllScrollUpdates(window.scrollY);
+    scheduleScrollFrame(window.scrollY);
   });
 })();
 
@@ -434,8 +468,7 @@ document.querySelectorAll('.ctr[data-t]').forEach(el => {
     const wrapper = bikeImg.closest('.bike-wrap') || document.querySelector('.bike-wrap');
     if (wrapper) {
       wrapper.classList.remove('scanning');
-      void wrapper.offsetWidth; // trigger reflow
-      wrapper.classList.add('scanning');
+      requestAnimationFrame(() => wrapper.classList.add('scanning'));
       setTimeout(() => wrapper.classList.remove('scanning'), 650);
     }
 
@@ -1056,8 +1089,7 @@ function stopEngine() {
 
           if (sweep) {
             sweep.classList.remove('active');
-            void sweep.offsetWidth;
-            sweep.classList.add('active');
+            requestAnimationFrame(() => sweep.classList.add('active'));
           }
         }
       }
@@ -1307,10 +1339,10 @@ function updateSoundPitch() {
       path.style.strokeDashoffset = length;
       
       // Force layout reflow
-      void path.getBoundingClientRect();
-      
-      path.style.transition = 'stroke-dashoffset 0.35s cubic-bezier(0.25, 1, 0.5, 1)';
-      path.style.strokeDashoffset = '0';
+      requestAnimationFrame(() => {
+        path.style.transition = 'stroke-dashoffset 0.35s cubic-bezier(0.25, 1, 0.5, 1)';
+        path.style.strokeDashoffset = '0';
+      });
     } catch(e) {}
   }
 
@@ -1500,56 +1532,57 @@ function updateSoundPitch() {
    SCROLL PARALLAX ENGINE
    ───────────────────────────────────────────── */
 (function initScrollParallax() {
+  if (!hasFinePointer || reducedMotion) return;
   const targets = document.querySelectorAll('.px-shift');
   if (!targets.length) return;
 
-  let ticking = false;
+  const metrics = [];
 
-  function updateParallax() {
-    const viewHeight = window.innerHeight;
-    const viewTop = window.scrollY;
-    const viewBottom = viewTop + viewHeight;
-
+  function cacheParallaxMetrics() {
+    metrics.length = 0;
     targets.forEach(el => {
       const rect = el.getBoundingClientRect();
-      const elTop = viewTop + rect.top;
-      const elHeight = rect.height;
-      const elBottom = elTop + elHeight;
-
-      // Check if element is inside the viewport bounds
-      if (elBottom >= viewTop && elTop <= viewBottom) {
-        // Calculate raw relative scroll position percentage
-        const progress = (viewBottom - elTop) / (viewHeight + elHeight);
-        
-        // Offset range from -0.5 to 0.5 (centered at 0)
-        const offset = progress - 0.5;
-
-        const speedX = parseFloat(el.dataset.pxX) || 0;
-        const speedY = parseFloat(el.dataset.pxY) || 0;
-
-        const tx = offset * speedX * 100;
-        const ty = offset * depthOffset(speedY) * 100; // Add fine parallax curve scaling
-
-        function depthOffset(s) {
-          return s;
-        }
-
-        el.style.transform = `translate3d(${tx}px, ${ty}px, 0)`;
-      }
+      metrics.push({
+        el,
+        top: window.scrollY + rect.top,
+        height: rect.height,
+        speedX: parseFloat(el.dataset.pxX) || 0,
+        speedY: parseFloat(el.dataset.pxY) || 0
+      });
     });
-
-    ticking = false;
   }
 
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(updateParallax);
-      ticking = true;
-    }
+  function updateParallax(viewTop = window.scrollY) {
+    const viewHeight = window.innerHeight;
+    const viewBottom = viewTop + viewHeight;
+
+    metrics.forEach(({ el, top, height, speedX, speedY }) => {
+      const bottom = top + height;
+      if (bottom < viewTop || top > viewBottom) return;
+
+      const progress = (viewBottom - top) / (viewHeight + height);
+      const offset = progress - 0.5;
+      const tx = offset * speedX * 100;
+      const ty = offset * speedY * 100;
+      el.style.transform = `translate3d(${tx}px, ${ty}px, 0)`;
+    });
+  }
+
+  cacheParallaxMetrics();
+  subscribeToScrollFrame(updateParallax);
+
+  window.addEventListener('resize', () => {
+    cacheParallaxMetrics();
+    scheduleScrollFrame(window.scrollY);
   }, { passive: true });
 
+  window.addEventListener('load', () => {
+    cacheParallaxMetrics();
+    scheduleScrollFrame(window.scrollY);
+  });
+
   // Initial trigger to position elements
-  updateParallax();
+  updateParallax(window.scrollY);
 })();
 
 /* ─────────────────────────────────────────────
@@ -1559,7 +1592,7 @@ function updateSoundPitch() {
   const elements = document.querySelectorAll('.split-reveal');
   elements.forEach(el => {
     // Preserve formatting and wrap each word
-    const text = el.innerText.trim();
+    const text = el.textContent.trim();
     const words = text.split(/\s+/);
     el.innerHTML = words.map((word, idx) => {
       return `<span class="word-mask" style="display:inline-block;overflow:hidden;vertical-align:top;margin-right:0.25em">

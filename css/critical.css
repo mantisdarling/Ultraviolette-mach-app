@@ -305,7 +305,9 @@ body {
   background: linear-gradient(90deg, var(--uv4), var(--uv), var(--uv3), var(--uv2), var(--uv3), var(--uv));
   background-size: 300% 100%;
   z-index: 9990;
-  width: 0;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
   box-shadow: 0 0 12px var(--uv3), 0 0 4px rgba(222,183,255,.5);
   animation: progressShimmer 3s linear infinite;
 }
