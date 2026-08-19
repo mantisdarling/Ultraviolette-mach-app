@@ -6,6 +6,26 @@
 document.documentElement.classList.add('js');
 
 /* ─────────────────────────────────────────────
+   ADAPTIVE DEVICE PROFILE
+───────────────────────────────────────────── */
+const hasFinePointer = window.matchMedia ? window.matchMedia('(pointer: fine)').matches : true;
+const reducedMotion  = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false;
+const reducedData = window.matchMedia ? window.matchMedia('(prefers-reduced-data: reduce)').matches : false;
+const deviceMemory = Number(navigator.deviceMemory) || 8;
+const hardwareConcurrency = Number(navigator.hardwareConcurrency) || 8;
+const lowEndDevice = reducedData || deviceMemory <= 4 || hardwareConcurrency <= 4;
+const performanceTier = lowEndDevice || !hasFinePointer ? 'lite' : 'full';
+
+document.documentElement.dataset.performance = performanceTier;
+window.__uvPerformance = {
+  tier: performanceTier,
+  lowEnd: lowEndDevice,
+  hasFinePointer,
+  reducedMotion,
+  allowNebula: hasFinePointer && !lowEndDevice && !reducedMotion
+};
+
+/* ─────────────────────────────────────────────
    LOADER — Boot sequence progress bar with telemetry logs
 ───────────────────────────────────────────── */
 (function initLoader() {
@@ -52,6 +72,12 @@ document.documentElement.classList.add('js');
     return;
   }
 
+  if (lowEndDevice || !hasFinePointer) {
+    if (lbl) lbl.textContent = logs[6];
+    setTimeout(dismiss, 180);
+    return;
+  }
+
   let p = 0;
   const iv = setInterval(function() {
     p += Math.random() * 11 + 4;
@@ -80,11 +106,7 @@ document.documentElement.classList.add('js');
   }
 })();
 
-/* ─────────────────────────────────────────────
-   POINTER ACCESSIBILITY AND DEVICE DETECTOR
-───────────────────────────────────────────── */
-const hasFinePointer = window.matchMedia ? window.matchMedia('(pointer: fine)').matches : true;
-const reducedMotion  = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false;
+/* Adaptive device profile is initialized before loader and interactions. */
 
 /* ─────────────────────────────────────────────
    AUDIO SYSTEM & SCROLL SPEED GLOBAL VARIABLES
@@ -134,7 +156,7 @@ function onScrollSpeedUpdate(sy) {
    MAGNETIC CURSOR
 ───────────────────────────────────────────── */
 (function initCursor() {
-  if (!hasFinePointer) return;
+  if (!hasFinePointer || performanceTier !== 'full') return;
 
   const cur  = document.getElementById('cur');
   const curR = document.getElementById('cur-r');
@@ -185,7 +207,7 @@ function onScrollSpeedUpdate(sy) {
    MAGNETIC BUTTONS
 ───────────────────────────────────────────── */
 (function initMagneticButtons() {
-  if (!hasFinePointer) return;
+  if (!hasFinePointer || performanceTier !== 'full') return;
   document.querySelectorAll('.btn-p, .btn-o, .btn-g, .sub-btn, .nav-cta')
     .forEach(btn => {
       let r = null;
@@ -215,12 +237,15 @@ function onScrollSpeedUpdate(sy) {
 const scrollFrameSubscribers = new Set();
 let scrollFrameId = null;
 let pendingScrollY = window.scrollY;
+let lastScrollFrameTime = -Infinity;
 
 function scheduleScrollFrame(scrollY = window.scrollY) {
   pendingScrollY = scrollY;
+  if (performanceTier === 'lite' && performance.now() - lastScrollFrameTime < 32) return;
   if (scrollFrameId !== null) return;
   scrollFrameId = requestAnimationFrame(() => {
     scrollFrameId = null;
+    lastScrollFrameTime = performance.now();
     const currentScrollY = pendingScrollY;
     scrollFrameSubscribers.forEach(subscriber => subscriber(currentScrollY));
   });
@@ -240,7 +265,7 @@ window.addEventListener('resize', () => scheduleScrollFrame(), { passive: true }
   const hWrap  = document.getElementById('h-scroll-section');
   const hTrack = document.getElementById('h-track');
   const paraImg  = document.getElementById('para-img');
-  const paraWrap = hasFinePointer && !reducedMotion && paraImg && typeof paraImg.closest === 'function'
+  const paraWrap = performanceTier === 'full' && !reducedMotion && paraImg && typeof paraImg.closest === 'function'
     ? paraImg.closest('.life-img-wrap')
     : null;
 
@@ -256,13 +281,18 @@ window.addEventListener('resize', () => scheduleScrollFrame(), { passive: true }
 
   function cacheDimensions() {
     maxScrollY = document.body.scrollHeight - window.innerHeight;
-    hScrollEnabled = Boolean(hWrap && hTrack && hasFinePointer && !reducedMotion && window.innerWidth > 1024);
-    if (hWrap) {
+    hScrollEnabled = Boolean(hWrap && hTrack && performanceTier === 'full' && !reducedMotion && window.innerWidth > 1024);
+    if (hScrollEnabled && hWrap) {
       wrapTop = hWrap.getBoundingClientRect().top + window.scrollY;
       scrollable = hWrap.offsetHeight - window.innerHeight;
+    } else {
+      wrapTop = 0;
+      scrollable = 0;
     }
-    if (hTrack) {
+    if (hScrollEnabled && hTrack) {
       maxX = -(hTrack.scrollWidth - window.innerWidth + 160);
+    } else {
+      maxX = 0;
     }
     if (paraWrap) {
       paraWrapTop = paraWrap.getBoundingClientRect().top + window.scrollY;
@@ -296,7 +326,7 @@ window.addEventListener('resize', () => scheduleScrollFrame(), { passive: true }
     }
 
     /* 4 — Parallax lifestyle image */
-    if (paraImg && paraWrap && hasFinePointer && !reducedMotion) {
+    if (paraImg && paraWrap && performanceTier === 'full' && !reducedMotion) {
       const center = (paraWrapTop + paraWrapHeight / 2) - (sy + window.innerHeight / 2);
       paraImg.style.transform = `translateY(${center * 0.12}px)`;
     }
@@ -1355,10 +1385,12 @@ function updateSoundPitch() {
     if (active) drawHUDLine(active);
   }, { passive: true });
 
-  setTimeout(() => {
-    const active = document.querySelector('.hotspot.on');
-    if (active) drawHUDLine(active);
-  }, 1000);
+  if (performanceTier !== 'lite') {
+    setTimeout(() => {
+      const active = document.querySelector('.hotspot.on');
+      if (active) drawHUDLine(active);
+    }, 1000);
+  }
 })();
 
 /* ─────────────────────────────────────────────
@@ -1532,7 +1564,7 @@ function updateSoundPitch() {
    SCROLL PARALLAX ENGINE
    ───────────────────────────────────────────── */
 (function initScrollParallax() {
-  if (!hasFinePointer || reducedMotion) return;
+  if (performanceTier !== 'full' || reducedMotion) return;
   const targets = document.querySelectorAll('.px-shift');
   if (!targets.length) return;
 
@@ -1624,8 +1656,8 @@ function updateSoundPitch() {
    LENIS SMOOTH SCROLL ENGINE INITIALIZATION
    ───────────────────────────────────────────── */
 (function initLenisSmoothScroll() {
-  // Native scrolling is the cheapest and most reliable path on touch devices.
-  if (!hasFinePointer || reducedMotion) return;
+  // Native scrolling is the cheapest and most reliable path on touch and lite devices.
+  if (performanceTier !== 'full' || reducedMotion) return;
 
   const boot = () => {
     if (typeof Lenis !== 'function') return;

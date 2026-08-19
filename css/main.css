@@ -2453,6 +2453,44 @@ button:focus-visible,
   border-radius: 2px;
 }
 
+/* ─── ADAPTIVE LITE PERFORMANCE MODE ─────────────── */
+html[data-performance="lite"] #grain,
+html[data-performance="lite"] #cur,
+html[data-performance="lite"] #cur-r,
+html[data-performance="lite"] #cur-txt {
+  display: none;
+}
+
+html[data-performance="lite"] .wc,
+html[data-performance="lite"] .fl,
+html[data-performance="lite"] .ticker-track,
+html[data-performance="lite"] .marquee-track,
+html[data-performance="lite"] .pulse,
+html[data-performance="lite"] .bike-glow,
+html[data-performance="lite"] .phone-glow {
+  animation: none !important;
+}
+
+html[data-performance="lite"] .bike-glow {
+  filter: none;
+  opacity: .72;
+}
+
+html[data-performance="lite"] .glass,
+html[data-performance="lite"] .hud-card,
+html[data-performance="lite"] .sound-hud-toggle,
+html[data-performance="lite"] .f77-control {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+html[data-performance="lite"] .reveal,
+html[data-performance="lite"] .reveal-left,
+html[data-performance="lite"] .reveal-right,
+html[data-performance="lite"] .reveal-scale {
+  transition-duration: .2s;
+}
+
 /* ─── REDUCED MOTION ─────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

@@ -14,7 +14,11 @@ if (root && canvas) {
   const environmentButtons = document.querySelectorAll('[data-environment]');
   const idleButton = document.getElementById('f77-idle');
   const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-  const lowPower = window.matchMedia?.('(max-width: 700px), (pointer: coarse)').matches || false;
+  const performanceProfile = window.__uvPerformance || {};
+  const lowPower = performanceProfile.lowEnd || window.matchMedia?.('(max-width: 700px), (pointer: coarse)').matches || false;
+  const liteMode = performanceProfile.tier === 'lite';
+  const renderScale = liteMode ? 0.8 : 1;
+  const shadowEnabled = !lowPower && !liteMode;
   const environmentPresets = {
     studio: { label: 'STUDIO LIGHTING', background: 0x090612, fog: 0x08050d, envIntensity: 0.78, key: 4.4, fill: 2.1, rim: 4.6, accent: 0xa855f7 },
     twilight: { label: 'TWILIGHT RUN', background: 0x100713, fog: 0x12081a, envIntensity: 0.58, key: 3.2, fill: 3.8, rim: 7.2, accent: 0xef4b4b },
@@ -38,8 +42,8 @@ if (root && canvas) {
     renderer = new THREE.WebGLRenderer({
       canvas,
       alpha: true,
-      antialias: !lowPower,
-      powerPreference: lowPower ? 'low-power' : 'high-performance'
+      antialias: !lowPower && !liteMode,
+      powerPreference: lowPower || liteMode ? 'low-power' : 'high-performance'
     });
   } catch (error) {
     root.classList.add('is-unsupported');
@@ -48,12 +52,12 @@ if (root && canvas) {
   }
 
   if (renderer) {
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lowPower ? 1.25 : 1.75));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lowPower ? 1.1 : (liteMode ? 1.25 : 1.75)));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.15;
-    renderer.shadowMap.enabled = !lowPower;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.shadowMap.enabled = shadowEnabled;
+    renderer.shadowMap.type = shadowEnabled ? THREE.PCFSoftShadowMap : THREE.BasicShadowMap;
 
     const scene = new THREE.Scene();
     scene.fog = new THREE.FogExp2(0x08050d, 0.055);
@@ -86,8 +90,8 @@ if (root && canvas) {
 
     const keyLight = new THREE.DirectionalLight(0xffffff, 4.4);
     keyLight.position.set(4, 6, 6);
-    keyLight.castShadow = true;
-    const shadowMapSize = lowPower ? 512 : 1024;
+    keyLight.castShadow = shadowEnabled;
+    const shadowMapSize = shadowEnabled ? 1024 : 256;
     keyLight.shadow.mapSize.set(shadowMapSize, shadowMapSize);
     keyLight.shadow.camera.near = 0.1;
     keyLight.shadow.camera.far = 18;
@@ -106,7 +110,7 @@ if (root && canvas) {
       new THREE.MeshStandardMaterial({ color: 0x10091a, metalness: 0.85, roughness: 0.3 })
     );
     platform.position.y = 0.04;
-    platform.receiveShadow = true;
+    platform.receiveShadow = shadowEnabled;
     scene.add(platform);
 
     const platformRing = new THREE.Mesh(
@@ -127,7 +131,7 @@ if (root && canvas) {
     bike.position.y = 0.12;
     scene.add(bike);
     const baseBikeY = bike.position.y;
-    let idleMotion = !reducedMotion && !lowPower;
+    let idleMotion = !reducedMotion && !lowPower && !liteMode;
     if (idleButton && lowPower) {
       idleButton.classList.remove('on');
       idleButton.setAttribute('aria-pressed', 'false');
@@ -291,7 +295,7 @@ if (root && canvas) {
     function resize() {
       const width = Math.max(root.clientWidth, 320);
       const height = Math.max(root.clientHeight, 420);
-      const pixelRatio = Math.min(window.devicePixelRatio || 1, lowPower ? 1.25 : 1.75);
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, lowPower ? 1.1 : (liteMode ? 1.25 : 1.75)) * renderScale;
       renderer.setPixelRatio(pixelRatio);
       renderer.setSize(width, height, false);
       camera.aspect = width / height;
@@ -358,7 +362,7 @@ if (root && canvas) {
     function animate(now = performance.now()) {
       rafId = null;
       if (!isVisible || document.hidden) return;
-      if (lowPower && now - lastRenderTime < 32) {
+      if ((lowPower || liteMode) && now - lastRenderTime < 48) {
         requestRender();
         return;
       }

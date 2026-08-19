@@ -5,7 +5,8 @@
 (function initWebGL() {
   try {
     const reducedMotion = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false;
-    if (reducedMotion) return;
+    const performanceProfile = window.__uvPerformance || {};
+    if (reducedMotion || performanceProfile.allowNebula === false) return;
 
     const c = document.getElementById('shader');
     if (!c) return;

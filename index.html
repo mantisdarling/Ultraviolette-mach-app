@@ -1120,7 +1120,7 @@
 </script>
 
 <!-- Load critical interaction code in order, while keeping the non-critical smooth-scroll library non-blocking. -->
-<script src="js/main.js?v=16" defer></script>
+<script src="js/main.js?v=17" defer></script>
 <script>
 (() => {
   const load = (src) => {
@@ -1130,8 +1130,9 @@
     document.body.appendChild(script);
   };
   const schedule = () => {
-    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
-    const run = () => load('js/webgl-nebula.js?v=14');
+    const profile = window.__uvPerformance;
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches || !profile?.allowNebula) return;
+    const run = () => load('js/webgl-nebula.js?v=15');
     if ('requestIdleCallback' in window) requestIdleCallback(run, { timeout: 1800 });
     else setTimeout(run, 1200);
   };
@@ -1158,7 +1159,7 @@
     loaded = true;
     const script = document.createElement('script');
     script.type = 'module';
-    script.src = 'js/f77-viewer.js?v=5';
+    script.src = 'js/f77-viewer.js?v=6';
     script.crossOrigin = 'anonymous';
     document.body.appendChild(script);
   };
