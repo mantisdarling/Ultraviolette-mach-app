@@ -14,6 +14,7 @@ if (root && canvas) {
   const environmentButtons = document.querySelectorAll('[data-environment]');
   const idleButton = document.getElementById('f77-idle');
   const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const lowPower = window.matchMedia?.('(max-width: 700px), (pointer: coarse)').matches || false;
   const environmentPresets = {
     studio: { label: 'STUDIO LIGHTING', background: 0x090612, fog: 0x08050d, envIntensity: 0.78, key: 4.4, fill: 2.1, rim: 4.6, accent: 0xa855f7 },
     twilight: { label: 'TWILIGHT RUN', background: 0x100713, fog: 0x12081a, envIntensity: 0.58, key: 3.2, fill: 3.8, rim: 7.2, accent: 0xef4b4b },
@@ -37,8 +38,8 @@ if (root && canvas) {
     renderer = new THREE.WebGLRenderer({
       canvas,
       alpha: true,
-      antialias: true,
-      powerPreference: 'high-performance'
+      antialias: !lowPower,
+      powerPreference: lowPower ? 'low-power' : 'high-performance'
     });
   } catch (error) {
     root.classList.add('is-unsupported');
@@ -47,11 +48,11 @@ if (root && canvas) {
   }
 
   if (renderer) {
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lowPower ? 1.25 : 1.75));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.15;
-    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.enabled = !lowPower;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     const scene = new THREE.Scene();
@@ -86,7 +87,8 @@ if (root && canvas) {
     const keyLight = new THREE.DirectionalLight(0xffffff, 4.4);
     keyLight.position.set(4, 6, 6);
     keyLight.castShadow = true;
-    keyLight.shadow.mapSize.set(1024, 1024);
+    const shadowMapSize = lowPower ? 512 : 1024;
+    keyLight.shadow.mapSize.set(shadowMapSize, shadowMapSize);
     keyLight.shadow.camera.near = 0.1;
     keyLight.shadow.camera.far = 18;
     scene.add(keyLight);
@@ -125,7 +127,12 @@ if (root && canvas) {
     bike.position.y = 0.12;
     scene.add(bike);
     const baseBikeY = bike.position.y;
-    let idleMotion = !reducedMotion;
+    let idleMotion = !reducedMotion && !lowPower;
+    if (idleButton && lowPower) {
+      idleButton.classList.remove('on');
+      idleButton.setAttribute('aria-pressed', 'false');
+      idleButton.querySelector('.f77-control-state').textContent = 'OFF';
+    }
 
     const paintMaterials = [];
     const glowMaterials = [];
@@ -284,7 +291,7 @@ if (root && canvas) {
     function resize() {
       const width = Math.max(root.clientWidth, 320);
       const height = Math.max(root.clientHeight, 420);
-      const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, lowPower ? 1.25 : 1.75);
       renderer.setPixelRatio(pixelRatio);
       renderer.setSize(width, height, false);
       camera.aspect = width / height;
@@ -340,8 +347,22 @@ if (root && canvas) {
     resizeObserver.observe(root);
 
     const animationClock = new THREE.Clock();
-    function animate() {
-      requestAnimationFrame(animate);
+    let isVisible = true;
+    let rafId = null;
+    let lastRenderTime = 0;
+
+    function requestRender() {
+      if (!rafId && isVisible && !document.hidden) rafId = requestAnimationFrame(animate);
+    }
+
+    function animate(now = performance.now()) {
+      rafId = null;
+      if (!isVisible || document.hidden) return;
+      if (lowPower && now - lastRenderTime < 32) {
+        requestRender();
+        return;
+      }
+      lastRenderTime = now;
       const elapsed = animationClock.getElapsedTime();
       if (idleMotion) {
         bike.position.y = baseBikeY + Math.sin(elapsed * 1.7) * 0.028;
@@ -353,7 +374,19 @@ if (root && canvas) {
       }
       controls.update();
       renderer.render(scene, camera);
+      requestRender();
     }
-    animate();
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((entries) => {
+        isVisible = entries[0]?.isIntersecting ?? true;
+        if (isVisible) requestRender();
+      }, { threshold: 0.01 }).observe(root);
+    }
+    document.addEventListener('visibilitychange', () => {
+      isVisible = !document.hidden;
+      if (isVisible) requestRender();
+    });
+    requestRender();
   }
 }
