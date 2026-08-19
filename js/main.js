@@ -406,6 +406,9 @@ document.querySelectorAll('.ctr[data-t]').forEach(el => {
     sw.classList.add('on');
     sw.setAttribute('aria-pressed', 'true');
     if (colourLbl) colourLbl.textContent = sw.dataset.clr || '';
+    window.dispatchEvent(new CustomEvent('f77:paint', {
+      detail: { name: sw.dataset.clr || '', color: sw.style.backgroundColor || '' }
+    }));
 
     const showcase = document.getElementById('showcase');
     if (showcase) {
@@ -1060,6 +1063,8 @@ function stopEngine() {
       if (torque) { torque.isDone = false; torque.dataset.t = '90'; runCounter(torque); }
       if (range) { range.isDone = false; range.dataset.t = '211'; runCounter(range); }
     }
+
+    window.dispatchEvent(new CustomEvent('f77:trim', { detail: { trim } }));
     
     // Play sound click
     if (typeof playClickSound === 'function') playClickSound();

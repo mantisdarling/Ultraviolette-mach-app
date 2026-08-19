@@ -3823,3 +3823,177 @@ body {
   .hero-eye, .hero-sub, .hero-btns { animation: none; opacity: 1; }
   .hero-bike-wrap img, #bike-img { animation: none; }
 }
+
+
+/* ─────────────────────────────────────────────────────────
+   F77 INTERACTIVE 3D VIEWER
+   ───────────────────────────────────────────────────────── */
+.bike-wrap {
+  isolation: isolate;
+}
+
+.f77-viewer {
+  --viewer-paint: #c0392b;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  min-height: 520px;
+  overflow: hidden;
+  border: 1px solid rgba(192,132,252,.28);
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--viewer-paint) 14%, transparent), transparent 42%),
+    radial-gradient(circle at 22% 12%, rgba(168,85,247,.2), transparent 34%),
+    linear-gradient(145deg, rgba(13,5,22,.95), rgba(5,5,8,.98));
+  box-shadow: inset 0 0 70px rgba(123,44,191,.12), 0 30px 80px rgba(0,0,0,.42), 0 0 0 1px rgba(255,255,255,.035);
+}
+
+.f77-viewer::before,
+.f77-viewer::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  z-index: 3;
+}
+.f77-viewer::before {
+  inset: 14px;
+  border: 1px solid rgba(255,255,255,.07);
+  clip-path: polygon(0 0, 18% 0, 18% 1px, 0 1px, 0 18%, 1px 18%, 1px 0, 100% 0, 100% 18%, calc(100% - 1px) 18%, calc(100% - 1px) 1px, 82% 1px, 82% 0, 100% 0, 100% 100%, 82% 100%, 82% calc(100% - 1px), calc(100% - 1px) calc(100% - 1px), calc(100% - 1px) 82%, 100% 82%, 100% 100%, 0 100%, 0 82%, 1px 82%, 1px calc(100% - 1px), 18% calc(100% - 1px), 18% 100%, 0 100%);
+}
+.f77-viewer::after {
+  inset: 0;
+  opacity: .17;
+  background: repeating-linear-gradient(to bottom, transparent 0, transparent 3px, rgba(0,0,0,.22) 4px);
+}
+
+#f77-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  cursor: grab;
+  touch-action: none;
+}
+#f77-canvas:active { cursor: grabbing; }
+
+.f77-viewer-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgba(5,5,8,.65), transparent 22%, transparent 72%, rgba(5,5,8,.88)),
+    linear-gradient(90deg, rgba(5,5,8,.65), transparent 28%, transparent 72%, rgba(5,5,8,.48));
+}
+
+.f77-viewer-hud {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 22px;
+  pointer-events: none;
+}
+.f77-viewer-topline,
+.f77-viewer-caption,
+.f77-viewer-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.f77-viewer-topline,
+.f77-viewer-caption { justify-content: space-between; }
+.f77-viewer-kicker,
+.f77-viewer-status,
+.f77-viewer-index,
+#f77-trim-readout,
+.f77-control,
+.f77-viewer-help {
+  font-family: var(--ff-mono);
+  text-transform: uppercase;
+}
+.f77-viewer-kicker,
+.f77-viewer-status,
+.f77-viewer-index,
+#f77-trim-readout {
+  font-size: 9px;
+  letter-spacing: .2em;
+}
+.f77-viewer-kicker { color: rgba(255,255,255,.55); }
+.f77-viewer-status { color: var(--uv2); text-align: right; }
+.f77-viewer-caption {
+  margin-top: auto;
+  margin-bottom: 18px;
+  align-items: flex-end;
+}
+.f77-viewer-index {
+  color: #fff;
+  font-family: var(--ff-display);
+  font-size: clamp(24px, 3vw, 38px);
+  font-weight: 800;
+  letter-spacing: -.05em;
+}
+#f77-trim-readout { color: var(--viewer-paint); text-shadow: 0 0 14px color-mix(in srgb, var(--viewer-paint) 65%, transparent); }
+.f77-viewer-controls { pointer-events: auto; }
+.f77-control {
+  min-height: 36px;
+  padding: 9px 12px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(8,5,14,.66);
+  color: rgba(255,255,255,.62);
+  font-size: 8px;
+  letter-spacing: .16em;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  transition: color .3s, border-color .3s, background .3s, box-shadow .3s;
+}
+.f77-control:hover,
+.f77-control.on {
+  color: #fff;
+  border-color: var(--viewer-paint);
+  background: color-mix(in srgb, var(--viewer-paint) 20%, rgba(8,5,14,.72));
+  box-shadow: 0 0 18px color-mix(in srgb, var(--viewer-paint) 30%, transparent);
+}
+.f77-control-state { color: var(--viewer-paint); margin-left: 6px; }
+.f77-viewer-help {
+  margin-top: 10px;
+  color: rgba(255,255,255,.34);
+  font-size: 8px;
+  letter-spacing: .14em;
+}
+
+#bike-img {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 1;
+  pointer-events: none;
+  object-fit: contain;
+  transition: opacity .35s ease;
+}
+.f77-viewer.is-ready + #bike-img { opacity: 0; }
+.f77-viewer.is-unsupported { display: none; }
+.f77-viewer.is-unsupported + #bike-img { opacity: 1; z-index: 3; }
+
+@media (max-width: 1024px) {
+  .f77-viewer { min-height: 380px; border-radius: 10px; }
+  .f77-viewer-hud { padding: 16px; }
+  .f77-viewer-kicker, .f77-viewer-status, .f77-viewer-index, #f77-trim-readout { font-size: 8px; }
+}
+
+@media (max-width: 600px) {
+  .f77-viewer { min-height: 350px; }
+  .f77-viewer-topline { align-items: flex-start; flex-direction: column; gap: 6px; }
+  .f77-viewer-status { text-align: left; }
+  .f77-viewer-caption { margin-bottom: 14px; }
+  .f77-viewer-controls { gap: 8px; }
+  .f77-control { flex: 1; padding-inline: 8px; font-size: 7px; }
+  .f77-viewer-help { font-size: 7px; letter-spacing: .08em; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .f77-control { transition: none; }
+}
