@@ -100,6 +100,7 @@ let engineOsc2 = null;    // Sub triangle oscillator (bass rumble)
 let engineFilter = null;  // Lowpass filter for tone shaping
 let engineGain = null;    // Overall volume gain node
 let engineActive = false; // Flag to check if engine is running
+let pitchRaf = null;      // Audio pitch loop runs only while the engine is active
 
 // Scroll speed tracking variables
 let lastScrollY = window.scrollY;
@@ -896,6 +897,7 @@ function startEngine() {
   }
   if (engineActive) return;
   engineActive = true;
+  if (!pitchRaf) updateSoundPitch();
 
   const now = audioCtx.currentTime;
 
@@ -1101,8 +1103,13 @@ function stopEngine() {
   });
 })();
 
-(function updateSoundPitch() {
-  if (engineActive && engineOsc1 && engineOsc2 && engineFilter && audioCtx) {
+function updateSoundPitch() {
+  if (!engineActive) {
+    pitchRaf = null;
+    return;
+  }
+
+  if (engineOsc1 && engineOsc2 && engineFilter && audioCtx) {
     currentPitchMultiplier += (targetPitchMultiplier - currentPitchMultiplier) * 0.1;
     targetPitchMultiplier += (1.0 - targetPitchMultiplier) * 0.05;
 
@@ -1116,8 +1123,8 @@ function stopEngine() {
       engineFilter.frequency.setValueAtTime(filterBase + (currentPitchMultiplier - 1.0) * 400, audioCtx.currentTime);
     } catch(e){}
   }
-  requestAnimationFrame(updateSoundPitch);
-})();
+  pitchRaf = requestAnimationFrame(updateSoundPitch);
+}
 
 /* ─────────────────────────────────────────────
    CONFIGURATOR TRIM LEVEL SWITCHER
@@ -1584,27 +1591,43 @@ function stopEngine() {
    LENIS SMOOTH SCROLL ENGINE INITIALIZATION
    ───────────────────────────────────────────── */
 (function initLenisSmoothScroll() {
-  if (typeof Lenis !== 'function') return;
+  // Native scrolling is the cheapest and most reliable path on touch devices.
+  if (!hasFinePointer || reducedMotion) return;
 
-  const lenis = new Lenis({
-    duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Luxurious deceleration profile
-    direction: 'vertical',
-    gestureDirection: 'vertical',
-    smooth: true,
-    mouseMultiplier: 1,
-    smoothTouch: false,
-    touchMultiplier: 2,
-    infinite: false,
-  });
+  const boot = () => {
+    if (typeof Lenis !== 'function') return;
 
-  // Bind Lenis updates to requestAnimationFrame ticks
-  function raf(time) {
-    lenis.raf(time);
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Luxurious deceleration profile
+      direction: 'vertical',
+      gestureDirection: 'vertical',
+      smooth: true,
+      mouseMultiplier: 1,
+      smoothTouch: false,
+      touchMultiplier: 2,
+      infinite: false,
+    });
+
+    // Bind Lenis updates to requestAnimationFrame ticks only on desktop.
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
     requestAnimationFrame(raf);
-  }
-  requestAnimationFrame(raf);
 
-  // Expose lenis instance globally for scroll synchronization if needed
-  window.lenis = lenis;
+    // Expose lenis instance globally for scroll synchronization if needed.
+    window.lenis = lenis;
+  };
+
+  if (typeof Lenis === 'function') {
+    boot();
+    return;
+  }
+
+  const script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.36/dist/lenis.min.js';
+  script.async = true;
+  script.onload = boot;
+  document.head.appendChild(script);
 })();

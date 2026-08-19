@@ -95,17 +95,9 @@
   imagesizes="100vw"
   fetchpriority="high"/>
 
-<!-- Preload core fonts to eliminate FOIT -->
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700;800&family=JetBrains+Mono:wght@400;500;600&family=Hanken+Grotesk:wght@300;400;600&display=swap" rel="stylesheet"/>
-
-<!-- Material Symbols loaded asynchronously -->
-<link rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap"
-  media="print"
-  onload="this.media='all'"/>
-<noscript>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap"/>
-</noscript>
+<!-- Load core fonts without blocking the first paint; display=swap preserves readable fallback text. -->
+<link rel="preload" as="style" fetchpriority="low" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700;800&family=JetBrains+Mono:wght@400;500;600&family=Hanken+Grotesk:wght@300;400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"/>
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700;800&family=JetBrains+Mono:wght@400;500;600&family=Hanken+Grotesk:wght@300;400;600&display=swap"/></noscript>
 
 <!-- Critical Stylesheet -->
 <link rel="stylesheet" href="css/critical.css"/>
@@ -172,7 +164,7 @@
   </ul>
   <a href="https://www.ultraviolette.com/configure" target="_blank" rel="noopener" class="nav-cta">CONFIGURE</a>
   <button type="button" class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mob-menu">
-    <span class="material-symbols-outlined" style="font-size:26px">menu</span>
+    <span class="icon icon-menu" style="font-size:26px" aria-hidden="true">☰</span>
   </button>
 </nav>
 
@@ -217,10 +209,10 @@
       <p class="hero-sub px-shift" data-px-y="0.35">Aviation-inspired engineering meets ballistic performance. The F77 — India's most advanced electric motorcycle — built to dominate every road and track.</p>
       <div class="hero-btns">
         <button type="button" class="btn-p btn-ignite" id="btn-ignite" aria-live="polite">
-          <span class="material-symbols-outlined btn-ignite-icon" style="font-size:18px">power_settings_new</span>
+          <span class="icon icon-power btn-ignite-icon" style="font-size:18px" aria-hidden="true">⏻</span>
           <span class="btn-ignite-txt">START ENGINE</span>
         </button>
-        <a href="https://www.ultraviolette.com/f77" target="_blank" rel="noopener noreferrer" class="btn-p">DISCOVER F77 <span class="material-symbols-outlined" style="font-size:18px">arrow_forward</span></a>
+        <a href="https://www.ultraviolette.com/f77" target="_blank" rel="noopener noreferrer" class="btn-p">DISCOVER F77 <span class="icon icon-arrow" style="font-size:18px" aria-hidden="true">→</span></a>
         <a href="https://www.youtube.com/@UltravioletteEV" target="_blank" rel="noopener noreferrer" class="btn-g">WATCH FILM</a>
       </div>
       
@@ -491,7 +483,7 @@
           <!-- Range & Charge Simulator Widget -->
           <div class="sim-card">
             <div class="sim-header">
-              <span class="material-symbols-outlined" style="font-size:16px;color:var(--uv5)">battery_charging_full</span>
+              <span class="icon icon-battery" style="font-size:16px;color:var(--uv5)" aria-hidden="true">▰</span>
               <span class="sim-title">DYNAMIC RANGE SIMULATOR</span>
             </div>
             <div class="sim-body">
@@ -518,7 +510,7 @@
           </div>
           
           <div class="showcase-btns">
-            <a href="https://www.ultraviolette.com/f77" target="_blank" rel="noopener" class="btn-p">EXPLORE F77 <span class="material-symbols-outlined" style="font-size:16px">arrow_forward</span></a>
+            <a href="https://www.ultraviolette.com/f77" target="_blank" rel="noopener" class="btn-p">EXPLORE F77 <span class="icon icon-arrow" style="font-size:16px" aria-hidden="true">→</span></a>
             <a href="https://www.ultraviolette.com/configure?model=Mach+2&variant=Recon" target="_blank" rel="noopener" class="btn-o">CONFIGURE RECON</a>
           </div>
         </div>
@@ -682,7 +674,7 @@
             <span class="inv-tag">SPECIALE INVEST</span>
           </div>
           <div style="margin-top:32px">
-            <a href="https://www.ultraviolette.com/about" target="_blank" rel="noopener" class="btn-o">ABOUT US <span class="material-symbols-outlined" style="font-size:15px">arrow_forward</span></a>
+            <a href="https://www.ultraviolette.com/about" target="_blank" rel="noopener" class="btn-o">ABOUT US <span class="icon icon-arrow" style="font-size:15px" aria-hidden="true">→</span></a>
           </div>
         </div>
       </div>
@@ -702,11 +694,11 @@
         <a href="https://www.ultraviolette.com/smarttech" target="_blank" rel="noopener" class="btn-o">GEEK OUT</a>
       </div>
       <div class="safety-g stagger">
-        <div class="safety-c"><span class="material-symbols-outlined safety-ic">thermostat</span><div class="safety-n">THERMAL</div></div>
-        <div class="safety-c"><span class="material-symbols-outlined safety-ic">bolt</span><div class="safety-n">ELECTRICAL</div></div>
-        <div class="safety-c"><span class="material-symbols-outlined safety-ic">construction</span><div class="safety-n">MECHANICAL</div></div>
-        <div class="safety-c"><span class="material-symbols-outlined safety-ic">memory</span><div class="safety-n">ELECTRONIC</div></div>
-        <div class="safety-c"><span class="material-symbols-outlined safety-ic">shield</span><div class="safety-n">SOFTWARE</div></div>
+        <div class="safety-c"><span class="icon icon-thermostat safety-ic" aria-hidden="true">♨</span><div class="safety-n">THERMAL</div></div>
+        <div class="safety-c"><span class="icon icon-bolt safety-ic" aria-hidden="true">ϟ</span><div class="safety-n">ELECTRICAL</div></div>
+        <div class="safety-c"><span class="icon icon-construction safety-ic" aria-hidden="true">⚒</span><div class="safety-n">MECHANICAL</div></div>
+        <div class="safety-c"><span class="icon icon-memory safety-ic" aria-hidden="true">▦</span><div class="safety-n">ELECTRONIC</div></div>
+        <div class="safety-c"><span class="icon icon-shield safety-ic" aria-hidden="true">⬢</span><div class="safety-n">SOFTWARE</div></div>
       </div>
       <div class="charge-g reveal">
         <div class="charge-c"><span class="label" style="display:block;margin-bottom:9px">STANDARD CHARGER</span><div class="charge-v">3–5 HRS</div><div class="charge-s">Base: 3 hrs · RECON: 5 hrs</div></div>
@@ -841,7 +833,7 @@
         </table>
       </div>
       <div style="text-align:center;margin-top:40px">
-        <a href="https://www.ultraviolette.com/configure" target="_blank" rel="noopener noreferrer" class="btn-p">CONFIGURE YOURS <span class="material-symbols-outlined" style="font-size:16px">arrow_forward</span></a>
+        <a href="https://www.ultraviolette.com/configure" target="_blank" rel="noopener noreferrer" class="btn-p">CONFIGURE YOURS <span class="icon icon-arrow" style="font-size:16px" aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
@@ -889,7 +881,7 @@
             <div class="tech-f"><div class="tech-f-title">Ride Analytics</div><p class="tech-f-desc">Performance telemetry, efficiency scores and trip logs.</p></div>
             <div class="tech-f"><div class="tech-f-title">OTA Updates</div><p class="tech-f-desc">Always current — firmware delivered over-the-air.</p></div>
           </div>
-          <a href="https://www.ultraviolette.com/smarttech" target="_blank" rel="noopener" class="btn-p">DISCOVER VIOLETTE AI <span class="material-symbols-outlined" style="font-size:16px">arrow_forward</span></a>
+          <a href="https://www.ultraviolette.com/smarttech" target="_blank" rel="noopener" class="btn-p">DISCOVER VIOLETTE AI <span class="icon icon-arrow" style="font-size:16px" aria-hidden="true">→</span></a>
         </div>
         <div class="phone-wrap reveal-right">
           <div class="phone-glow"></div>
@@ -899,10 +891,10 @@
               <div class="ph-scr">
                 <div class="ph-bar"></div>
                 <div class="ph-bar-s"></div>
-                <div class="ph-widget" style="margin-top:5px"><span class="material-symbols-outlined" style="font-size:24px;color:var(--uv)">speed</span></div>
+                <div class="ph-widget" style="margin-top:5px"><span class="icon icon-speed" style="font-size:24px;color:var(--uv)" aria-hidden="true">↗</span></div>
                 <div class="ph-row" style="margin-top:5px">
-                  <div class="ph-half"><span class="material-symbols-outlined" style="font-size:13px;color:var(--uv)">battery_charging_full</span></div>
-                  <div class="ph-half"><span class="material-symbols-outlined" style="font-size:13px;color:var(--uv)">location_on</span></div>
+                  <div class="ph-half"><span class="icon icon-battery" style="font-size:13px;color:var(--uv)" aria-hidden="true">▰</span></div>
+                  <div class="ph-half"><span class="icon icon-location" style="font-size:13px;color:var(--uv)" aria-hidden="true">⌖</span></div>
                 </div>
                 <div class="ph-bar" style="margin-top:7px;background:rgba(123,44,191,.3)"></div>
                 <div class="ph-bar-s" style="background:rgba(123,44,191,.18)"></div>
@@ -991,7 +983,7 @@
             <div class="racing-s-c"><div class="label" style="margin-bottom:7px">TRACK DAYS</div><div style="font-family:'Sora',sans-serif;font-weight:700;font-size:24px;color:#fff">PRIVATE</div></div>
             <div class="racing-s-c"><div class="label" style="margin-bottom:7px">LEADERBOARD</div><div style="font-family:'Sora',sans-serif;font-weight:700;font-size:24px;color:#fff">GLOBAL</div></div>
           </div>
-          <a href="https://www.ultraviolette.com/f99" target="_blank" rel="noopener" class="btn-o">EXPLORE UV RACING <span class="material-symbols-outlined" style="font-size:16px">arrow_forward</span></a>
+          <a href="https://www.ultraviolette.com/f99" target="_blank" rel="noopener" class="btn-o">EXPLORE UV RACING <span class="icon icon-arrow" style="font-size:16px" aria-hidden="true">→</span></a>
         </div>
         <div class="form-wrap reveal-right">
           <div class="form-head">
@@ -1128,8 +1120,7 @@
 </script>
 
 <!-- Load critical interaction code in order, while keeping the non-critical smooth-scroll library non-blocking. -->
-<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.36/dist/lenis.min.js" defer></script>
-<script src="js/main.js?v=12" defer></script>
+<script src="js/main.js?v=14" defer></script>
 <script>
 (() => {
   const load = (src) => {

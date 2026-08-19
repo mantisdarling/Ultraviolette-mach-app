@@ -4161,3 +4161,31 @@ body {
   .telemetry-audio-status.is-pulsing .telemetry-audio-led,
   .telemetry-audio-status.is-pulsing .telemetry-audio-meter i { animation: none; }
 }
+
+
+/* ─── LIGHTWEIGHT LOCAL ICON TOKENS ─────────────────
+   Keep the small showroom icon set on the system font stack instead of
+   shipping the Material Symbols webfont for a handful of glyphs. */
+.icon {
+  display: inline-grid;
+  place-items: center;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  speak: never;
+}
+
+.icon-arrow { transform: translateY(-0.02em); }
+.icon-power { font-size: 1.12em; }
+.icon-battery { font-size: 0.86em; transform: scaleX(.88); }
+.icon-menu { font-size: 1em; }
+.icon-thermostat,
+.icon-bolt,
+.icon-construction,
+.icon-memory,
+.icon-shield,
+.icon-speed,
+.icon-location { font-family: Arial, Helvetica, sans-serif; }
