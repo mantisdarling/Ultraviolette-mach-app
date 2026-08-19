@@ -46,3 +46,7 @@ The live Vercel build serves `ss04-desktop.webp` at 1920×752 inside a 641×360 
 The screenshots’ blank page came from `.h-scroll-wrap { height: 350vh; }`, which was intended for a pinned scroll animation but remained after the image-first redesign. The new replica override changes the wrapper to a compact auto-height rail, makes the sticky container static, and enables a normal horizontal overflow track. Local measurements now show the story wrapper at about 634px tall instead of 350 viewport heights, with the F77 showcase starting immediately after it.
 
 The local visual boundary check confirms the next F77 showcase begins directly after the compact story rail; the former full-black viewport is no longer present.
+
+## Production blank-gap verification
+
+The live deployment serves `css/main.css?v=6`. Production measurements confirm the story rail is approximately 634px tall with a static sticky wrapper, and the F77 showcase begins immediately at the next section boundary. The old 350vh spacer is no longer active, and the intentionally hidden dashboard sections remain `display:none`.
