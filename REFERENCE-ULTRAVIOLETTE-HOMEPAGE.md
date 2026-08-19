@@ -36,3 +36,7 @@ The strongest local assets are `ss04-desktop.webp` (1920×752, sharp full-width 
 ## Image-first local verification
 
 The local showcase now displays the sharp `ss04-desktop.webp` asset at its native 1920×752 dimensions within a compact 16:9 frame. The old viewer canvas and module request are gone; only the hidden shader canvas remains in the DOM and no `#f77-canvas` exists. The prior blank dashboard sections remain `display:none`. A live swatch test successfully changed the image to `laser-afterburner-yellow.webp` without runtime errors, confirming the static color switching still works.
+
+## Production image-first verification
+
+The live Vercel build serves `ss04-desktop.webp` at 1920×752 inside a 641×360 image frame, with no `#f77-canvas`, no `f77-viewer.js` request, and no Three.js module request. The blank spacer sections remain hidden, service-worker control is active, inline event attributes remain at zero, and no runtime errors were observed.
