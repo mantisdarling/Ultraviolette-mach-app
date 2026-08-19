@@ -66,3 +66,15 @@ The local build now reports an Ultraviolette title and wordmark, the hero accent
 The live deployment now serves `css/main.css?v=7` and `js/main.js?v=22`. The page title and visible logo are Ultraviolette, the hero accent computes to red (`#f05a4d`), 35 interactive controls expose a minimum visible touch dimension of 40px in the desktop browser context, and the menu open/outside-tap simulation passes. Service-worker control remains active, inline event attributes remain at zero, and no runtime errors were observed.
 
 The simulated 412×915 mobile Lighthouse audit reported a 68/100 performance score, 3.4s FCP, 3.6s LCP, 450ms TBT, 0.001 CLS, 4.1s TTI, and a passing viewport audit.
+
+## Configurator research
+
+The official configurator is a dedicated booking/customization destination with the main Ultraviolette navigation retained. The official F77 product page emphasizes a focused hero, a Configure Your F77 conversion action, selectable personality/design lines such as Airstrike, Laser, and Shadow, performance categories for power/torque/range/top speed, technical specification access, and interactive technology/safety storytelling. The clone’s new configurator will adapt these patterns into a self-contained on-page Design Studio with progressive steps, a live static product image, variant/paint/riding-profile controls, range presets, and a persistent summary CTA.
+
+## Design Studio local verification
+
+The new F77 Design Studio renders as a distinct premium section with a BUILD YOUR F77 hero, three-step progress rail, live static preview, model selection cards, and a right-side build summary. It sits directly in the existing product story flow without reintroducing the removed 3D canvas or the previous blank spacer. The initial model panel and summary are visible and readable at the current desktop browser viewport.
+
+The configurator interaction probe passed: the Design step becomes visible, Airstrike selection updates the summary to AIRSTRIKE / STELLAR WHITE and swaps the preview to `airstrike-stellar-white.webp` after the transition, Ballistic profile updates the output to 180 KM, and Reset returns the active step to Model with Laser / Turbo Red / Glide defaults.
+
+The primary desktop Configure link now jumps to `#configurator` in the local browser, placing the user directly at the Design Studio with the active Model step and synchronized summary visible.

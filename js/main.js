@@ -1781,3 +1781,155 @@ function updateSoundPitch() {
   script.onload = boot;
   document.head.appendChild(script);
 })();
+
+
+/* ─────────────────────────────────────────────
+   F77 DESIGN STUDIO CONFIGURATOR
+───────────────────────────────────────────── */
+(function initDesignStudio() {
+  const root = document.getElementById('configurator');
+  if (!root) return;
+
+  const state = {
+    step: 'model',
+    trim: 'recon',
+    design: 'laser',
+    color: 'TURBO RED',
+    image: 'assets/images/laser-turbo-red.webp',
+    profile: 'glide'
+  };
+
+  const trimData = {
+    recon: { name: 'MACH 2 RECON', kicker: 'F77 MACH 2 / RECON', price: '₹3.99 L*', color: 'TURBO RED' },
+    base: { name: 'MACH 2 BASE', kicker: 'F77 MACH 2 / BASE', price: '₹2.99 L*', color: 'TURBO RED' }
+  };
+  const designData = {
+    laser: { name: 'LASER', color: 'TURBO RED', image: 'assets/images/laser-turbo-red.webp' },
+    airstrike: { name: 'AIRSTRIKE', color: 'STELLAR WHITE', image: 'assets/images/airstrike-stellar-white.webp' },
+    shadow: { name: 'SHADOW', color: 'STEALTH GREY', image: 'assets/images/shadow-stealth-grey.webp' }
+  };
+  const profileData = {
+    glide: { name: 'GLIDE', range: '323 KM', label: 'EFFICIENCY MAP ENGAGED' },
+    combat: { name: 'COMBAT', range: '250 KM', label: 'BALANCED PERFORMANCE MAP' },
+    ballistic: { name: 'BALLISTIC', range: '180 KM', label: 'MAXIMUM TORQUE MAP' }
+  };
+
+  const steps = [...root.querySelectorAll('[data-config-step]')];
+  const panels = [...root.querySelectorAll('[data-config-panel]')];
+  const previewImg = root.querySelector('#config-preview-img');
+  const previewKicker = root.querySelector('#config-preview-kicker');
+  const previewName = root.querySelector('#config-preview-name');
+  const previewColor = root.querySelector('#config-preview-color');
+  const previewIndex = root.querySelector('#config-preview-index');
+  const summaryName = root.querySelector('#config-summary-name');
+  const summaryDesign = root.querySelector('#config-summary-design');
+  const summaryColor = root.querySelector('#config-summary-color');
+  const summaryProfile = root.querySelector('#config-summary-profile');
+  const summaryPrice = root.querySelector('#config-summary-price');
+  const rangeOutput = root.querySelector('#config-range-output');
+  const outputLabel = root.querySelector('#config-output-label');
+
+  function setStep(step) {
+    if (!panels.some(panel => panel.dataset.configPanel === step)) return;
+    state.step = step;
+    const stepIndex = ['model', 'design', 'ride'].indexOf(step) + 1;
+    steps.forEach(button => {
+      const active = button.dataset.configStep === step;
+      button.classList.toggle('on', active);
+      button.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+    panels.forEach(panel => {
+      const active = panel.dataset.configPanel === step;
+      panel.hidden = !active;
+      panel.classList.toggle('on', active);
+    });
+    if (previewIndex) previewIndex.textContent = String(stepIndex).padStart(2, '0');
+    const status = root.querySelector('#config-preview-status');
+    if (status) status.textContent = `CONFIGURATION ${String(stepIndex).padStart(2, '0')}`;
+  }
+
+  function refreshPreview() {
+    const trim = trimData[state.trim];
+    const design = designData[state.design];
+    state.color = design.color;
+    state.image = design.image;
+    if (previewKicker) previewKicker.textContent = trim.kicker;
+    if (previewName) previewName.textContent = trim.name;
+    if (previewColor) previewColor.textContent = state.color;
+    if (summaryName) summaryName.textContent = trim.name;
+    if (summaryDesign) summaryDesign.textContent = design.name;
+    if (summaryColor) summaryColor.textContent = state.color;
+    if (summaryPrice) summaryPrice.textContent = trim.price;
+    if (previewImg && state.image) {
+      previewImg.style.opacity = '0';
+      previewImg.style.transform = 'scale(1.02)';
+      window.setTimeout(() => {
+        previewImg.src = state.image;
+        previewImg.alt = `${trim.name} in ${design.name} ${state.color} configuration`;
+        previewImg.style.opacity = '1';
+        previewImg.style.transform = 'scale(1)';
+      }, 160);
+    }
+  }
+
+  function selectTrim(trim) {
+    if (!trimData[trim]) return;
+    state.trim = trim;
+    root.querySelectorAll('[data-config-trim]').forEach(button => {
+      const active = button.dataset.configTrim === trim;
+      button.classList.toggle('on', active);
+      button.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+    document.querySelector(`.trim-btn[data-trim="${trim}"]`)?.click();
+    refreshPreview();
+  }
+
+  function selectDesign(design) {
+    if (!designData[design]) return;
+    state.design = design;
+    root.querySelectorAll('[data-config-design]').forEach(button => {
+      const active = button.dataset.configDesign === design;
+      button.classList.toggle('on', active);
+      button.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+    refreshPreview();
+  }
+
+  function selectProfile(profile) {
+    if (!profileData[profile]) return;
+    state.profile = profile;
+    const data = profileData[profile];
+    root.querySelectorAll('[data-config-profile]').forEach(button => {
+      const active = button.dataset.configProfile === profile;
+      button.classList.toggle('on', active);
+      button.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+    if (summaryProfile) summaryProfile.textContent = data.name;
+    if (rangeOutput) rangeOutput.textContent = data.range;
+    if (outputLabel) outputLabel.textContent = data.label;
+    document.querySelector(`.sim-mode-btn[data-mode="${profile}"]`)?.click();
+  }
+
+  steps.forEach(button => button.addEventListener('click', () => setStep(button.dataset.configStep)));
+  root.querySelectorAll('[data-config-next]').forEach(button => button.addEventListener('click', () => setStep(button.dataset.configNext)));
+  root.querySelectorAll('[data-config-trim]').forEach(button => button.addEventListener('click', () => selectTrim(button.dataset.configTrim)));
+  root.querySelectorAll('[data-config-design]').forEach(button => button.addEventListener('click', () => selectDesign(button.dataset.configDesign)));
+  root.querySelectorAll('[data-config-profile]').forEach(button => button.addEventListener('click', () => selectProfile(button.dataset.configProfile)));
+  root.querySelector('[data-config-complete]')?.addEventListener('click', () => {
+    setStep('ride');
+    root.querySelector('.config-summary')?.classList.add('confirmed');
+    window.setTimeout(() => root.querySelector('.config-summary')?.classList.remove('confirmed'), 900);
+  });
+  root.querySelector('[data-config-reset]')?.addEventListener('click', () => {
+    state.trim = 'recon';
+    state.design = 'laser';
+    state.profile = 'glide';
+    selectTrim(state.trim);
+    selectDesign(state.design);
+    selectProfile(state.profile);
+    setStep('model');
+  });
+
+  refreshPreview();
+  selectProfile(state.profile);
+})();

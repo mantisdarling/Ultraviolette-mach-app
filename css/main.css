@@ -4884,3 +4884,281 @@ body.replica-mode .mob-nav a {
   body.replica-mode .hero-sub { font-size: 12px; }
   body.replica-mode .hstat-n { font-size: 21px; }
 }
+
+
+/* ─────────────────────────────────────────────────────
+   F77 DESIGN STUDIO / AWARD-QUALITY CONFIGURATOR
+───────────────────────────────────────────────────── */
+body.replica-mode .configurator-section {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(96px, 12vw, 180px);
+  background: #0a0a0a;
+  border-top: 1px solid rgba(255,255,255,.12);
+}
+body.replica-mode .configurator-section::before {
+  content: 'CONFIGURE / F77 MACH 2';
+  position: absolute;
+  top: 34px;
+  left: clamp(22px, 7vw, 120px);
+  color: rgba(255,255,255,.28);
+  font: 500 9px/1 var(--ff-mono);
+  letter-spacing: .24em;
+}
+body.replica-mode .configurator-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 40px;
+  margin-bottom: clamp(40px, 6vw, 76px);
+}
+body.replica-mode .configurator-heading h2 {
+  margin: 14px 0 0;
+  color: #fff;
+  font: 800 clamp(52px, 8vw, 128px)/.82 var(--ff-display);
+  letter-spacing: -.065em;
+}
+body.replica-mode .configurator-heading h2 span { color: var(--uv3); }
+body.replica-mode .configurator-heading p {
+  max-width: 360px;
+  margin: 0 0 8px;
+  color: rgba(255,255,255,.62);
+  font: 400 14px/1.65 var(--ff-body);
+}
+body.replica-mode .configurator-shell {
+  border: 1px solid rgba(255,255,255,.14);
+  background: #0f0f0f;
+  box-shadow: 0 32px 90px rgba(0,0,0,.34);
+}
+body.replica-mode .configurator-progress {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-bottom: 1px solid rgba(255,255,255,.14);
+}
+body.replica-mode .config-step {
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 24px;
+  border: 0;
+  border-right: 1px solid rgba(255,255,255,.1);
+  background: transparent;
+  color: rgba(255,255,255,.42);
+  cursor: pointer;
+  font: 500 10px/1 var(--ff-mono);
+  letter-spacing: .18em;
+  text-align: left;
+  transition: color .25s ease, background .25s ease;
+}
+body.replica-mode .config-step:last-child { border-right: 0; }
+body.replica-mode .config-step span { color: rgba(255,255,255,.28); font-size: 12px; }
+body.replica-mode .config-step:hover,
+body.replica-mode .config-step.on { color: #fff; background: rgba(216,59,50,.12); }
+body.replica-mode .config-step.on span { color: var(--uv3); }
+body.replica-mode .configurator-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(340px, .9fr) 250px;
+  min-height: 620px;
+}
+body.replica-mode .config-preview {
+  position: relative;
+  min-height: 620px;
+  overflow: hidden;
+  background: #080808;
+  border-right: 1px solid rgba(255,255,255,.12);
+}
+body.replica-mode .config-preview-picture,
+body.replica-mode .config-preview-picture img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+body.replica-mode .config-preview-picture img {
+  object-fit: cover;
+  object-position: center;
+  transition: opacity .35s ease, transform .55s var(--ease);
+}
+body.replica-mode .config-preview:hover img { transform: scale(1.025); }
+body.replica-mode .config-preview-gradient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(0,0,0,.1), transparent 38%, rgba(0,0,0,.88));
+}
+body.replica-mode .config-preview-meta,
+body.replica-mode .config-preview-caption,
+body.replica-mode .config-preview-index {
+  position: absolute;
+  z-index: 2;
+  font: 500 9px/1 var(--ff-mono);
+  letter-spacing: .16em;
+}
+body.replica-mode .config-preview-meta {
+  top: 22px;
+  left: 24px;
+  right: 24px;
+  display: flex;
+  justify-content: space-between;
+  color: rgba(255,255,255,.62);
+}
+body.replica-mode .config-preview-meta span:last-child { color: var(--uv3); }
+body.replica-mode .config-preview-caption { left: 24px; bottom: 26px; display: grid; gap: 8px; }
+body.replica-mode .config-preview-caption strong { color: #fff; font: 700 24px/1 var(--ff-display); letter-spacing: -.04em; }
+body.replica-mode .config-preview-caption span { color: rgba(255,255,255,.55); }
+body.replica-mode .config-preview-index { right: 24px; bottom: 28px; color: rgba(255,255,255,.35); }
+body.replica-mode .config-preview-index span { color: var(--uv3); }
+body.replica-mode .config-controls { padding: clamp(28px, 4vw, 52px); }
+body.replica-mode .config-step-panel[hidden] { display: none; }
+body.replica-mode .config-kicker,
+body.replica-mode .config-summary-kicker {
+  display: block;
+  color: var(--uv3);
+  font: 500 9px/1.2 var(--ff-mono);
+  letter-spacing: .2em;
+}
+body.replica-mode .config-step-panel h3 {
+  margin: 18px 0 30px;
+  color: #fff;
+  font: 800 clamp(34px, 4vw, 58px)/.88 var(--ff-display);
+  letter-spacing: -.06em;
+}
+body.replica-mode .config-step-panel h3 em { color: var(--uv3); font-style: normal; }
+body.replica-mode .config-choice-grid,
+body.replica-mode .config-design-grid,
+body.replica-mode .config-profile-grid { display: grid; gap: 10px; }
+body.replica-mode .config-choice,
+body.replica-mode .config-design,
+body.replica-mode .config-profile {
+  position: relative;
+  display: grid;
+  gap: 8px;
+  min-height: 112px;
+  padding: 18px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.025);
+  color: #fff;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color .25s ease, background .25s ease, transform .25s ease;
+}
+body.replica-mode .config-choice:hover,
+body.replica-mode .config-design:hover,
+body.replica-mode .config-profile:hover,
+body.replica-mode .config-choice.on,
+body.replica-mode .config-design.on,
+body.replica-mode .config-profile.on {
+  border-color: var(--uv3);
+  background: rgba(216,59,50,.1);
+  transform: translateY(-2px);
+}
+body.replica-mode .config-choice::after,
+body.replica-mode .config-design::after,
+body.replica-mode .config-profile::after {
+  content: '✓';
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  color: var(--uv3);
+  opacity: 0;
+}
+body.replica-mode .config-choice.on::after,
+body.replica-mode .config-design.on::after,
+body.replica-mode .config-profile.on::after { opacity: 1; }
+body.replica-mode .config-choice-index,
+body.replica-mode .config-design small,
+body.replica-mode .config-profile small {
+  color: rgba(255,255,255,.4);
+  font: 500 8px/1.3 var(--ff-mono);
+  letter-spacing: .12em;
+}
+body.replica-mode .config-choice strong,
+body.replica-mode .config-design strong,
+body.replica-mode .config-profile strong { font: 700 16px/1 var(--ff-display); letter-spacing: -.02em; }
+body.replica-mode .config-choice b { color: var(--uv3); font: 600 13px/1 var(--ff-mono); }
+body.replica-mode .config-design { grid-template-columns: auto 1fr; align-items: center; min-height: 76px; padding-left: 14px; }
+body.replica-mode .config-design small { grid-column: 2; margin-top: -4px; }
+body.replica-mode .config-design-swatch { width: 30px; height: 30px; border: 1px solid rgba(255,255,255,.4); border-radius: 50%; grid-row: span 2; }
+body.replica-mode .config-mini-note { display: flex; align-items: center; gap: 8px; margin-top: 18px; color: rgba(255,255,255,.4); font: 500 9px/1.5 var(--ff-mono); }
+body.replica-mode .config-mini-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--uv3); box-shadow: 0 0 12px var(--uv3); }
+body.replica-mode .config-next,
+body.replica-mode .config-summary-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 48px;
+  margin-top: 26px;
+  padding: 0 16px;
+  border: 1px solid var(--uv3);
+  background: var(--uv3);
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+  font: 600 10px/1 var(--ff-mono);
+  letter-spacing: .14em;
+  transition: background .25s ease, color .25s ease;
+}
+body.replica-mode .config-next:hover,
+body.replica-mode .config-summary-cta:hover { background: #fff; color: #111; }
+body.replica-mode .config-next span,
+body.replica-mode .config-summary-cta span { font-size: 18px; }
+body.replica-mode .config-output { display: grid; gap: 8px; margin-top: 24px; padding: 18px; border-left: 2px solid var(--uv3); background: rgba(216,59,50,.08); }
+body.replica-mode .config-output span,
+body.replica-mode .config-output i { color: rgba(255,255,255,.45); font: 500 9px/1.3 var(--ff-mono); letter-spacing: .14em; font-style: normal; }
+body.replica-mode .config-output strong { color: #fff; font: 800 42px/1 var(--ff-display); letter-spacing: -.05em; }
+body.replica-mode .config-output i { color: var(--uv3); }
+body.replica-mode .config-summary {
+  display: flex;
+  flex-direction: column;
+  padding: 30px 22px;
+  border-left: 1px solid rgba(255,255,255,.12);
+  background: #0b0b0b;
+}
+body.replica-mode .config-summary > strong { margin: 18px 0 30px; color: #fff; font: 800 24px/1 var(--ff-display); letter-spacing: -.05em; }
+body.replica-mode .config-summary-line { display: flex; justify-content: space-between; gap: 10px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.1); color: rgba(255,255,255,.4); font: 500 8px/1.2 var(--ff-mono); letter-spacing: .12em; }
+body.replica-mode .config-summary-line b { color: #fff; font-weight: 500; text-align: right; }
+body.replica-mode .config-summary-divider { flex: 1; min-height: 30px; }
+body.replica-mode .config-summary-total { display: grid; gap: 8px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.16); }
+body.replica-mode .config-summary-total span { color: rgba(255,255,255,.42); font: 500 8px/1 var(--ff-mono); letter-spacing: .14em; }
+body.replica-mode .config-summary-total strong { color: var(--uv3); font: 800 30px/1 var(--ff-display); letter-spacing: -.05em; }
+body.replica-mode .config-summary-cta { margin-top: 20px; }
+body.replica-mode .config-reset { min-height: 36px; margin-top: 10px; border: 0; background: transparent; color: rgba(255,255,255,.42); cursor: pointer; font: 500 8px/1 var(--ff-mono); letter-spacing: .12em; text-align: left; }
+body.replica-mode .config-reset:hover { color: #fff; }
+body.replica-mode .config-summary small { margin-top: auto; padding-top: 20px; color: rgba(255,255,255,.3); font: 400 9px/1.5 var(--ff-body); }
+
+@media (max-width: 1100px) {
+  body.replica-mode .configurator-grid { grid-template-columns: minmax(0, 1.25fr) minmax(300px, .9fr); }
+  body.replica-mode .config-summary { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0 26px; border-top: 1px solid rgba(255,255,255,.12); border-left: 0; }
+  body.replica-mode .config-summary-divider { display: none; }
+  body.replica-mode .config-summary-total { align-self: end; }
+  body.replica-mode .config-summary-cta { align-self: end; }
+  body.replica-mode .config-reset { align-self: end; }
+  body.replica-mode .config-summary small { grid-column: 1 / -1; }
+}
+@media (max-width: 700px) {
+  body.replica-mode .configurator-section { padding-block: 84px; }
+  body.replica-mode .configurator-heading { display: block; margin-bottom: 34px; }
+  body.replica-mode .configurator-heading p { margin-top: 24px; font-size: 13px; }
+  body.replica-mode .configurator-progress { grid-template-columns: repeat(3, 1fr); }
+  body.replica-mode .config-step { min-height: 54px; justify-content: center; gap: 5px; padding: 0 4px; font-size: 8px; letter-spacing: .08em; }
+  body.replica-mode .config-step span { display: none; }
+  body.replica-mode .configurator-grid { display: flex; flex-direction: column; min-height: 0; }
+  body.replica-mode .config-preview { min-height: 270px; height: 55vw; border-right: 0; border-bottom: 1px solid rgba(255,255,255,.12); }
+  body.replica-mode .config-preview-meta { top: 14px; left: 16px; right: 16px; font-size: 7px; }
+  body.replica-mode .config-preview-caption { left: 16px; bottom: 16px; }
+  body.replica-mode .config-preview-caption strong { font-size: 18px; }
+  body.replica-mode .config-preview-index { right: 16px; bottom: 18px; font-size: 8px; }
+  body.replica-mode .config-controls { padding: 28px 18px 32px; }
+  body.replica-mode .config-step-panel h3 { margin-bottom: 22px; font-size: 38px; }
+  body.replica-mode .config-choice { min-height: 104px; padding: 16px; }
+  body.replica-mode .config-summary { display: flex; padding: 24px 18px; }
+  body.replica-mode .config-summary-divider { min-height: 22px; }
+  body.replica-mode .config-summary small { margin-top: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.replica-mode .config-preview-picture img,
+  body.replica-mode .config-choice,
+  body.replica-mode .config-design,
+  body.replica-mode .config-profile { transition: none; }
+}

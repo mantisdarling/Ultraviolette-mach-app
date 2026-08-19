@@ -103,7 +103,7 @@
 <link rel="stylesheet" href="css/critical.css?v=2"/>
 
 <!-- Main Stylesheet -->
-<link rel="stylesheet" href="css/main.css?v=7"/>
+<link rel="stylesheet" href="css/main.css?v=8"/>
 </head>
 <body class="replica-mode">
 
@@ -164,7 +164,7 @@
     <li><a href="#discovery">DISCOVER</a></li>
     <li><a href="#racing">REGISTER YOUR INTEREST</a></li>
   </ul>
-  <a href="https://www.ultraviolette.com/configure" target="_blank" rel="noopener noreferrer" class="nav-cta">CONFIGURE</a>
+  <a href="#configurator" class="nav-cta">CONFIGURE</a>
   <button type="button" class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mob-menu">
     <span class="icon icon-menu" style="font-size:26px" aria-hidden="true">☰</span>
   </button>
@@ -182,7 +182,7 @@
     <a href="#racing" class="mob-lnk">REGISTER YOUR INTEREST</a>
   </nav>
   <div style="margin-top:40px">
-    <a href="https://www.ultraviolette.com/configure" target="_blank" rel="noopener noreferrer" class="btn-p" style="justify-content:center; width: 100%;">CONFIGURE YOUR RIDE</a>
+    <a href="#configurator" class="btn-p" style="justify-content:center; width: 100%;">CONFIGURE YOUR RIDE</a>
   </div>
 </div>
 
@@ -530,6 +530,90 @@
             <div class="image-showcase-topline"><span>F77 // MACH 2</span><span>STATIC STUDIO / 01</span></div>
             <div class="image-showcase-caption"><strong>F77 MACH 2 RECON</strong><span>AVIATION-DERIVED ELECTRIC PERFORMANCE</span></div>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Award-quality F77 Design Studio configurator -->
+  <section id="configurator" class="configurator-section" aria-labelledby="configurator-title">
+    <div class="con">
+      <div class="configurator-heading reveal">
+        <div>
+          <span class="label label-uv">F77 MACH 2 // DESIGN STUDIO</span>
+          <h2 id="configurator-title">BUILD YOUR<br><span>F77.</span></h2>
+        </div>
+        <p>Choose your machine, define its personality, and preview a configuration engineered around the way you ride.</p>
+      </div>
+
+      <div class="configurator-shell">
+        <div class="configurator-progress" role="tablist" aria-label="Configuration steps">
+          <button type="button" class="config-step on" role="tab" aria-selected="true" data-config-step="model"><span>01</span> MODEL</button>
+          <button type="button" class="config-step" role="tab" aria-selected="false" data-config-step="design"><span>02</span> DESIGN</button>
+          <button type="button" class="config-step" role="tab" aria-selected="false" data-config-step="ride"><span>03</span> RIDE PROFILE</button>
+        </div>
+
+        <div class="configurator-grid">
+          <div class="config-preview">
+            <div class="config-preview-meta"><span id="config-preview-kicker">F77 MACH 2 / RECON</span><span id="config-preview-status">CONFIGURATION 01</span></div>
+            <picture class="config-preview-picture">
+              <source media="(max-width: 600px)" srcset="assets/images/ss04-mobile.webp" type="image/webp">
+              <source media="(max-width: 1024px)" srcset="assets/images/ss04-tablet.webp" type="image/webp">
+              <img id="config-preview-img" src="assets/images/ss04-desktop.webp" data-fallback="assets/images/ss04-desktop.webp" alt="F77 Mach 2 live configuration preview" width="1920" height="752" loading="lazy" decoding="async">
+            </picture>
+            <div class="config-preview-gradient" aria-hidden="true"></div>
+            <div class="config-preview-caption"><strong id="config-preview-name">MACH 2 RECON</strong><span id="config-preview-color">TURBO RED</span></div>
+            <div class="config-preview-index">F77 / <span id="config-preview-index">01</span></div>
+          </div>
+
+          <div class="config-controls">
+            <div class="config-step-panel on" role="tabpanel" data-config-panel="model">
+              <span class="config-kicker">SELECT YOUR MACHINE</span>
+              <h3>ONE PLATFORM.<br><em>TWO ATTITUDES.</em></h3>
+              <div class="config-choice-grid">
+                <button type="button" class="config-choice on" data-config-trim="recon" aria-pressed="true"><span class="config-choice-index">01 / RECOMMENDED</span><strong>MACH 2 RECON</strong><small>30 KW · 100 NM · 323 KM IDC RANGE</small><b>₹3.99 L*</b></button>
+                <button type="button" class="config-choice" data-config-trim="base" aria-pressed="false"><span class="config-choice-index">02 / ESSENTIAL</span><strong>MACH 2 BASE</strong><small>27 KW · 90 NM · 211 KM IDC RANGE</small><b>₹2.99 L*</b></button>
+              </div>
+              <button type="button" class="config-next" data-config-next="design">CONTINUE TO DESIGN <span>→</span></button>
+            </div>
+
+            <div class="config-step-panel" role="tabpanel" data-config-panel="design" hidden>
+              <span class="config-kicker">CHOOSE YOUR PERSONALITY</span>
+              <h3>MAKE IT<br><em>UNMISTAKABLE.</em></h3>
+              <div class="config-design-grid" role="group" aria-label="Choose F77 design line">
+                <button type="button" class="config-design on" data-config-design="laser" data-config-color="TURBO RED" data-config-img="assets/images/laser-turbo-red.webp" aria-pressed="true"><span class="config-design-swatch" style="background:#c0392b"></span><strong>LASER</strong><small>PASSION / ADRENALINE</small></button>
+                <button type="button" class="config-design" data-config-design="airstrike" data-config-color="STELLAR WHITE" data-config-img="assets/images/airstrike-stellar-white.webp" aria-pressed="false"><span class="config-design-swatch" style="background:#d9d9d9"></span><strong>AIRSTRIKE</strong><small>SHARP / CHARISMATIC</small></button>
+                <button type="button" class="config-design" data-config-design="shadow" data-config-color="STEALTH GREY" data-config-img="assets/images/shadow-stealth-grey.webp" aria-pressed="false"><span class="config-design-swatch" style="background:#71808b"></span><strong>SHADOW</strong><small>COVERT / ENIGMATIC</small></button>
+              </div>
+              <div class="config-mini-note"><span class="config-mini-dot"></span> Design lines include coordinated paint, decals, and trim detailing.</div>
+              <button type="button" class="config-next" data-config-next="ride">CONTINUE TO RIDE PROFILE <span>→</span></button>
+            </div>
+
+            <div class="config-step-panel" role="tabpanel" data-config-panel="ride" hidden>
+              <span class="config-kicker">TUNE YOUR OUTPUT</span>
+              <h3>RIDE<br><em>YOUR WAY.</em></h3>
+              <div class="config-profile-grid" role="group" aria-label="Choose ride profile">
+                <button type="button" class="config-profile on" data-config-profile="glide" aria-pressed="true"><span>01</span><strong>GLIDE</strong><small>MAX RANGE / CALM DELIVERY</small></button>
+                <button type="button" class="config-profile" data-config-profile="combat" aria-pressed="false"><span>02</span><strong>COMBAT</strong><small>BALANCED / RESPONSIVE</small></button>
+                <button type="button" class="config-profile" data-config-profile="ballistic" aria-pressed="false"><span>03</span><strong>BALLISTIC</strong><small>MAX TORQUE / 155 KM/H</small></button>
+              </div>
+              <div class="config-output"><span>ESTIMATED RANGE</span><strong id="config-range-output">323 KM</strong><i id="config-output-label">EFFICIENCY MAP ENGAGED</i></div>
+              <button type="button" class="config-next config-complete" data-config-complete>REVIEW YOUR BUILD <span>→</span></button>
+            </div>
+          </div>
+
+          <aside class="config-summary" aria-live="polite">
+            <span class="config-summary-kicker">YOUR F77 / BUILD 01</span>
+            <strong id="config-summary-name">MACH 2 RECON</strong>
+            <div class="config-summary-line"><span>DESIGN LINE</span><b id="config-summary-design">LASER</b></div>
+            <div class="config-summary-line"><span>PAINT</span><b id="config-summary-color">TURBO RED</b></div>
+            <div class="config-summary-line"><span>RIDE PROFILE</span><b id="config-summary-profile">GLIDE</b></div>
+            <div class="config-summary-divider"></div>
+            <div class="config-summary-total"><span>EST. EX-SHOWROOM</span><strong id="config-summary-price">₹3.99 L*</strong></div>
+            <a href="#racing" class="config-summary-cta" data-config-interest>REGISTER INTEREST <span>↗</span></a>
+            <button type="button" class="config-reset" data-config-reset>RESET CONFIGURATION</button>
+            <small>*Indicative pricing shown for demonstration. Final pricing and availability may vary.</small>
+          </aside>
         </div>
       </div>
     </div>
@@ -1077,7 +1161,7 @@
 
 <!-- Coordinated boot and critical interaction bundles. -->
 <script src="js/boot.js?v=4" defer></script>
-<script src="js/main.js?v=22" defer></script>
+<script src="js/main.js?v=23" defer></script>
 
 </body>
 </html>
