@@ -1271,9 +1271,9 @@ function stopEngine() {
     rangeText.textContent = estRange;
 
     if (charge >= 80) {
-      chargeText.textContent = "0";
+      chargeText.textContent = charge === 100 ? "FULL" : "READY";
       const unit = chargeText.nextElementSibling;
-      if (unit) unit.textContent = charge === 100 ? "FULL" : "OPTIMISED";
+      if (unit) unit.textContent = "";
     } else {
       const remainingPercent = 80 - charge;
       const rate = activeTrim === 'recon' ? 1.0 : 0.75;

@@ -3649,3 +3649,177 @@ html.lenis, html.lenis body {
 .lenis-scrolling iframe {
   pointer-events: none;
 }
+
+
+/* ─────────────────────────────────────────────────────────
+   MACH-EV POLISH PASS — clearer hierarchy, calmer surfaces,
+   stronger touch targets, and a more deliberate mobile system
+   ───────────────────────────────────────────────────────── */
+:root {
+  --ink-0: #050506;
+  --ink-1: #0b0810;
+  --ink-2: #120b1b;
+  --line-soft: rgba(255,255,255,.09);
+  --line-uv: rgba(192,132,252,.3);
+}
+
+html { scrollbar-gutter: stable; }
+body {
+  background:
+    radial-gradient(circle at 82% 8%, rgba(123,44,191,.12), transparent 28rem),
+    var(--black);
+}
+
+/* Header: more legible over the hero, less abrupt when it becomes sticky. */
+#navbar {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background: linear-gradient(180deg, rgba(5,5,6,.76), transparent);
+}
+#navbar.scrolled {
+  background: rgba(7,5,11,.82);
+  border-bottom-color: rgba(192,132,252,.22);
+  box-shadow: 0 12px 40px rgba(0,0,0,.36);
+}
+.nav-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  margin-right: 36px;
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  letter-spacing: .22em;
+  color: rgba(255,255,255,.42);
+  white-space: nowrap;
+}
+.nav-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #39d98a;
+  box-shadow: 0 0 0 4px rgba(57,217,138,.08), 0 0 14px rgba(57,217,138,.8);
+}
+
+/* Hero: keep the cinematic scale, but give the copy a clearer reading measure. */
+.hero-content { max-width: 1680px; }
+.hero-eye { color: #d6a7ff; }
+.hero-sub { max-width: 500px; color: rgba(241,235,246,.76); }
+.hero-btns { align-items: center; }
+.hero-stats {
+  max-width: 900px;
+  border-color: rgba(255,255,255,.15);
+  background: rgba(5,5,8,.48);
+  box-shadow: 0 18px 48px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.06);
+}
+.hstat { padding: 24px 26px; }
+.hstat:hover { background: rgba(123,44,191,.09); }
+.hstat-n { font-variant-numeric: tabular-nums; }
+
+/* Buttons: make the primary action unmistakable and touch-friendly. */
+.btn-p, .btn-o, .btn-g, .sub-btn, .nav-cta { min-height: 48px; }
+.btn-p, .btn-o, .btn-g { letter-spacing: .18em; }
+.btn-p:hover, .btn-o:hover { transform: translateY(-3px); }
+
+/* Use quieter cards so content leads and effects support rather than compete. */
+.award-c, .spec-c, .charge-c, .tech-f, .aero-d, .racing-s-c, .press-c {
+  background: linear-gradient(145deg, rgba(255,255,255,.028), rgba(123,44,191,.035));
+  border-color: var(--line-soft);
+}
+.award-c:hover, .mode-c:hover, .press-c:hover { transform: translateY(-6px); }
+.chapter, .gal-c, .schematic-wrap, .hud-card, .sim-card, .tft-card-wrap, .phone-wrap {
+  border-color: rgba(192,132,252,.22);
+}
+
+/* Touch targets and active controls are easier to read at a glance. */
+.hotspot { min-width: 40px; min-height: 40px; }
+.trim-btn, .sim-mode-btn { min-height: 42px; }
+.trim-btn.on, .sim-mode-btn.on { color: #fff; background: rgba(168,85,247,.16); }
+.sw-dot { width: 34px; height: 34px; }
+
+/* Improve the specs table as a deliberate horizontal data view. */
+.specs-table-wrap { background: rgba(7,5,11,.58); }
+.specs-table th { white-space: nowrap; }
+.specs-table tbody tr:nth-child(even) { background: rgba(255,255,255,.012); }
+
+/* Keep chapter cards useful on touch devices where hover is unavailable. */
+.ch-explore, .gal-cta { opacity: .92; }
+
+/* Tablet: retain a two-column hero stat bar until the screen is genuinely narrow. */
+@media (max-width: 1024px) {
+  .nav-status { margin-right: 20px; }
+  .hero-content { padding-top: 128px; padding-bottom: 96px; }
+  .hero-stats { display: grid; grid-template-columns: repeat(2, 1fr); }
+  .hstat { border-right: 1px solid rgba(168,85,247,.1); }
+  .hstat:nth-child(2n) { border-right: none; }
+  .hstat:nth-child(-n+2) { border-bottom: 1px solid rgba(168,85,247,.1); }
+  .hstat:last-child { border-bottom: none; }
+  .chapter { min-height: 420px; }
+}
+
+@media (max-width: 700px) {
+  #navbar { padding: 16px 20px; }
+  #navbar.scrolled { padding: 12px 20px; }
+  .nav-status { display: none; }
+  .nav-logo { font-size: 18px; }
+  #mob-menu { padding: 28px 22px; }
+  .mob-nav { margin-top: 48px; }
+  .mob-nav a { font-size: clamp(32px, 11vw, 52px); padding: 12px 0; }
+  .hero-content { padding: 116px 20px 78px; }
+  .hero-eye { font-size: 9px; letter-spacing: .34em; margin-bottom: 20px; }
+  .hero-h1 { font-size: clamp(46px, 15vw, 88px); line-height: .86; letter-spacing: -.055em; }
+  .hero-sub { font-size: 15px; line-height: 1.55; margin: 24px 0 30px; max-width: 360px; }
+  .hero-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .hero-btns .btn-ignite { grid-column: 1 / -1; }
+  .hero-btns .btn-p, .hero-btns .btn-g { justify-content: center; width: 100%; padding: 14px 12px; font-size: 10px; }
+  .hero-stats { width: 100%; margin-top: 34px; }
+  .hstat { padding: 16px 14px; }
+  .hstat-n { font-size: clamp(24px, 8vw, 36px); }
+  .hstat-u { font-size: 10px; }
+  .hstat-l { font-size: 7px; letter-spacing: .2em; line-height: 1.35; }
+  .scroll-hint { bottom: 18px; }
+  .sh-txt { font-size: 7px; letter-spacing: .3em; }
+  .sh-line { height: 36px; }
+  .con { padding: 0 20px; }
+  section { padding: 72px 0; }
+  .cine-section { padding: 88px 0; }
+  .cine-big { font-size: clamp(42px, 14vw, 80px); line-height: .88; }
+  .cine-stat-row { gap: 28px 36px; margin-top: 50px; }
+  .cine-num { font-size: clamp(42px, 14vw, 68px); }
+  .cine-lbl { font-size: 8px; letter-spacing: .22em; }
+  .showcase-btns { display: grid; grid-template-columns: 1fr; }
+  .showcase-btns a { justify-content: center; }
+  .spec-c { padding: 18px 20px; }
+  .spec-num { font-size: 40px; }
+  .sim-card { padding: 18px; }
+  .sim-modes { gap: 4px; }
+  .sim-mode-btn { font-size: 7px; letter-spacing: .06em; }
+  .sim-metrics { gap: 8px; }
+  .sim-metric { padding: 12px 10px; }
+  .sim-metric-val { font-size: 17px; }
+  .chapter { height: 360px; min-height: 0; }
+  .ch-info { padding: 24px 20px; }
+  .ch-desc { font-size: 13px; line-height: 1.5; }
+  .hud-card { padding: 26px 22px; min-height: 280px; }
+  .form-head { align-items: flex-start; flex-direction: column; gap: 14px; margin-bottom: 28px; }
+  .form-badge { align-self: flex-start; }
+  .foot-bot { align-items: flex-start; flex-direction: column; }
+  .foot-legal { flex-wrap: wrap; row-gap: 10px; }
+}
+
+@media (max-width: 420px) {
+  .hero-h1 { font-size: clamp(42px, 14vw, 64px); }
+  .hero-btns { grid-template-columns: 1fr; }
+  .hero-btns .btn-ignite { grid-column: auto; }
+  .hero-stats { grid-template-columns: 1fr 1fr; }
+  .hstat-n { font-size: 25px; }
+  .hstat-l { font-size: 6px; letter-spacing: .14em; }
+  .mode-c { padding: 28px 22px; }
+  .tft-screen { padding: 18px 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-status-dot { box-shadow: 0 0 0 4px rgba(57,217,138,.08); }
+  .hero-eye, .hero-sub, .hero-btns { animation: none; opacity: 1; }
+  .hero-bike-wrap img, #bike-img { animation: none; }
+}
